@@ -157,7 +157,7 @@ public class BlockHelper {
      */
     @SuppressWarnings("deprecation")
     public final Block getFaceBlock() {
-        while ((this.getNextBlock() != null) && (this.getCurBlock().getType() == Material.AIR)) {
+        while ((this.getNextBlock() != null) && (this.getCurBlock().getType().isAir())) {
         }
 
         if (this.getCurBlock() != null) {
@@ -230,7 +230,7 @@ public class BlockHelper {
     @SuppressWarnings("deprecation")
     public final Block getTargetBlock() {
         this.fromOffworld();
-        while ((this.getNextBlock() != null) && (this.getCurBlock().getType() == Material.AIR)) {
+        while ((this.getNextBlock() != null) && (this.getCurBlock().getType().isAir())) {
 
         }
         return this.getCurBlock();
@@ -256,7 +256,7 @@ public class BlockHelper {
 
         } while ((this.length <= this.range) && ((this.targetX == this.lastX) && (this.targetY == this.lastY) && (this.targetZ == this.lastZ)));
 
-        if (this.world.getBlockAt(this.targetX, this.targetY, this.targetZ).getType() != Material.AIR) {
+        if (!this.world.getBlockAt(this.targetX, this.targetY, this.targetZ).getType().isAir()) {
             return this.world.getBlockAt(this.targetX, this.targetY, this.targetZ);
         }
 
