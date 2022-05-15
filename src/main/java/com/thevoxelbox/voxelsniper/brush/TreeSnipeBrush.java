@@ -48,7 +48,7 @@ public class TreeSnipeBrush extends Brush {
     }
 
     private int getYOffset() {
-        for (int i = 1; i < (getTargetBlock().getWorld().getMaxHeight() - 1 - getTargetBlock().getY()); i++) {
+        for (int i = getTargetBlock().getWorld().getMinHeight() + 1; i < (getTargetBlock().getWorld().getMaxHeight() - 1 - getTargetBlock().getY()); i++) {
             if (Objects.equal(getTargetBlock().getRelative(0, i + 1, 0).getType(), Material.AIR)) {
                 return i;
             }
