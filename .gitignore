@@ -13,6 +13,9 @@ dependency-reduced-pom.xml
 
 # gradle
 .gradle/
+/gradle
+.idea
+/build
 
 # vim
 .*.sw[a-p]

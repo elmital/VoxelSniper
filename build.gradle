@@ -1,0 +1,63 @@
+plugins {
+    id "java"
+    id "com.github.johnrengelman.shadow" version "7.1.2" //Dependency shadow
+}
+
+//Plugin information
+group 'com.thevoxelbox.voxelsniper'
+version '6.1.2-SNAPSHOT'
+
+//Minecraft API variable
+ext {
+    minecraftAPI = '1.18.2-R0.1-SNAPSHOT'
+}
+
+defaultTasks 'build'
+
+//Java version
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+//Dependencies repositories
+repositories {
+    mavenCentral()
+    //PaperMC
+    maven {
+        name 'papermc'
+        url 'https://papermc.io/repo/repository/maven-public/'
+    }
+}
+
+//Dependencies
+dependencies {
+    implementation group: 'io.papermc.paper', name: 'paper-api', version: "${minecraftAPI}" //Minecraft
+    testImplementation 'junit:junit:4.11'
+    testRuntimeOnly 'org.mockito:mockito-core:2.24.0'
+}
+
+//Tasks
+tasks.compileJava {
+    options.compilerArgs = ["-parameters"]
+    options.encoding = 'UTF-8'
+}
+
+//Shadowing dependencies
+shadowJar {
+    archiveClassifier.set('')
+    manifest {
+        attributes(
+                'Main-Class': {group}
+        )
+    }
+}
+
+//Shadow
+artifacts {
+    archives shadowJar
+}
+
+test {
+    useJUnitPlatform()
+}
+
+build.dependsOn(shadowJar)
