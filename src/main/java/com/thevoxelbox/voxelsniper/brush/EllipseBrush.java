@@ -78,7 +78,7 @@ public class EllipseBrush extends PerformerBrush {
 
         try {
             if (ix >= iy) { // Need this unless you want weird holes
-                for (iy = this.yscl; iy > 0; iy--) {
+                for (iy = this.yscl; iy > 0; iy--) { //TODO potentially broken with new world height
                     for (double steps = 0; (steps <= TWO_PI); steps += stepSize) {
                         final int x = (int) Math.round(ix * Math.cos(steps));
                         final int y = (int) Math.round(iy * Math.sin(steps));
@@ -106,7 +106,7 @@ public class EllipseBrush extends PerformerBrush {
                     ix--;
                 }
             } else {
-                for (ix = this.xscl; ix > 0; ix--) {
+                for (ix = this.xscl; ix > 0; ix--) { //TODO potentially broken with new world height
                     for (double steps = 0; (steps <= TWO_PI); steps += stepSize) {
                         final int x = (int) Math.round(ix * Math.cos(steps));
                         final int y = (int) Math.round(iy * Math.sin(steps));
