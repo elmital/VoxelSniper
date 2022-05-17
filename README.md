@@ -2,37 +2,32 @@
 VoxelSniper
 ============
 The premier long-distance brush editor for [Bukkit](https://bukkit.org/), [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/), and most Bukkit-based server distributions. The plugin is fully functional (according to our limited usage), and should be able to snipe most blocks. Please submit an issue if something is not working and I'll try my best to work it out.
-
-I'm thinking of renaming the project to prevent confusion with the already existing VoxelSniper. Please suggest any in the issues section!
+This plugin is a fork created to just maintains the project updated to new minecraft versions. No warranty are provided about the fact the plugin is fully functional and future features will be added.
 
 Minecraft Version
 ------------------
-VoxelSniper was built against the Bukkit 1.15.2 API.
+VoxelSniper was built against the PaperMC 1.18.2 API.
 
- - Minecraft 1.15.2 [Tested on SpigotMC, release 6.0.0]
+ - Minecraft 1.18.2 [Tested on PaperMC, 6.2.0-SNAPSHOT]
 
 Compilation
 -----------
-Pre-compiled JARs are available in releases. Latest release is `6.0.0`.
+Pre-compiled JARs are available in releases. Latest release is `6.2.0-SNAPSHOT`.
 
-We use Maven to handle dependencies.
-
-- Install [Maven 3][Maven]
-- Check out this repository.
-- Run `mvn clean package`
-
-Alternatively, use a Java IDE that supports Maven. Please ensure that Maven `version >= 3.2.3` because [Maven Central is now on HTTPS](https://blog.sonatype.com/central-repository-moving-to-https); any version older than 3.2.3 will fail to compile as it will not be able to retrieve sources from Maven Central.
+Fork use Gradle to handle dependencies.
 
 Issue Tracker Notes
 -------------------
 
 How do I create a ticket the right way?
 
-- Seperate your reports. You think there is something wrong, but also want this new brush? Make life easier for us and create two tickets. We'd appriciate it big times.
+- Separate your reports. You think there is something wrong, but also want this new brush? Make life easier for us and create two tickets. We'd appreciate it big times.
 - Don't tell us your story of life. We want facts and information. The more information about `the Problem` you give us, the easier it is for us to figure out what's wrong.
-- Check the closed tickets first. Maybe someone created a similiar ticket already. If you think it's unresolved, then give us more information on there instead.
+- Check the closed tickets first. Maybe someone created a similar ticket already. If you think it's unresolved, then give us more information on there instead.
 
 ### Bug Report
+
+As said above I provide no warranty about the full functionality of the plugin, you can report issues, major should be fixed.
 
 Make sure to not tell us your story of life. We want brief descriptions of what's wrong to get directly to fixing.
 Also try to make the title describe briefly what's wrong and attach things like logs or screenshots to help illustrate the issue further.
@@ -61,6 +56,8 @@ Additional Information like what java version the server runs on would be appric
 
 ### Enhancement Request
 
+As said above I provide no warranty about adding new features.
+
 This is where imagination comes in, but make sure to keep as it easy for us. As mentioned, we don't want your story of life. We want to know what you think would be a good enhancement.
 
 Here is an example of an enhancement request.
@@ -79,7 +76,7 @@ It would be useful, since off angle lines are sometimes hard to make.
 ```
 
 Keep in mind that those are guidelines.
-We will still look into stuff that does not follow these guidlines, but it will give you an idea what we want in a ticket and make our life easier.
+We will still look into stuff that does not follow these guidelines, but it will give you an idea what we want in a ticket and make our life easier.
 
 Pull Requests
 -------------
@@ -93,7 +90,6 @@ Some rough guidelines for now:
 - Give us a good description to what you've done.
 - Try to submit one change in one pull request and try to link it to the issue in the tracker if possible.
 
-[VoxelSniperWiki]: http://voxelwiki.com/minecraft/VoxelSniper/
-[JenkinsJob]: http://ci.thevoxelbox.com/job/VoxelSniper/
-[Bukkit]: http://bukkit.org/
-[Maven]: http://maven.apache.org/
+[Original VoxelSniperWiki]: http://voxelwiki.com/minecraft/VoxelSniper/
+[PaperMC]: https://papermc.io
+[Gradle]: https://gradle.org
