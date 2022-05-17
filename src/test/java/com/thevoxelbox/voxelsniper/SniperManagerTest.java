@@ -1,7 +1,6 @@
 package com.thevoxelbox.voxelsniper;
 
-import org.junit.Before;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  *
@@ -10,7 +9,7 @@ public class SniperManagerTest {
 
     private VoxelProfileManager sniperManager;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         sniperManager = new VoxelProfileManager();
     }

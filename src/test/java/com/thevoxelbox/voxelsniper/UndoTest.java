@@ -6,9 +6,9 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
@@ -19,7 +19,7 @@ public class UndoTest
 {
     private Undo undo;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception
     {
         undo = new Undo();
@@ -42,7 +42,7 @@ public class UndoTest
                    .thenReturn(location);
             undo.put(block);
         }
-        Assert.assertEquals(5, undo.getSize());
+        Assertions.assertEquals(5, undo.getSize());
         Block block = Mockito.mock(Block.class);
         BlockState blockState = Mockito.mock(BlockState.class);
         Location location = new Location(world, 0, 0, 6);
@@ -53,9 +53,9 @@ public class UndoTest
         Mockito.when(blockState.getLocation())
                .thenReturn(location);
         undo.put(block);
-        Assert.assertEquals(6, undo.getSize());
+        Assertions.assertEquals(6, undo.getSize());
         undo.put(block);
-        Assert.assertEquals(6, undo.getSize());
+        Assertions.assertEquals(6, undo.getSize());
 
     }
 
