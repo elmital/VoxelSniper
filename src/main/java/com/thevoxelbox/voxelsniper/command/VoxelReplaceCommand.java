@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
 public class VoxelReplaceCommand extends VoxelCommand {
@@ -58,13 +59,15 @@ public class VoxelReplaceCommand extends VoxelCommand {
 
         // Command: /vr [material]       <- Sets the defined material as voxel substance.
         Material material = Material.matchMaterial(args[0]); // TODO: Match old ID numbers to materials
-        
+        BlockData blockData;
         if (material == null) {
-            material = MaterialTranslator.resolveMaterial(args[0]);
+            blockData = MaterialTranslator.resolveMaterial(args[0]);
+        } else {
+            blockData = material.createBlockData();
         }
 
-        if (material != null && material.isBlock()) {
-            snipeData.setReplaceSubstance(material.createBlockData());
+        if (blockData != null && blockData.getMaterial().isBlock()) {
+            snipeData.setReplaceSubstance(blockData);
             snipeData.getVoxelMessage().replace();
             return true;
         } else {
