@@ -4,17 +4,18 @@ import com.google.common.collect.Multimap;
 import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.perform.Performer;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
+
 import static org.hamcrest.CoreMatchers.hasItems;
 
 /**

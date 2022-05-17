@@ -1,15 +1,13 @@
 package com.thevoxelbox.voxelsniper.brush;
 
-import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Blend_Brushes

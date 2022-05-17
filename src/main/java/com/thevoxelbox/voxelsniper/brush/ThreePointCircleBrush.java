@@ -1,16 +1,16 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Three-Point_Circle_Brush

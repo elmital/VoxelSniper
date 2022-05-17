@@ -1,14 +1,18 @@
 package com.thevoxelbox.voxelsniper.util;
 
-import java.util.HashMap;
-import java.util.function.Function;
-
 import org.bukkit.Material;
 import org.bukkit.block.data.AnaloguePowerable;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.block.data.Lightable;
-import org.bukkit.block.data.type.*;
+import org.bukkit.block.data.type.Comparator;
+import org.bukkit.block.data.type.DaylightDetector;
+import org.bukkit.block.data.type.Furnace;
+import org.bukkit.block.data.type.Repeater;
+import org.bukkit.block.data.type.Slab;
+
+import java.util.HashMap;
+import java.util.function.Function;
 
 /**
  * Resolves legacy numerical item IDs to Materials.

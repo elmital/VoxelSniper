@@ -3,12 +3,13 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author GavJenks

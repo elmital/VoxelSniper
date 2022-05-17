@@ -1,8 +1,8 @@
 package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
-import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.VoxelSniper;
+import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;

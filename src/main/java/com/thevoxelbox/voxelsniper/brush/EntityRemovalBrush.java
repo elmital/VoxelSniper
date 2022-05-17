@@ -6,14 +6,13 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
-import org.bukkit.entity.EntityType;
 
 /**
  *

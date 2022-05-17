@@ -14,12 +14,13 @@ import com.thevoxelbox.voxelsniper.command.VoxelUndoCommand;
 import com.thevoxelbox.voxelsniper.command.VoxelVariablesCommand;
 import com.thevoxelbox.voxelsniper.command.VoxelVoxCommand;
 import com.thevoxelbox.voxelsniper.command.VoxelVoxelCommand;
+import org.bukkit.command.PluginCommand;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bukkit.command.PluginCommand;
 
 /**
  *

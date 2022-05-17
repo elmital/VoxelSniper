@@ -3,7 +3,6 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -12,6 +11,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
