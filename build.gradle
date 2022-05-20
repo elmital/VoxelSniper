@@ -24,7 +24,7 @@ repositories {
     //PaperMC
     maven {
         name 'papermc'
-        url 'https://papermc.io/repo/repository/maven-public/'
+        url 'https://repo.papermc.io/repository/maven-public/'
     }
 }
 
