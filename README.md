@@ -1,8 +1,7 @@
 
 VoxelSniper
 ============
-The premier long-distance brush editor for [Bukkit](https://bukkit.org/), [Spigot](https://www.spigotmc.org/), [Paper](https://papermc.io/), and most Bukkit-based server distributions. The plugin is fully functional (according to our limited usage), and should be able to snipe most blocks. Please submit an issue if something is not working and I'll try my best to work it out.
-This plugin is a fork created to just maintains the project updated to new minecraft versions. No warranty are provided about the fact the plugin is fully functional and future features will be added.
+This plugin is a fork created to just maintains the project updated to new minecraft versions, it works on [Paper](https://papermc.io/) and most Paper based server distribution. No warranty are provided about the fact the plugin is fully functional and future features will be added.
 
 Minecraft Version
 ------------------
