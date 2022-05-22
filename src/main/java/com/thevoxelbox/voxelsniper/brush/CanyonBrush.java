@@ -20,9 +20,9 @@ import java.util.List;
  */
 public class CanyonBrush extends Brush {
 
-    private static final int SHIFT_LEVEL_MIN = 10;
-    private static final int SHIFT_LEVEL_MAX = 60;
-    private int yLevel = 10;
+    private final int SHIFT_LEVEL_MIN = getTargetBlock().getWorld().getMinHeight() + 10;
+    private final int SHIFT_LEVEL_MAX = 60;
+    private int yLevel = SHIFT_LEVEL_MIN;
 
     /**
      *
@@ -54,11 +54,11 @@ public class CanyonBrush extends Brush {
                     currentYLevel++;
                 }
 
-                final Block block = chunk.getBlock(x, 0, z);
+                final Block block = chunk.getBlock(x, getWorld().getMinHeight(), z);
                 undo.put(block);
                 block.setType(Material.BEDROCK);
 
-                for (int y = 1; y < SHIFT_LEVEL_MIN; y++) {
+                for (int y = getWorld().getMinHeight() + 1; y < SHIFT_LEVEL_MIN; y++) {
                     final Block currentBlock = chunk.getBlock(x, y, z);
                     undo.put(currentBlock);
                     currentBlock.setType(Material.STONE);
@@ -114,9 +114,9 @@ public class CanyonBrush extends Brush {
                     yLevel = SHIFT_LEVEL_MAX;
                 }
 
-                this.yLevel = yLevel;
+                setYLevel(yLevel);
 
-                v.sendMessage(ChatColor.GREEN + "Land will be shifted to y-coordinate of " + this.yLevel);
+                v.sendMessage(ChatColor.GREEN + "Land will be shifted to y-coordinate of " + getYLevel());
             } catch (NumberFormatException e) {
                 v.sendMessage(ChatColor.RED + "Invalid input, please enter a valid number!");
             }
