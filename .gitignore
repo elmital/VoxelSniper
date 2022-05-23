@@ -13,7 +13,6 @@ dependency-reduced-pom.xml
 
 # gradle
 .gradle/
-/gradle
 .idea
 /build
 
