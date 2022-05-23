@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 public class CanyonBrush extends Brush {
 
-    private final int SHIFT_LEVEL_MIN = getTargetBlock().getWorld().getMinHeight() + 10;
+    private final int SHIFT_LEVEL_MIN = BlockHelper.MINIMUM_WORLD_HEIGHT + 10;
     private final int SHIFT_LEVEL_MAX = 60;
     private int yLevel = SHIFT_LEVEL_MIN;
 
