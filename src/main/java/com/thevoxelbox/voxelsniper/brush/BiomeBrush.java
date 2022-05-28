@@ -2,7 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 
@@ -65,22 +66,24 @@ public class BiomeBrush extends Brush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + this.selectedBiome.name());
+        vm.custom(Component.text("Currently selected biome type: ").color(NamedTextColor.GOLD).append(Component.text(this.selectedBiome.name()).color(NamedTextColor.DARK_GREEN)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Biome Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [biomeType] -- Change brush to the specified biome");
+            v.sendMessage(Component.text("Biome Brush Parameters:").color(NamedTextColor.GOLD)
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " [biomeType] -- Change brush to the specified biome").color(NamedTextColor.AQUA))
+            );
             return;
         }
 
         try {
             this.selectedBiome = Biome.valueOf(params[0].toUpperCase());
-            v.sendMessage(ChatColor.GOLD + "Currently selected biome type: " + ChatColor.DARK_GREEN + this.selectedBiome.name());
+            v.sendMessage(Component.text("Currently selected biome type: ").color(NamedTextColor.GOLD).append(Component.text(this.selectedBiome.name()).color(NamedTextColor.DARK_GREEN)));
         } catch (IllegalArgumentException e) {
-            v.sendMessage(ChatColor.RED + "That biome does not exist.");
+            v.sendMessage(Component.text("That biome does not exist.").color(NamedTextColor.RED));
         }
     }
 

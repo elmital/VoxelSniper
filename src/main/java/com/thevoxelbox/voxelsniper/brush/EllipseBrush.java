@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class EllipseBrush extends PerformerBrush {
                 }
             }
         } catch (final Exception exception) {
-            v.sendMessage(ChatColor.RED + "Invalid target.");
+            v.sendMessage(Component.text("Invalid target.").color(NamedTextColor.RED));
         }
 
         v.owner().storeUndo(this.currentPerformer.getUndo());
@@ -136,7 +137,7 @@ public class EllipseBrush extends PerformerBrush {
                 }
             }
         } catch (final Exception exception) {
-            v.sendMessage(ChatColor.RED + "Invalid target.");
+            v.sendMessage(Component.text("Invalid target.").color(NamedTextColor.RED));
         }
 
         v.owner().storeUndo(this.currentPerformer.getUndo());
@@ -177,30 +178,38 @@ public class EllipseBrush extends PerformerBrush {
         }
 
         vm.brushName(this.getName());
-        vm.custom(ChatColor.AQUA + "X-size set to: " + ChatColor.DARK_AQUA + this.xscl);
-        vm.custom(ChatColor.AQUA + "Y-size set to: " + ChatColor.DARK_AQUA + this.yscl);
-        vm.custom(ChatColor.AQUA + "Render step number set to: " + ChatColor.DARK_AQUA + this.steps);
+        vm.custom(Component.empty()
+                .append(Component.text("X-size set to: ").color(NamedTextColor.AQUA).append(Component.text(this.xscl).color(NamedTextColor.DARK_AQUA).append(Component.newline())))
+                .append(Component.text("Y-size set to: ").color(NamedTextColor.AQUA).append(Component.text(this.yscl).color(NamedTextColor.DARK_AQUA).append(Component.newline())))
+                .append(Component.text("Render step number set to: ").color(NamedTextColor.AQUA).append(Component.text(this.steps).color(NamedTextColor.DARK_AQUA)))
+        );
         if (this.fill) {
-            vm.custom(ChatColor.AQUA + "Fill mode is enabled");
+            vm.custom(Component.text("Fill mode is enabled").color(NamedTextColor.AQUA));
         } else {
-            vm.custom(ChatColor.AQUA + "Fill mode is disabled");
+            vm.custom(Component.text("Fill mode is disabled").color(NamedTextColor.AQUA));
         }
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Ellipse Brush Parameters: ");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " x [number]  -- Set X size modifier");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " y [number]  -- Set Y size modifier");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " t [number]  -- Set time steps");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "fill  -- Toggles fill mode");
+            v.sendMessage(Component.empty()
+                    .append(Component.text("Ellipse Brush Parameters: ").color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " x [number]  -- Set X size modifier").color(NamedTextColor.AQUA))
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " y [number]  -- Set Y size modifier").color(NamedTextColor.AQUA))
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " t [number]  -- Set time steps").color(NamedTextColor.AQUA))
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + "fill  -- Toggles fill mode").color(NamedTextColor.AQUA))
+            );
             return;
         }
 
         if (params[0].equalsIgnoreCase("fill")) {
             this.fill = !this.fill;
-            v.sendMessage(ChatColor.AQUA + "Fill mode is now " + (this.fill ? "enabled" : "disabled"));
+            v.sendMessage(Component.text("Fill mode is now " + (this.fill ? "enabled" : "disabled")).color(NamedTextColor.AQUA));
             return;
         }
 
@@ -209,12 +218,12 @@ public class EllipseBrush extends PerformerBrush {
                 int xValue = Integer.parseInt(params[1]);
 
                 if (xValue < SCL_MIN || xValue > SCL_MAX) {
-                    v.sendMessage(ChatColor.RED + "Invalid X scale, must be between " + SCL_MIN + " - " + SCL_MAX);
+                    v.sendMessage(Component.text("Invalid X scale, must be between " + SCL_MIN + " - " + SCL_MAX).color(NamedTextColor.RED));
                     return;
                 }
 
                 this.xscl = xValue;
-                v.sendMessage(ChatColor.AQUA + "X-scale modifier set to: " + this.xscl);
+                v.sendMessage(Component.text("X-scale modifier set to: " + this.xscl).color(NamedTextColor.AQUA));
                 return;
             }
 
@@ -222,12 +231,12 @@ public class EllipseBrush extends PerformerBrush {
                 int yValue = Integer.parseInt(params[1]);
 
                 if (yValue < SCL_MIN || yValue > SCL_MAX) {
-                    v.sendMessage(ChatColor.RED + "Invalid Y scale, must be between " + SCL_MIN + " - " + SCL_MAX);
+                    v.sendMessage(Component.text("Invalid Y scale, must be between " + SCL_MIN + " - " + SCL_MAX).color(NamedTextColor.RED));
                     return;
                 }
 
                 this.yscl = yValue;
-                v.sendMessage(ChatColor.AQUA + "Y-scale modifier set to: " + this.yscl);
+                v.sendMessage(Component.text("Y-scale modifier set to: " + this.yscl).color(NamedTextColor.AQUA));
                 return;
             }
 
@@ -235,18 +244,21 @@ public class EllipseBrush extends PerformerBrush {
                 int stepValue = Integer.parseInt(params[1]);
 
                 if (stepValue < STEPS_MIN || stepValue > STEPS_MAX) {
-                    v.sendMessage(ChatColor.RED + "Invalid step amount, must be between " + STEPS_MIN + " - " + STEPS_MAX);
+                    v.sendMessage(Component.text("Invalid step amount, must be between " + STEPS_MIN + " - " + STEPS_MAX).color(NamedTextColor.RED));
                     return;
                 }
 
                 this.steps = stepValue;
-                v.sendMessage(ChatColor.AQUA + "Render step number set to: " + this.steps);
+                v.sendMessage(Component.text("Render step number set to: " + this.steps).color(NamedTextColor.AQUA));
                 return;
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Component.text("Invalid parameter! Use ").color(NamedTextColor.RED)
+                .append(Component.text("'/b " + triggerHandle + " info'").color(NamedTextColor.LIGHT_PURPLE))
+                .append(Component.text(" to display valid parameters."))
+        );
         sendPerformerMessage(triggerHandle, v);
     }
 

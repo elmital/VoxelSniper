@@ -3,7 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,18 +41,25 @@ public abstract class BlendBrushBase extends Brush {
         vm.brushName(this.getName());
         vm.size();
         vm.voxel();
-        vm.custom(ChatColor.BLUE + "Water Mode: " + (this.excludeWater ? "exclude" : "include"));
+        vm.custom(Component.text("Water Mode: " + (this.excludeWater ? "exclude" : "include")).color(NamedTextColor.BLUE));
     }
 
     @Override
     public void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("water")) {
             this.excludeWater = !this.excludeWater;
-            v.sendMessage(ChatColor.AQUA + "Water Mode: " + (this.excludeWater ? "exclude" : "include"));
+            v.sendMessage(Component.text("Water Mode: " + (this.excludeWater ? "exclude" : "include")).color(NamedTextColor.AQUA));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(
+                Component.empty()
+                        .append(Component.text("Invalid parameter! Use ").color(NamedTextColor.RED))
+                        .append(Component.newline())
+                        .append(Component.text("'/b " + triggerHandle + " info'").color(NamedTextColor.LIGHT_PURPLE))
+                        .append(Component.newline())
+                        .append(Component.text(" to display valid parameters.").color(NamedTextColor.RED))
+        );
     }
 
     @Override

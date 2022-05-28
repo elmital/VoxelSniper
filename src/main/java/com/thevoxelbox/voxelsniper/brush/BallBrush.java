@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -103,18 +104,20 @@ public class BallBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Ball Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " smooth -- Toggle using smooth sphere algorithm (default: false)");
+            v.sendMessage(Component.text("Ball Brush Parameters:").color(NamedTextColor.GOLD)
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " smooth -- Toggle using smooth sphere algorithm (default: false)").color(NamedTextColor.AQUA))
+            );
             return;
         }
 
         if (params[0].equalsIgnoreCase("smooth")) {
             this.smoothSphere = !this.smoothSphere;
-            v.sendMessage(ChatColor.AQUA + "Smooth sphere algorithm: " + this.smoothSphere);
+            v.sendMessage(Component.text("Smooth sphere algorithm: " + this.smoothSphere).color(NamedTextColor.AQUA));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Component.text("Invalid parameter! Use ").color(NamedTextColor.RED).append(Component.text("'/b " + triggerHandle + " info'").color(NamedTextColor.LIGHT_PURPLE)).append(Component.text(" to display valid parameters.").color(NamedTextColor.RED)));
         sendPerformerMessage(triggerHandle, v);
     }
 

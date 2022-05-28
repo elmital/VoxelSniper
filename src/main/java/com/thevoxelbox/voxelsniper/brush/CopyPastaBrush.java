@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
@@ -64,9 +65,9 @@ public class CopyPastaBrush extends Brush {
                 }
             }
 
-            v.sendMessage(ChatColor.AQUA + "" + this.numBlocks + " blocks copied.");
+            v.sendMessage(Component.text(this.numBlocks + " blocks copied.").color(NamedTextColor.AQUA));
         } else {
-            v.sendMessage(ChatColor.RED + "Copy area too big: " + this.numBlocks + "(Limit: " + CopyPastaBrush.BLOCK_LIMIT + ")");
+            v.sendMessage(Component.text("Copy area too big: " + this.numBlocks + "(Limit: " + CopyPastaBrush.BLOCK_LIMIT + ")").color(NamedTextColor.RED));
         }
     }
 
@@ -104,7 +105,7 @@ public class CopyPastaBrush extends Brush {
                 }
             }
         }
-        v.sendMessage(ChatColor.AQUA + "" + this.numBlocks + " blocks pasted.");
+        v.sendMessage(Component.text(this.numBlocks + " blocks pasted.").color(NamedTextColor.AQUA));
 
         v.owner().storeUndo(undo);
     }
@@ -112,28 +113,28 @@ public class CopyPastaBrush extends Brush {
     @Override
     protected final void arrow(final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         switch (this.points) {
-            case 0:
+            case 0 -> {
                 this.firstPoint[0] = this.getTargetBlock().getX();
                 this.firstPoint[1] = this.getTargetBlock().getY();
                 this.firstPoint[2] = this.getTargetBlock().getZ();
-                v.sendMessage(ChatColor.GRAY + "First point");
+                v.sendMessage(Component.text("First point").color(NamedTextColor.GRAY));
                 this.points = 1;
-                break;
-            case 1:
+            }
+            case 1 -> {
                 this.secondPoint[0] = this.getTargetBlock().getX();
                 this.secondPoint[1] = this.getTargetBlock().getY();
                 this.secondPoint[2] = this.getTargetBlock().getZ();
-                v.sendMessage(ChatColor.GRAY + "Second point");
+                v.sendMessage(Component.text("Second point").color(NamedTextColor.GRAY));
                 this.points = 2;
-                break;
-            default:
+            }
+            default -> {
                 this.firstPoint = new int[3];
                 this.secondPoint = new int[3];
                 this.numBlocks = 0;
                 this.substanceArray = new BlockData[1];
                 this.points = 0;
-                v.sendMessage(ChatColor.GRAY + "Points cleared.");
-                break;
+                v.sendMessage(Component.text("Points cleared.").color(NamedTextColor.GRAY));
+            }
         }
     }
 
@@ -148,45 +149,58 @@ public class CopyPastaBrush extends Brush {
                 this.pastePoint[2] = this.getTargetBlock().getZ();
                 this.doPasta(v);
             } else {
-                v.sendMessage(ChatColor.RED + "Error");
+                v.sendMessage(Component.text("Error").color(NamedTextColor.RED));
             }
         } else {
-            v.sendMessage(ChatColor.RED + "You must select exactly two points.");
+            v.sendMessage(Component.text("You must select exactly two points.").color(NamedTextColor.RED));
         }
     }
 
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.GOLD + "Paste air: " + this.pasteAir);
-        vm.custom(ChatColor.GOLD + "Pivot angle: " + this.pivot);
+        vm.custom(
+                Component.text("Paste air: " + this.pasteAir).color(NamedTextColor.GOLD)
+                        .append(Component.newline())
+                        .append(Component.text("Pivot angle: " + this.pivot))
+        );
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "CopyPasta Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " air  -- Toggle include air during paste (default: true)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " rotate [number]  -- Set rotation pivot (default: 0)");
+            v.sendMessage(Component.empty()
+                    .append(Component.text("CopyPasta Brush Parameters:").color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " air  -- Toggle include air during paste (default: true)").color(NamedTextColor.AQUA))
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " rotate [number]  -- Set rotation pivot (default: 0)").color(NamedTextColor.AQUA))
+            );
             return;
         }
 
         if (params[0].equalsIgnoreCase("air")) {
             this.pasteAir = !this.pasteAir;
 
-            v.sendMessage(ChatColor.GOLD + "Air included in paste: " + this.pasteAir);
+            v.sendMessage(Component.text("Air included in paste: " + this.pasteAir).color(NamedTextColor.GOLD));
             return;
         }
 
         if (params[0].equalsIgnoreCase("rotate")) {
             if (params[1].equalsIgnoreCase("90") || params[1].equalsIgnoreCase("180") || params[1].equalsIgnoreCase("270") || params[1].equalsIgnoreCase("0")) {
                 this.pivot = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.GOLD + "Pivot angle: " + this.pivot + " degrees");
+                v.sendMessage(Component.text("Pivot angle: " + this.pivot + " degrees").color(NamedTextColor.GOLD));
                 return;
             }
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Component.empty()
+                .append(Component.text("Invalid parameter! Use ").color(NamedTextColor.RED))
+                .append(Component.newline())
+                .append(Component.text("'/b " + triggerHandle + " info'").color(NamedTextColor.LIGHT_PURPLE))
+                .append(Component.newline())
+                .append(Component.text(" to display valid parameters.").color(NamedTextColor.RED))
+        );
     }
 
     @Override

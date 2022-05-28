@@ -2,7 +2,8 @@ package com.thevoxelbox.voxelsniper.command;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -34,7 +35,7 @@ public class VoxelVoxCommand extends VoxelCommand {
                 try {
                     BlockHelper.paint(player, false, false, Integer.parseInt(args[0]));
                 } catch (NumberFormatException e) {
-                    player.sendMessage(ChatColor.RED + "Invalid syntax. Command: /paint <number>");
+                    player.sendMessage(Component.text("Invalid syntax. Command: /paint <number>").color(NamedTextColor.RED));
                 }
                 return true;
             }
@@ -43,7 +44,7 @@ public class VoxelVoxCommand extends VoxelCommand {
         // Command: /vchunk
         if (getActiveAlias().equalsIgnoreCase("vchunk")) {
             player.getWorld().refreshChunk(player.getLocation().getBlockX(), player.getLocation().getBlockZ());
-            player.sendMessage("Refreshed the chunk that you are standing in.");
+            player.sendMessage(Component.text("Refreshed the chunk that you are standing in."));
             return true;
         }
 
@@ -54,9 +55,9 @@ public class VoxelVoxCommand extends VoxelCommand {
                 final int z = Integer.parseInt(args[1]);
 
                 player.teleport(new Location(player.getWorld(), x, player.getWorld().getHighestBlockYAt(x, z), z));
-                player.sendMessage(ChatColor.DARK_PURPLE + "Whoosh!");
+                player.sendMessage(Component.text("Whoosh!").color(NamedTextColor.DARK_PURPLE));
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                player.sendMessage(ChatColor.RED + "Invalid syntax. Command:" + ChatColor.GOLD + "/goto <x> <z>");
+                player.sendMessage(Component.text("Invalid syntax. Command:").color(NamedTextColor.RED).append(Component.text("/goto <x> <z>").color(NamedTextColor.GOLD)));
             }
             return true;
         }
@@ -64,13 +65,21 @@ public class VoxelVoxCommand extends VoxelCommand {
         // Default command
         // Command: /vox, /vox help, /vox info
         if (args.length == 0 || (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info")))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " chunk");
-            player.sendMessage(ChatColor.YELLOW + "    Force refreshes the chunk that you are standing in.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " painting");
-            player.sendMessage(ChatColor.YELLOW + "    Changes the painting you are looking at.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " painting [number]");
-            player.sendMessage(ChatColor.YELLOW + "    Changes the painting you are looking at to a specified ID.");
+            player.sendMessage(Component.empty()
+                    .append(Component.text(getName() + " Command Syntax:").color(NamedTextColor.DARK_AQUA))
+                    .append(Component.newline())
+                    .append(Component.text("/" + getActiveAlias() + " chunk").color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("    Force refreshes the chunk that you are standing in.").color(NamedTextColor.YELLOW))
+                    .append(Component.newline())
+                    .append(Component.text("/" + getActiveAlias() + " painting").color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("    Changes the painting you are looking at.").color(NamedTextColor.YELLOW))
+                    .append(Component.newline())
+                    .append(Component.text("/" + getActiveAlias() + " painting [number]").color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("    Changes the painting you are looking at to a specified ID.").color(NamedTextColor.YELLOW))
+            );
             return true;
         }
 
@@ -86,7 +95,7 @@ public class VoxelVoxCommand extends VoxelCommand {
                 try {
                     BlockHelper.paint(player, false, false, Integer.parseInt(args[0]));
                 } catch (NumberFormatException e) {
-                    player.sendMessage(ChatColor.RED + "Invalid syntax. Command: /" + getActiveAlias() + " paint [number]");
+                    player.sendMessage(Component.text("Invalid syntax. Command: /" + getActiveAlias() + " paint [number]").color(NamedTextColor.RED));
                 }
                 return true;
             }
@@ -95,7 +104,7 @@ public class VoxelVoxCommand extends VoxelCommand {
         // Command: /vox chunk
         if (args[0].equalsIgnoreCase("chunk")) {
             player.getWorld().refreshChunk(player.getLocation().getBlockX(), player.getLocation().getBlockZ());
-            player.sendMessage("Refreshed the chunk that you are standing in.");
+            player.sendMessage(Component.text("Refreshed the chunk that you are standing in."));
             return true;
         }
 
@@ -106,9 +115,9 @@ public class VoxelVoxCommand extends VoxelCommand {
                 final int z = Integer.parseInt(args[2]);
 
                 player.teleport(new Location(player.getWorld(), x, player.getWorld().getHighestBlockYAt(x, z), z));
-                player.sendMessage(ChatColor.DARK_PURPLE + "Whoosh!");
+                player.sendMessage(Component.text("Whoosh!").color(NamedTextColor.DARK_PURPLE));
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                player.sendMessage(ChatColor.RED + "Invalid syntax. Command:" + ChatColor.GOLD + "/" + getActiveAlias() + " goto <x> <z>");
+                player.sendMessage(Component.text("Invalid syntax. Command:").color(NamedTextColor.RED).append(Component.text("/" + getActiveAlias() + " goto <x> <z>").color(NamedTextColor.GOLD)));
             }
             return true;
         }

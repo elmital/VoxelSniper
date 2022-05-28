@@ -5,7 +5,8 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -94,14 +95,16 @@ public class CanyonBrush extends Brush {
     @Override
     public void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.GREEN + "Shift Level set to " + this.yLevel);
+        vm.custom(Component.text("Shift Level set to " + this.yLevel).color(NamedTextColor.GREEN));
     }
 
     @Override
     public final void parseParameters(String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Blob Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " y [number] -- Set the y-coordinate where the land will be shifted to");
+            v.sendMessage(Component.text("Blob Parameters:").color(NamedTextColor.GOLD)
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " y [number] -- Set the y-coordinate where the land will be shifted to").color(NamedTextColor.AQUA))
+            );
             return;
         }
 
@@ -117,14 +120,19 @@ public class CanyonBrush extends Brush {
 
                 setYLevel(yLevel);
 
-                v.sendMessage(ChatColor.GREEN + "Land will be shifted to y-coordinate of " + getYLevel());
+                v.sendMessage(Component.text("Land will be shifted to y-coordinate of " + getYLevel()).color(NamedTextColor.GREEN));
             } catch (NumberFormatException e) {
-                v.sendMessage(ChatColor.RED + "Invalid input, please enter a valid number!");
+                v.sendMessage(Component.text("Invalid input, please enter a valid number!").color(NamedTextColor.RED));
             }
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(
+                Component.empty()
+                        .append(Component.text("Invalid parameter! Use ").color(NamedTextColor.RED))
+                        .append(Component.text("'/b " + triggerHandle + " info'").color(NamedTextColor.LIGHT_PURPLE))
+                        .append(Component.text(" to display valid parameters.").color(NamedTextColor.RED))
+        );
     }
 
     @Override

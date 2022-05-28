@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import net.kyori.adventure.text.Component;
 import org.bukkit.block.Block;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
@@ -41,7 +42,7 @@ public class DomeBrush extends Brush {
     private void generateDome(final SnipeData v, final Block targetBlock) {
 
         if (v.getVoxelHeight() == 0) {
-            v.sendMessage("VoxelHeight must not be 0.");
+            v.sendMessage(Component.text("VoxelHeight must not be 0."));
             return;
         }
 

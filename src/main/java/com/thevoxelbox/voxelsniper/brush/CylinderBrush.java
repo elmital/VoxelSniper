@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -38,17 +39,17 @@ public class CylinderBrush extends PerformerBrush {
         }
         if (yStartingPoint < this.getWorld().getMinHeight()) {
             yStartingPoint = this.getWorld().getMinHeight();
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world start position.");
+            v.sendMessage(Component.text("Warning: off-world start position.").color(NamedTextColor.DARK_PURPLE));
         } else if (yStartingPoint > this.getWorld().getMaxHeight() - 1) {
             yStartingPoint = this.getWorld().getMaxHeight() - 1;
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world start position.");
+            v.sendMessage(Component.text("Warning: off-world start position.").color(NamedTextColor.DARK_PURPLE));
         }
         if (yEndPoint < this.getWorld().getMinHeight()) {
             yEndPoint = this.getWorld().getMinHeight();
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world end position.");
+            v.sendMessage(Component.text("Warning: off-world start position.").color(NamedTextColor.DARK_PURPLE));
         } else if (yEndPoint > this.getWorld().getMaxHeight() - 1) {
             yEndPoint = this.getWorld().getMaxHeight() - 1;
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world end position.");
+            v.sendMessage(Component.text("Warning: off-world start position.").color(NamedTextColor.DARK_PURPLE));
         }
 
         final double bSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
@@ -91,16 +92,21 @@ public class CylinderBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Cylinder Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " height [number]  -- Set voxel height (default: 1)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " shift [number]  -- Shifts the cylinder by [number] blocks on the y-axis (default: 0)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " smooth  -- Toggle smooth circle (default: false)");
+            v.sendMessage(Component.empty()
+                    .append(Component.text("Cylinder Brush Parameters:").color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " height [number]  -- Set voxel height (default: 1)").color(NamedTextColor.AQUA))
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " shift [number]  -- Shifts the cylinder by [number] blocks on the y-axis (default: 0)").color(NamedTextColor.AQUA))
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " smooth  -- Toggle smooth circle (default: false)").color(NamedTextColor.AQUA))
+            );
             return;
         }
 
         if (params[0].startsWith("smooth")) {
             this.smoothCircle = !this.smoothCircle;
-            v.sendMessage(ChatColor.AQUA + "Using smooth circles: " + this.smoothCircle);
+            v.sendMessage(Component.text("Using smooth circles: " + this.smoothCircle).color(NamedTextColor.AQUA));
             return;
         }
 
@@ -116,13 +122,16 @@ public class CylinderBrush extends PerformerBrush {
         if (params[0].startsWith("shift")) {
             try {
                 v.setcCen(Integer.parseInt(params[1]));
-                v.sendMessage(ChatColor.AQUA + "Cylinder will shift by " + v.getcCen() + " blocks on y-axis");
+                v.sendMessage(Component.text("Cylinder will shift by " + v.getcCen() + " blocks on y-axis").color(NamedTextColor.AQUA));
                 return;
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             }
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Component.text("Invalid parameter! Use ").color(NamedTextColor.RED)
+                .append(Component.text("'/b " + triggerHandle + " info'").color(NamedTextColor.LIGHT_PURPLE))
+                .append(Component.text(" to display valid parameters."))
+        );
         sendPerformerMessage(triggerHandle, v);
     }
 

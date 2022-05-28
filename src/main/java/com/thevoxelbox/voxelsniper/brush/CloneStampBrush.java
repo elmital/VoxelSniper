@@ -3,7 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,18 +45,18 @@ public class CloneStampBrush extends StampBrush {
 
         if (yStartingPoint < this.getWorld().getMinHeight()) {
             yStartingPoint = this.getWorld().getMinHeight();
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world start position.");
+            v.sendMessage(Component.text("Warning: off-world start position.").color(NamedTextColor.DARK_PURPLE));
         } else if (yStartingPoint > this.getWorld().getMaxHeight() - 1) {
             yStartingPoint = this.getWorld().getMaxHeight() - 1;
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world start position.");
+            v.sendMessage(Component.text("Warning: off-world start position.").color(NamedTextColor.DARK_PURPLE));
         }
 
         if (yEndPoint < this.getWorld().getMinHeight()) {
             yEndPoint = this.getWorld().getMinHeight();
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world end position.");
+            v.sendMessage(Component.text("Warning: off-world start position.").color(NamedTextColor.DARK_PURPLE));
         } else if (yEndPoint > this.getWorld().getMaxHeight() - 1) {
             yEndPoint = this.getWorld().getMaxHeight() - 1;
-            v.sendMessage(ChatColor.DARK_PURPLE + "Warning: off-world end position.");
+            v.sendMessage(Component.text("Warning: off-world start position.").color(NamedTextColor.DARK_PURPLE));
         }
 
         final double bSquared = Math.pow(brushSize, 2);
@@ -80,7 +81,7 @@ public class CloneStampBrush extends StampBrush {
                 }
             }
         }
-        v.sendMessage(ChatColor.GREEN + String.valueOf(this.clone.size()) + ChatColor.AQUA + " blocks copied sucessfully.");
+        v.sendMessage(Component.text(String.valueOf(this.clone.size())).color(NamedTextColor.GREEN).append(Component.text(" blocks copied sucessfully.").color(NamedTextColor.AQUA)));
     }
 
     @Override
@@ -95,66 +96,62 @@ public class CloneStampBrush extends StampBrush {
         vm.height();
         vm.center();
         switch (this.stamp) {
-            case DEFAULT:
-                vm.brushMessage("Default Stamp");
-                break;
-
-            case NO_AIR:
-                vm.brushMessage("No-Air Stamp");
-                break;
-
-            case FILL:
-                vm.brushMessage("Fill Stamp");
-                break;
-
-            default:
-                vm.custom(ChatColor.DARK_RED + "Error while stamping! Report");
-                break;
+            case DEFAULT -> vm.brushMessage("Default Stamp");
+            case NO_AIR -> vm.brushMessage("No-Air Stamp");
+            case FILL -> vm.brushMessage("Fill Stamp");
+            default -> vm.custom(Component.text("Error while stamping! Report").color(NamedTextColor.DARK_RED));
         }
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Clone / Stamp Cylinder Brush Parameters: ");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " fill  -- Change to Fill mode");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " air  -- Change to No-Air mode");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " default  -- Change to Default mode");
+            v.sendMessage(Component.empty()
+                    .append(Component.text("Clone / Stamp Cylinder Brush Parameters: ").color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " fill  -- Change to Fill mode").color(NamedTextColor.AQUA))
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " air  -- Change to No-Air mode").color(NamedTextColor.AQUA))
+                    .append(Component.newline())
+                    .append(Component.text("/b " + triggerHandle + " default  -- Change to Default mode").color(NamedTextColor.AQUA))
+            );
             return;
         }
 
         if (params[0].equalsIgnoreCase("air")) {
             this.setStamp(StampType.NO_AIR);
             this.reSort();
-            v.sendMessage(ChatColor.AQUA + "Stamp Mode: No-Air");
+            v.sendMessage(Component.text("Stamp Mode: No-Air").color(NamedTextColor.AQUA));
             return;
         }
 
         if (params[0].equalsIgnoreCase("fill")) {
             this.setStamp(StampType.FILL);
             this.reSort();
-            v.sendMessage(ChatColor.AQUA + "Stamp Mode: Fill");
+            v.sendMessage(Component.text("Stamp Mode: Fill").color(NamedTextColor.AQUA));
             return;
         }
 
         if (params[0].equalsIgnoreCase("default")) {
             this.setStamp(StampType.DEFAULT);
             this.reSort();
-            v.sendMessage(ChatColor.AQUA + "StampMode: Default");
+            v.sendMessage(Component.text("StampMode: Default").color(NamedTextColor.AQUA));
             return;
         }
 
-        /**
-         * TODO: Implement if (params[0].startsWith("centre")) { v.setcCen(Integer.parseInt(params[0].replace("c", ""))); v.sendMessage(ChatColor.BLUE + "Center
-         * set to " + v.getcCen()); return; }
+        /* TODO: Implement if (params[0].startsWith("centre")) { v.setcCen(Integer.parseInt(params[0].replace("c", ""))); v.sendMessage(ChatColor.BLUE + "Center
+            set to " + v.getcCen()); return; }
          */
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Component.text("Invalid parameter! Use ").color(NamedTextColor.RED)
+                .append(Component.text("'/b " + triggerHandle + " info'").color(NamedTextColor.LIGHT_PURPLE))
+                .append(Component.text(" to display valid parameters.").color(NamedTextColor.RED))
+        );
     }
 
     @Override
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
-        
+
         arguments.addAll(Lists.newArrayList("air", "fill", "default"));
 
         return arguments;

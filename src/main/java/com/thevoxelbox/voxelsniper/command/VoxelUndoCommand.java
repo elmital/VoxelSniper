@@ -2,8 +2,9 @@ package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -24,17 +25,26 @@ public class VoxelUndoCommand extends VoxelCommand {
         Sniper sniper = profileManager.getSniperForPlayer(player);
 
         if ((args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) || args.length > 2) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
+            var comp = Component.empty().append(Component.text(" Command Syntax:").color(NamedTextColor.DARK_AQUA));
+
             if (getActiveIdentifier().equalsIgnoreCase("u")) {
-                player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias());
-                player.sendMessage(ChatColor.YELLOW + "    Undo latest changes for yourself.");
-                player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [changes]");
-                player.sendMessage(ChatColor.YELLOW + "    Undo previous [amount] changes for yourself.");
+                comp = comp.append(Component.text("/" + getActiveAlias()).color(NamedTextColor.GOLD))
+                        .append(Component.newline())
+                        .append(Component.text("    Undo latest changes for yourself.").color(NamedTextColor.YELLOW))
+                        .append(Component.newline())
+                        .append(Component.text("/" + getActiveAlias() + " [changes]").color(NamedTextColor.GOLD))
+                        .append(Component.newline())
+                        .append(Component.text("    Undo previous [amount] changes for yourself.").color(NamedTextColor.YELLOW));
             }
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [player]");
-            player.sendMessage(ChatColor.YELLOW + "    Undo the latest changes for specified player.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [player] [amount]");
-            player.sendMessage(ChatColor.YELLOW + "    Undo the previous [amount] changes for specified player.");
+            player.sendMessage(
+                    comp.append(Component.text("/" + getActiveAlias() + " [player]").color(NamedTextColor.GOLD))
+                            .append(Component.newline())
+                            .append(Component.text("    Undo the latest changes for specified player.").color(NamedTextColor.YELLOW))
+                            .append(Component.newline())
+                            .append(Component.text("/" + getActiveAlias() + " [player] [amount]").color(NamedTextColor.GOLD))
+                            .append(Component.newline())
+                            .append(Component.text("    Undo the previous [amount] changes for specified player.").color(NamedTextColor.YELLOW))
+            );
             return true;
         }
 
@@ -54,7 +64,7 @@ public class VoxelUndoCommand extends VoxelCommand {
         }
 
         if (!player.hasPermission("voxelsniper.undouser")) {
-            player.sendMessage(ChatColor.RED + "You need the 'voxelsniper.undouser' permission to undo other user's changes.");
+            player.sendMessage(Component.text("You need the 'voxelsniper.undouser' permission to undo other user's changes.").color(NamedTextColor.RED));
             return true;
         }
 
@@ -72,17 +82,17 @@ public class VoxelUndoCommand extends VoxelCommand {
                     try {
                         undoAmount = Integer.parseInt(args[1]);
                     } catch (NumberFormatException e) {
-                        player.sendMessage(ChatColor.RED + "Please enter a valid amount to undo. Value must be a number.");
+                        player.sendMessage(Component.text("Please enter a valid amount to undo. Value must be a number.").color(NamedTextColor.RED));
                         return true;
                     }
                 }
 
-                targetPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "Your changes were undone by someone else.");
+                targetPlayer.sendMessage(Component.text("Your changes were undone by someone else.").color(NamedTextColor.LIGHT_PURPLE));
                 int amountChanged = sniper.undo(undoAmount);
-                player.sendMessage(ChatColor.GOLD + "Undid " + sniper.getPlayer().getName() + "'s changes: " + ChatColor.DARK_AQUA + amountChanged + " blocks replaced");
+                player.sendMessage(Component.text("Undid " + sniper.getPlayer().getName() + "'s changes: ").color(NamedTextColor.GOLD).append(Component.text(amountChanged + " blocks replaced").color(NamedTextColor.DARK_AQUA)));
                 return true;
             } catch (Exception e) {
-                player.sendMessage(ChatColor.RED + "Could not find the player " + ChatColor.GOLD + "'" + args[0] + "'" + ChatColor.RED + ".");
+                player.sendMessage(Component.text("Could not find the player ").color(NamedTextColor.RED).append(Component.text("'" + args[0] + "'").color(NamedTextColor.GOLD)).append(Component.text(".").color(NamedTextColor.RED)));
                 return true;
             }
         }
