@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -67,21 +68,23 @@ public class RingBrush extends PerformerBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(ChatColor.AQUA + "The inner radius is " + ChatColor.RED + this.innerSize);
+        vm.custom(Component.text("The inner radius is " + this.innerSize).color(NamedTextColor.AQUA));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Ring Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " smooth  -- Toggle smooth circle (default: false)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " inner [decimal]  -- Set inner radius to specified value");
+            v.getVoxelMessage().commandParameters("Ring Brush Parameters:"
+                    , null
+                    , "/b " + triggerHandle + " smooth  -- Toggle smooth circle (default: false)"
+                    , "/b " + triggerHandle + " inner [decimal]  -- Set inner radius to specified value"
+            );
             return;
         }
 
         if (params[0].startsWith("smooth")) {
             this.smoothCircle = !this.smoothCircle;
-            v.sendMessage(ChatColor.AQUA + "Using smooth circle: " + this.smoothCircle);
+            v.sendMessage(Component.text("Using smooth circle: " + this.smoothCircle).color(NamedTextColor.AQUA));
             return;
         }
 
@@ -89,13 +92,13 @@ public class RingBrush extends PerformerBrush {
             if (params[0].startsWith("inner")) {
                 final double d = Double.parseDouble(params[1]);
                 this.innerSize = d;
-                v.sendMessage(ChatColor.AQUA + "The inner radius has been set to " + ChatColor.RED + this.innerSize + ChatColor.AQUA + ".");
+                v.sendMessage(Component.text("The inner radius has been set to ").color(NamedTextColor.AQUA).append(Component.text(this.innerSize).color(NamedTextColor.YELLOW)).append(Component.text(".")));
                 return;
             }
         } catch (final NumberFormatException e) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+       v.getVoxelMessage().invalidUseParameter(triggerHandle);
         sendPerformerMessage(triggerHandle, v);
     }
 

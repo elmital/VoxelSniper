@@ -3,7 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class ShellSetBrush extends Brush {
             return true;
         } else {
             if (!this.block.getWorld().getName().equals(bl.getWorld().getName())) {
-                v.sendMessage(ChatColor.RED + "You selected points in different worlds!");
+                v.getVoxelMessage().brushMessageError("You selected points in different worlds!");
                 this.block = null;
                 return true;
             }
@@ -45,7 +46,7 @@ public class ShellSetBrush extends Brush {
             final int highZ = (this.block.getZ() >= bl.getZ()) ? this.block.getZ() : bl.getZ();
 
             if (Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY) > MAX_SIZE) {
-                v.sendMessage(ChatColor.RED + "Selection size above hardcoded limit, please use a smaller selection.");
+                v.getVoxelMessage().brushMessageError("Selection size above hardcoded limit, please use a smaller selection.");
             } else {
                 final ArrayList<Block> blocks = new ArrayList<Block>(((Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY)) / 2));
                 for (int y = lowY; y <= highY; y++) {
@@ -80,7 +81,7 @@ public class ShellSetBrush extends Brush {
                     }
                 }
                 v.owner().storeUndo(undo);
-                v.sendMessage(ChatColor.AQUA + "Shell complete.");
+                v.sendMessage(Component.text("Shell complete.").color(NamedTextColor.AQUA));
             }
 
             this.block = null;
@@ -91,14 +92,14 @@ public class ShellSetBrush extends Brush {
     @Override
     protected final void arrow(final SnipeData v) {
         if (this.set(this.getTargetBlock(), v)) {
-            v.owner().getPlayer().sendMessage(ChatColor.GRAY + "Point one");
+            v.owner().getPlayer().sendMessage(Component.text("Point one").color(NamedTextColor.GRAY));
         }
     }
 
     @Override
     protected final void powder(final SnipeData v) {
         if (this.set(this.getLastBlock(), v)) {
-            v.owner().getPlayer().sendMessage(ChatColor.GRAY + "Point one");
+            v.owner().getPlayer().sendMessage(Component.text("Point one").color(NamedTextColor.GRAY));
         }
     }
 

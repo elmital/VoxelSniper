@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
@@ -487,25 +488,29 @@ public class GenerateTreeBrush extends Brush {
 
         if (params[0].equalsIgnoreCase("info")) {
             if (params.length == 1 || params[1].equals("1")) {
-                v.sendMessage(ChatColor.GOLD + "Generate Tree Brush Parameters:         [1/2]");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "leaves [material]  -- leaves type");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "wood [material]  -- wood type");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "thickness [number]  -- tree thickness");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "startHeight [number] -- starting height");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "slope [0 - 100]  -- trunk slope chance");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "branchLength [number]  -- branch length");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "rootLength [number]  -- root length");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "rootFloat [true/false]  -- root float ");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "info 2  -- next page");
+                v.getVoxelMessage().commandParameters("Generate Tree Brush Parameters:         [1/2]"
+                        , null
+                        , "/b " + triggerHandle + "leaves [material]  -- leaves type"
+                        , "/b " + triggerHandle + "wood [material]  -- wood type"
+                        , "/b " + triggerHandle + "thickness [number]  -- tree thickness"
+                        , "/b " + triggerHandle + "startHeight [number] -- starting height"
+                        , "/b " + triggerHandle + "slope [0 - 100]  -- trunk slope chance"
+                        , "/b " + triggerHandle + "branchLength [number]  -- branch length"
+                        , "/b " + triggerHandle + "rootLength [number]  -- root length"
+                        , "/b " + triggerHandle + "rootFloat [true/false]  -- root float "
+                        , "/b " + triggerHandle + "info 2  -- next page"
+                );
             } else if (params[1].equals("2")) {
-                v.sendMessage(ChatColor.GOLD + "Generate Tree Brush Parameters:         [2/2]");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "rootMin [number]  -- minimum roots");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "rootMax [number]  -- maximum roots");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "heightMin [number]  -- minimum height");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "heightMax [number]  -- maximum height");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "leavesMin [number]  -- minimum leaf node size");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "leavesMax [number]  -- maximum leaf node size");
-                v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + "default  -- restore default params");
+                v.getVoxelMessage().commandParameters("Generate Tree Brush Parameters:         [2/2]"
+                        , null
+                        , "/b " + triggerHandle + "rootMin [number]  -- minimum roots"
+                        , "/b " + triggerHandle + "rootMax [number]  -- maximum roots"
+                        , "/b " + triggerHandle + "heightMin [number]  -- minimum height"
+                        , "/b " + triggerHandle + "heightMax [number]  -- maximum height"
+                        , "/b " + triggerHandle + "leavesMin [number]  -- minimum leaf node size"
+                        , "/b " + triggerHandle + "leavesMax [number]  -- maximum leaf node size"
+                        , "/b " + triggerHandle + "default  -- restore default params"
+                );
             }
             return;
         }
@@ -516,7 +521,7 @@ public class GenerateTreeBrush extends Brush {
                 if (material == Material.OAK_LEAVES || material == Material.ACACIA_LEAVES || material == Material.SPRUCE_LEAVES
                         || material == Material.JUNGLE_LEAVES || material == Material.DARK_OAK_LEAVES || material == Material.BIRCH_LEAVES) {
                     this.leavesMaterial = material;
-                    v.sendMessage(ChatColor.BLUE + "Leaves material set to " + this.leavesMaterial.name());
+                    v.sendMessage(Component.text("Leaves material set to " + this.leavesMaterial.name()).color(NamedTextColor.BLUE));
                 } else {
                     throw new IllegalArgumentException();
                 }
@@ -529,51 +534,51 @@ public class GenerateTreeBrush extends Brush {
                 if (material == Material.OAK_LOG || material == Material.ACACIA_LOG || material == Material.SPRUCE_LOG
                         || material == Material.JUNGLE_LOG || material == Material.DARK_OAK_LOG || material == Material.BIRCH_LOG) {
                     this.leavesMaterial = material;
-                    v.sendMessage(ChatColor.BLUE + "Wood log material set to " + this.leavesMaterial.name());
+                    v.sendMessage(Component.text("Wood log material set to " + this.leavesMaterial.name()).color(NamedTextColor.BLUE));
                 } else {
                     throw new IllegalArgumentException();
                 }
                 return;
             }
         } catch (IllegalArgumentException e) {
-            v.sendMessage(ChatColor.RED + "Not a valid material type.");
+            v.getVoxelMessage().brushMessageError("Not a valid material type.");
             return;
         }
 
         try {
             if (params[0].equalsIgnoreCase("thickness")) { // Tree Thickness
                 this.thickness = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.BLUE + "Thickness set to " + this.thickness);
+                v.sendMessage(Component.text("Thickness set to " + this.thickness).color(NamedTextColor.BLUE));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("startHeight")) { // Starting Height
                 this.startHeight = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.BLUE + "Starting height set to " + this.startHeight);
+                v.sendMessage(Component.text("Starting height set to " + this.startHeight).color(NamedTextColor.BLUE));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("slope")) { // Trunk Slope Chance
                 this.slopeChance = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.BLUE + "Trunk slope set to " + this.slopeChance + "% chance");
+                v.sendMessage(Component.text("Trunk slope set to " + this.slopeChance + "% chance").color(NamedTextColor.BLUE));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("branchLength")) { // Branch Length
                 this.branchLength = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.BLUE + "Branch length set to " + this.branchLength);
+                v.sendMessage(Component.text("Branch length set to " + this.branchLength).color(NamedTextColor.BLUE));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("rootLength")) { // Root Length
                 this.rootLength = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.BLUE + "Root length set to " + this.rootLength);
+                v.sendMessage(Component.text("Root length set to " + this.rootLength).color(NamedTextColor.BLUE));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("rootFloat")) { // Root Float
                 this.rootFloat = Boolean.parseBoolean(params[1]);
-                v.sendMessage(ChatColor.BLUE + "Floating roots set to " + this.rootFloat);
+                v.sendMessage(Component.text("Floating roots set to " + this.rootFloat).color(NamedTextColor.BLUE));
                 return;
             }
 
@@ -581,9 +586,9 @@ public class GenerateTreeBrush extends Brush {
                 this.minRoots = Integer.parseInt(params[1]);
                 if (this.minRoots > this.maxRoots) {
                     this.minRoots = this.maxRoots;
-                    v.sendMessage(ChatColor.RED + "Minimum roots can't exceed maximum roots, has  been set to " + this.minRoots + " instead!");
+                    v.getVoxelMessage().brushMessageError("Minimum roots can't exceed maximum roots, has  been set to " + this.minRoots + " instead!");
                 } else {
-                    v.sendMessage(ChatColor.BLUE + "Minimum roots set to " + this.minRoots);
+                    v.sendMessage(Component.text("Minimum roots set to " + this.minRoots).color(NamedTextColor.BLUE));
                 }
                 return;
             }
@@ -592,9 +597,9 @@ public class GenerateTreeBrush extends Brush {
                 this.maxRoots = Integer.parseInt(params[1]);
                 if (this.minRoots > this.maxRoots) {
                     this.maxRoots = this.minRoots;
-                    v.sendMessage(ChatColor.RED + "Maximum roots can't be lower than minimum roots, has been set to " + this.minRoots + " instead!");
+                    v.getVoxelMessage().brushMessageError("Maximum roots can't be lower than minimum roots, has been set to " + this.minRoots + " instead!");
                 } else {
-                    v.sendMessage(ChatColor.BLUE + "Maximum roots set to " + this.maxRoots);
+                    v.sendMessage(Component.text("Maximum roots set to " + this.maxRoots).color(NamedTextColor.BLUE));
                 }
                 return;
             }
@@ -603,9 +608,9 @@ public class GenerateTreeBrush extends Brush {
                 this.heightMininmum = Integer.parseInt(params[1]);
                 if (this.heightMininmum > this.heightMaximum) {
                     this.heightMininmum = this.heightMaximum;
-                    v.sendMessage(ChatColor.RED + "Minimum height exceed than maximum height, has been set to " + this.heightMininmum + " instead!");
+                    v.getVoxelMessage().brushMessageError("Minimum height exceed than maximum height, has been set to " + this.heightMininmum + " instead!");
                 } else {
-                    v.sendMessage(ChatColor.BLUE + "Minimum height set to " + this.heightMininmum);
+                    v.sendMessage(Component.text("Minimum height set to " + this.heightMininmum).color(NamedTextColor.BLUE));
                 }
                 return;
             }
@@ -614,22 +619,22 @@ public class GenerateTreeBrush extends Brush {
                 this.heightMaximum = Integer.parseInt(params[1]);
                 if (this.heightMininmum > this.heightMaximum) {
                     this.heightMaximum = this.heightMininmum;
-                    v.sendMessage(ChatColor.RED + "Maximum height can't be lower than minimum height, has been set to " + this.heightMaximum + " instead!");
+                    v.getVoxelMessage().brushMessageError("Maximum height can't be lower than minimum height, has been set to " + this.heightMaximum + " instead!");
                 } else {
-                    v.sendMessage(ChatColor.BLUE + "Maximum height set to " + this.heightMaximum);
+                    v.sendMessage(Component.text("Maximum height set to " + this.heightMaximum).color(NamedTextColor.BLUE));
                 }
                 return;
             }
 
             if (params[0].equalsIgnoreCase("leavesMax")) { // Leaf Node Max Size
                 this.nodeMax = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.BLUE + "Leaf thickness set to " + this.nodeMax);
+                v.sendMessage(Component.text("Leaf thickness set to " + this.nodeMax).color(NamedTextColor.BLUE));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("leavesMin")) { // Leaf Node Min Size
                 this.nodeMin = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.BLUE + "Leaf thickness set to " + this.nodeMin);
+                v.sendMessage(Component.text("Leaf thickness set to " + this.nodeMin).color(NamedTextColor.BLUE));
                 return;
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
@@ -651,11 +656,11 @@ public class GenerateTreeBrush extends Brush {
             this.branchLength = 8;
             this.nodeMax = 4;
             this.nodeMin = 3;
-            v.sendMessage(ChatColor.GOLD + "Brush reset to default parameters.");
+            v.sendMessage(Component.text("Brush reset to default parameters.").color(NamedTextColor.GOLD));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
     }
 
     @Override

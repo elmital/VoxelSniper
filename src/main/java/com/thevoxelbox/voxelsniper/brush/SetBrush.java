@@ -3,7 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 
 /**
@@ -29,7 +30,7 @@ public class SetBrush extends PerformerBrush {
             return true;
         } else {
             if (!this.block.getWorld().getName().equals(bl.getWorld().getName())) {
-                v.sendMessage(ChatColor.RED + "You selected points in different worlds!");
+                v.getVoxelMessage().brushMessageError("You selected points in different worlds!");
                 this.block = null;
                 return true;
             }
@@ -41,7 +42,7 @@ public class SetBrush extends PerformerBrush {
             final int highZ = (this.block.getZ() >= bl.getZ()) ? this.block.getZ() : bl.getZ();
 
             if (Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY) > SELECTION_SIZE_MAX) {
-                v.sendMessage(ChatColor.RED + "Selection size above hardcoded limit, please use a smaller selection.");
+                v.getVoxelMessage().brushMessageError("Selection size above hardcoded limit, please use a smaller selection.");
             } else {
                 for (int y = lowY; y <= highY; y++) {
                     for (int x = lowX; x <= highX; x++) {
@@ -60,7 +61,7 @@ public class SetBrush extends PerformerBrush {
     @Override
     protected final void arrow(final SnipeData v) {
         if (this.set(this.getTargetBlock(), v)) {
-            v.sendMessage(ChatColor.GRAY + "Point one");
+            v.sendMessage(Component.text("Point one").color(NamedTextColor.GRAY));
         } else {
             v.owner().storeUndo(this.currentPerformer.getUndo());
         }
@@ -69,7 +70,7 @@ public class SetBrush extends PerformerBrush {
     @Override
     protected final void powder(final SnipeData v) {
         if (this.set(this.getLastBlock(), v)) {
-            v.sendMessage(ChatColor.GRAY + "Point one");
+            v.sendMessage(Component.text("Point one").color(NamedTextColor.GRAY));
         } else {
             v.owner().storeUndo(this.currentPerformer.getUndo());
         }

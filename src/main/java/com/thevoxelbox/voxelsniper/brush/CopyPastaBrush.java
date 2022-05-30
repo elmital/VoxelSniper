@@ -169,12 +169,10 @@ public class CopyPastaBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Component.empty()
-                    .append(Component.text("CopyPasta Brush Parameters:").color(NamedTextColor.GOLD))
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " air  -- Toggle include air during paste (default: true)").color(NamedTextColor.AQUA))
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " rotate [number]  -- Set rotation pivot (default: 0)").color(NamedTextColor.AQUA))
+            v.getVoxelMessage().commandParameters("CopyPasta Brush Parameters:"
+                    , null
+                    , "/b " + triggerHandle + " air  -- Toggle include air during paste (default: true)"
+                    , "/b " + triggerHandle + " rotate [number]  -- Set rotation pivot (default: 0)"
             );
             return;
         }

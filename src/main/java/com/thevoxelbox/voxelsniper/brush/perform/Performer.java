@@ -4,7 +4,9 @@
  */
 package com.thevoxelbox.voxelsniper.brush.perform;
 
-import org.bukkit.ChatColor;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
@@ -79,8 +81,8 @@ public enum Performer {
     private Class<? extends vPerformer> pclass;
     private String short_name;
     private String long_name;
-    public static String performer_list_short = "";
-    public static String performer_list_long = "";
+    public static Component performer_list_short = Component.empty();
+    public static Component performer_list_long = Component.empty();
 
     private Performer(Class<? extends vPerformer> c, String s, String l) {
         pclass = c;
@@ -135,13 +137,18 @@ public enum Performer {
         performers = new TreeMap<String, vPerformer>();
         long_names = new TreeMap<String, String>();
 
+        var count = 0;
         for (Performer pe : values()) {
+            count++;
             performers.put(pe.short_name, pe.getPerformer());
             long_names.put(pe.long_name, pe.short_name);
-            performer_list_short = performer_list_short + ChatColor.GREEN + pe.short_name + ChatColor.RED + ", ";
-            performer_list_long = performer_list_long + ChatColor.GREEN + pe.long_name + ChatColor.RED + ", ";
+            performer_list_short = performer_list_short.append(Component.text(pe.short_name).color(NamedTextColor.GREEN));
+            performer_list_long = performer_list_long.append(Component.text(pe.long_name).color(NamedTextColor.GREEN));
+
+            if(count != values().length) {
+                performer_list_short = performer_list_short.append(Component.text(", ").color(NamedTextColor.RED));
+                performer_list_long = performer_list_long.append(Component.text(", ").color(NamedTextColor.RED));
+            }
         }
-        performer_list_short = performer_list_short.substring(0, performer_list_short.length() - 2);
-        performer_list_long = performer_list_long.substring(0, performer_list_long.length() - 2);
     }
 }

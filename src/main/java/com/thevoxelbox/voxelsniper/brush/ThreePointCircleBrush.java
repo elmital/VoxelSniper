@@ -3,9 +3,11 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,18 +37,18 @@ public class ThreePointCircleBrush extends PerformerBrush {
     protected final void arrow(final SnipeData v) {
         if (this.coordsOne == null) {
             this.coordsOne = this.getTargetBlock().getLocation().toVector();
-            v.sendMessage(ChatColor.GRAY + "First Corner set.");
+            v.sendMessage(Component.text("First Corner set.").color(NamedTextColor.GRAY));
         } else if (this.coordsTwo == null) {
             this.coordsTwo = this.getTargetBlock().getLocation().toVector();
-            v.sendMessage(ChatColor.GRAY + "Second Corner set.");
+            v.sendMessage(Component.text("Second Corner set.").color(NamedTextColor.GRAY));
         } else if (this.coordsThree == null) {
             this.coordsThree = this.getTargetBlock().getLocation().toVector();
-            v.sendMessage(ChatColor.GRAY + "Third Corner set.");
+            v.sendMessage(Component.text("Third Corner set.").color(NamedTextColor.GRAY));
         } else {
             this.coordsOne = this.getTargetBlock().getLocation().toVector();
             this.coordsTwo = null;
             this.coordsThree = null;
-            v.sendMessage(ChatColor.GRAY + "First Corner set.");
+            v.sendMessage(Component.text("First Corner set.").color(NamedTextColor.GRAY));
         }
     }
 
@@ -67,7 +69,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
         // Redundant data check
         if (vectorOne.length() == 0 || vectorTwo.length() == 0 || vectorThree.length() == 0 || vectorOne.angle(vectorTwo) == 0 || vectorOne.angle(vectorThree) == 0 || vectorThree.angle(vectorTwo) == 0) {
 
-            v.sendMessage(ChatColor.RED + "ERROR: Invalid points, try again.");
+            v.getVoxelMessage().brushMessageError("ERROR: Invalid points, try again.");
             this.coordsOne = null;
             this.coordsTwo = null;
             this.coordsThree = null;
@@ -131,7 +133,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
             }
         }
 
-        v.sendMessage(ChatColor.GREEN + "Done.");
+        v.sendMessage(Component.text("Done.").color(NamedTextColor.GREEN));
         v.owner().storeUndo(this.currentPerformer.getUndo());
 
         // Reset Brush
@@ -145,18 +147,10 @@ public class ThreePointCircleBrush extends PerformerBrush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         switch (this.tolerance) {
-            case ACCURATE:
-                vm.custom(ChatColor.GOLD + "Mode: Accurate");
-                break;
-            case DEFAULT:
-                vm.custom(ChatColor.GOLD + "Mode: Default");
-                break;
-            case SMOOTH:
-                vm.custom(ChatColor.GOLD + "Mode: Smooth");
-                break;
-            default:
-                vm.custom(ChatColor.GOLD + "Mode: Unknown");
-                break;
+            case ACCURATE -> vm.custom(Component.text("Mode: Accurate").color(NamedTextColor.GOLD));
+            case DEFAULT -> vm.custom(Component.text("Mode: Default").color(NamedTextColor.GOLD));
+            case SMOOTH -> vm.custom(Component.text("Mode: Smooth").color(NamedTextColor.GOLD));
+            default -> vm.custom(Component.text("Mode: Unknown").color(NamedTextColor.GOLD));
         }
 
     }
@@ -164,17 +158,18 @@ public class ThreePointCircleBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Spline Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [mode]  -- Change mode to prioritize accuracy or smoothness");
-            v.sendMessage(ChatColor.BLUE + "Instructions: Select three corners with the arrow brush, then generate the Circle with the powder brush.");
+            v.getVoxelMessage().commandParameters("Spline Brush Parameters:"
+                    , Component.text("Instructions: Select three corners with the arrow brush, then generate the Circle with the powder brush.").color(NamedTextColor.BLUE)
+                    , "/b " + triggerHandle + " [mode]  -- Change mode to prioritize accuracy or smoothness"
+            );
             return;
         }
 
         try {
             this.tolerance = Tolerance.valueOf(params[0].toUpperCase());
-            v.sendMessage(ChatColor.GOLD + "Brush tolerance set to " + ChatColor.YELLOW + this.tolerance.name().toLowerCase() + ChatColor.GOLD + ".");
+            v.sendMessage(Component.text("Brush tolerance set to ").color(NamedTextColor.GOLD).append(Component.text(this.tolerance.name().toLowerCase()).color(NamedTextColor.YELLOW)).append(Component.text(".")));
         } catch (Exception e) {
-            v.getVoxelMessage().brushMessage(ChatColor.RED + "That tolerance setting does not exist. Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
+            v.getVoxelMessage().invalidUseParameter(triggerHandle);
             sendPerformerMessage(triggerHandle, v);
         }
     }

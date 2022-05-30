@@ -101,10 +101,7 @@ public class CanyonBrush extends Brush {
     @Override
     public final void parseParameters(String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Component.text("Blob Parameters:").color(NamedTextColor.GOLD)
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " y [number] -- Set the y-coordinate where the land will be shifted to").color(NamedTextColor.AQUA))
-            );
+            v.getVoxelMessage().commandParameters("Blob Parameters:", null, "/b " + triggerHandle + " y [number] -- Set the y-coordinate where the land will be shifted to");
             return;
         }
 

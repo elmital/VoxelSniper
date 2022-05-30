@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Collectors;
 
@@ -30,6 +31,22 @@ public class VoxelMessage {
      */
     public void brushMessage(String brushMessage) {
         snipeData.sendMessage(Component.text(brushMessage).color(NamedTextColor.LIGHT_PURPLE));
+    }
+
+    /**
+     * Send a brush message styled message to the player.
+     *
+     * @param brushMessage
+     */
+    public void brushMessageError(String brushMessage) {
+        snipeData.sendMessage(Component.text(brushMessage).color(NamedTextColor.RED));
+    }
+
+    /**
+     * Send a brush message styled message to the player.
+     */
+    public void brushMessageError() {
+        brushMessageError("An error occurred");
     }
 
     /**
@@ -77,6 +94,10 @@ public class VoxelMessage {
      */
     public void height() {
         snipeData.sendMessage(Component.text("Brush Height: ").color(NamedTextColor.DARK_AQUA).append(Component.text(snipeData.getVoxelHeight()).color(NamedTextColor.DARK_RED)));
+    }
+
+    public void invalidUseParameter(String triggerHandle) {
+        snipeData.sendMessage(Component.text("Invalid parameter! Use ").color(NamedTextColor.RED).append(Component.text("'/b " + triggerHandle + " info'").color(NamedTextColor.LIGHT_PURPLE)).append(Component.text(" to display valid parameters.")));
     }
 
     /**
@@ -153,5 +174,24 @@ public class VoxelMessage {
                     .append(Component.text(snipeData.getVoxelList().getList().stream().map(e -> e.getKey().toString()).collect(Collectors.joining(","))).color(NamedTextColor.DARK_AQUA))
             );
         }
+    }
+
+    public void commandParameters(@Nullable String header, @Nullable Component footer, String ... parameters) {
+        var comp = Component.empty();
+
+        if (header != null)
+            comp = comp.append(Component.text(header).color(NamedTextColor.GOLD));
+
+        if(parameters != null) {
+            for (String parameter : parameters) {
+                comp = comp.append(Component.newline())
+                        .append(Component.text(parameter).color(NamedTextColor.AQUA));
+            }
+        }
+
+        if(footer != null)
+            comp = comp.append(Component.newline().append(footer));
+
+        snipeData.sendMessage(comp);
     }
 }

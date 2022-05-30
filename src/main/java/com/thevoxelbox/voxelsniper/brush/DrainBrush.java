@@ -110,12 +110,7 @@ public class DrainBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(
-                    Component.text("Drain Brush Parameters:").color(NamedTextColor.GOLD)
-                            .append(Component.newline())
-                            .append(Component.text("/b " + triggerHandle + " shape  -- Toggle between brush shapes (default: ball)").color(NamedTextColor.AQUA))
-            );
-
+            v.getVoxelMessage().commandParameters("Drain Brush Parameters:", null, "/b " + triggerHandle + " shape  -- Toggle between brush shapes (default: ball)");
             return;
         }
         if (params[0].startsWith("shape")) {

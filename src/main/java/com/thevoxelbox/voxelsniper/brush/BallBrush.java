@@ -104,10 +104,7 @@ public class BallBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Component.text("Ball Brush Parameters:").color(NamedTextColor.GOLD)
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " smooth -- Toggle using smooth sphere algorithm (default: false)").color(NamedTextColor.AQUA))
-            );
+            v.getVoxelMessage().commandParameters("Ball Brush Parameters:", null, "/b " + triggerHandle + " smooth -- Toggle using smooth sphere algorithm (default: false)");
             return;
         }
 

@@ -2,7 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -32,8 +33,10 @@ public class PullBrush extends Brush {
         vm.brushName(this.getName());
         vm.size();
         vm.height();
-        vm.custom(ChatColor.AQUA + "Pinch " + (-this.c1 + 1));
-        vm.custom(ChatColor.AQUA + "Bubble " + this.c2);
+        vm.custom(Component.text("Pinch " + (-this.c1 + 1)).color(NamedTextColor.AQUA)
+                .append(Component.newline())
+                .append(Component.text("Bubble " + this.c2))
+        );
     }
 
     @Override
@@ -44,7 +47,7 @@ public class PullBrush extends Brush {
             this.c1 = 1 - pinch;
             this.c2 = bubble;
         } catch (final Exception exception) {
-            v.sendMessage(ChatColor.RED + "Invalid brush parameters!");
+            v.getVoxelMessage().brushMessageError("Invalid brush parameters!");
         }
     }
 

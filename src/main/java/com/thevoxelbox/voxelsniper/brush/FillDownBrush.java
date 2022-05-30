@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -94,32 +95,34 @@ public class FillDownBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Fill Down Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " smooth  -- Toggle use smooth circles (default: false)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " liquid  -- Toggle filling liquids (default: true)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " existing  -- Toggle filling existing blocks or all blocks. (Toggle)");
+            v.getVoxelMessage().commandParameters("Fill Down Parameters:"
+                    , null
+                    , "/b " + triggerHandle + " smooth  -- Toggle use smooth circles (default: false)"
+                    , "/b " + triggerHandle + " liquid  -- Toggle filling liquids (default: true)"
+                    , "/b " + triggerHandle + " existing  -- Toggle filling existing blocks or all blocks. (Toggle)"
+            );
             return;
         }
 
         if (params[0].equalsIgnoreCase("liquid")) {
             this.fillLiquid = !this.fillLiquid;
-            v.sendMessage(ChatColor.AQUA + "Now filling " + ((this.fillLiquid) ? "liquid and air" : "air only") + ".");
+            v.sendMessage(Component.text("Now filling " + ((this.fillLiquid) ? "liquid and air" : "air only") + ".").color(NamedTextColor.AQUA));
             return;
         }
 
         if (params[0].equalsIgnoreCase("existing")) {
             this.fromExisting = !this.fromExisting;
-            v.sendMessage(ChatColor.AQUA + "Now filling down from " + ((this.fromExisting) ? "existing" : "all") + " blocks.");
+            v.sendMessage(Component.text("Now filling down from " + ((this.fromExisting) ? "existing" : "all") + " blocks.").color(NamedTextColor.AQUA));
             return;
         }
 
         if (params[0].startsWith("smooth")) {
             this.smoothCircle = !this.smoothCircle;
-            v.sendMessage(ChatColor.AQUA + "Using smooth circle: " + this.smoothCircle);
+            v.sendMessage(Component.text("Using smooth circle: " + this.smoothCircle).color(NamedTextColor.AQUA));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
         sendPerformerMessage(triggerHandle, v);
     }
 

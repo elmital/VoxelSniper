@@ -134,8 +134,7 @@ public class DiscFaceBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Component.text("Disc Face Brush Parameters:").color(NamedTextColor.GOLD));
-            v.sendMessage(Component.text("/b " + triggerHandle + " smooth  -- Toggle smooth circle (default: false)").color(NamedTextColor.AQUA));
+            v.getVoxelMessage().commandParameters("Disc Face Brush Parameters:", null, "/b " + triggerHandle + " smooth  -- Toggle smooth circle (default: false)");
             return;
         }
 

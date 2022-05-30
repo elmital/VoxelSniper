@@ -3,7 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -70,10 +71,18 @@ public class EntityRemovalBrush extends Brush {
             }
         } catch (final PatternSyntaxException pse) {
             pse.printStackTrace();
-            v.sendMessage(ChatColor.RED + "Error in RegEx: " + ChatColor.LIGHT_PURPLE + pse.getPattern());
-            v.sendMessage(ChatColor.RED + String.format("%s (Index: %d)", pse.getDescription(), pse.getIndex()));
+            v.sendMessage(Component.text("Error in RegEx: ").color(NamedTextColor.RED)
+                    .append(Component.text(pse.getPattern()).color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.newline())
+                    .append(Component.text(String.format("%s (Index: %d)", pse.getDescription(), pse.getIndex())))
+            );
         }
-        v.sendMessage(ChatColor.GREEN + "Removed " + ChatColor.RED + entityCount + ChatColor.GREEN + " entities out of " + ChatColor.BLUE + chunkCount + ChatColor.GREEN + (chunkCount == 1 ? " chunk." : " chunks."));
+        v.sendMessage(Component.text("Removed ").color(NamedTextColor.GREEN)
+                .append(Component.text(entityCount).color(NamedTextColor.RED))
+                .append(Component.text(" entities out of "))
+                .append(Component.text(chunkCount).color(NamedTextColor.BLUE))
+                .append(Component.text(chunkCount == 1 ? " chunk." : " chunks."))
+        );
     }
 
     private int removeEntities(Chunk chunk) throws PatternSyntaxException {
@@ -104,36 +113,42 @@ public class EntityRemovalBrush extends Brush {
     @Override
     public void info(VoxelMessage vm) {
         vm.brushName(getName());
-        vm.custom(ChatColor.GREEN + "Exclusions: " + ChatColor.DARK_GREEN + exclusionList.stream().map(e -> e.name()).collect(Collectors.joining(ChatColor.AQUA + ", " + ChatColor.DARK_GREEN)));
+        vm.custom(Component.text( "Exclusions: ").color(NamedTextColor.GREEN).append(Component.text(exclusionList.stream().map(Enum::name).collect(Collectors.joining(", "))).color(NamedTextColor.DARK_GREEN)));
         vm.size();
     }
 
     @Override
     public void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " + [entityType]  -- Add entity to exception list");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " - [entityType]  -- Remove entity from exception list");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " reset  -- Resets exception list to defaults");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " clear  -- Clear exception list");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " list  -- Shows entities in exception list");
+            v.getVoxelMessage().commandParameters("Entity Brush Parameters: "
+                    , null
+                    , "/b " + triggerHandle + " + [entityType]  -- Add entity to exception list"
+                    , "/b " + triggerHandle + " - [entityType]  -- Remove entity from exception list"
+                    , "/b " + triggerHandle + " reset  -- Resets exception list to defaults"
+                    , "/b " + triggerHandle + " clear  -- Clear exception list"
+                    , "/b " + triggerHandle + " list  -- Shows entities in exception list"
+            );
             return;
         }
 
         if (params[0].equalsIgnoreCase("reset")) {
             defaultValues();
-            v.sendMessage(ChatColor.GOLD + "Reset exclusions list to default values.");
+            v.sendMessage(Component.text("Reset exclusions list to default values.").color(NamedTextColor.GOLD));
             return;
         }
 
         if (params[0].equalsIgnoreCase("clear")) {
             exclusionList.clear();
-            v.sendMessage(ChatColor.GOLD + "Cleared the exclusions list." + ChatColor.RED + " WARNING! " + ChatColor.DARK_RED + "All" + ChatColor.RED + " entities can now be removed by the brush. BE CAREFUL!");
+            v.sendMessage(Component.text("Cleared the exclusions list.").color(NamedTextColor.GOLD)
+                    .append(Component.text(" WARNING! ").color(NamedTextColor.RED))
+                    .append(Component.text("All").color(NamedTextColor.DARK_RED))
+                    .append(Component.text(" entities can now be removed by the brush. BE CAREFUL!").color(NamedTextColor.RED)));
             return;
         }
 
         if (params[0].equalsIgnoreCase("list")) {
-            v.sendMessage(ChatColor.GREEN + "Exclusions: " + ChatColor.DARK_GREEN + exclusionList.stream().map(e -> e.name()).collect(Collectors.joining(ChatColor.AQUA + ", " + ChatColor.DARK_GREEN)));
+            v.sendMessage(Component.text("Exclusions: ").color(NamedTextColor.GREEN)
+                    .append(Component.text(exclusionList.stream().map(Enum::name).collect(Collectors.joining(", "))).color(NamedTextColor.DARK_GREEN)));
             return;
         }
 
@@ -143,13 +158,13 @@ public class EntityRemovalBrush extends Brush {
 
                 if (params[0].equals("+")) {
                     exclusionList.add(entity);
-                    v.sendMessage(ChatColor.GOLD + "Added " + entity.name() + " to exclusion list.");
+                    v.sendMessage(Component.text("Added " + entity.name() + " to exclusion list.").color(NamedTextColor.GOLD));
                 } else {
                     if (exclusionList.contains(entity)) {
                         exclusionList.remove(entity);
-                        v.sendMessage(ChatColor.GOLD + "Removed " + entity.name() + " from exclusion list.");
+                        v.sendMessage(Component.text("Removed " + entity.name() + " from exclusion list.").color(NamedTextColor.GOLD));
                     } else {
-                        v.sendMessage(ChatColor.GOLD + entity.name() + " wasn't in exclusion list. Nothing happened.");
+                        v.sendMessage(Component.text(entity.name() + " wasn't in exclusion list. Nothing happened.").color(NamedTextColor.GOLD));
                     }
                 }
 
@@ -158,7 +173,7 @@ public class EntityRemovalBrush extends Brush {
             }
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
     }
 
     @Override

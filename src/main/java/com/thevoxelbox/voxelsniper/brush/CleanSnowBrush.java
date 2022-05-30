@@ -75,11 +75,7 @@ public class CleanSnowBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(
-                    Component.text("Clean Snow Brush Parameters:").color(NamedTextColor.GOLD)
-                            .append(Component.newline())
-                            .append(Component.text("/b " + triggerHandle + " smooth -- Toggle using smooth sphere algorithm (default: false)").color(NamedTextColor.AQUA))
-            );
+            v.getVoxelMessage().commandParameters("Clean Snow Brush Parameters:", null, "/b " + triggerHandle + " smooth -- Toggle using smooth sphere algorithm (default: false)");
             return;
         }
 

@@ -44,9 +44,7 @@ public class CometBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Component.text("Comet Brush Parameters:").color(NamedTextColor.GOLD)
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " [big|small]  -- Sets your ball size").color(NamedTextColor.AQUA)));
+            v.getVoxelMessage().commandParameters("Comet Brush Parameters:", null, "/b " + triggerHandle + " [big|small]  -- Sets your ball size");
         }
 
         if (params[0].equalsIgnoreCase("big")) {
@@ -61,7 +59,7 @@ public class CometBrush extends Brush {
             return;
         }
 
-        v.sendMessage(Component.text("Invalid parameter! Use ").color(NamedTextColor.RED).append(Component.text("'/b " + triggerHandle + " info'").color(NamedTextColor.LIGHT_PURPLE)).append(Component.text(" to display valid parameters.")));
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
     }
 
     @Override

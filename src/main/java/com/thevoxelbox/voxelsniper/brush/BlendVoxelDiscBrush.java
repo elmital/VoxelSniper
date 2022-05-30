@@ -111,7 +111,7 @@ public class BlendVoxelDiscBrush extends BlendBrushBase {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Component.text("Blend Ball Parameters:").color(NamedTextColor.GOLD).append(Component.newline()).append(Component.text("/b " + triggerHandle + " water -- toggle include water (default: exclude)").color(NamedTextColor.AQUA)));
+            v.getVoxelMessage().commandParameters("Blend Ball Parameters:", null, "/b " + triggerHandle + " water -- toggle include water (default: exclude)");
             return;
         }
 

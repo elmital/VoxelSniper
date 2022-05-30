@@ -3,7 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 
@@ -66,18 +67,19 @@ public class FlatOceanBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.RED + "THIS BRUSH DOES NOT UNDO.");
-        vm.custom(ChatColor.GREEN + "Water level set to " + this.waterLevel);
-        vm.custom(ChatColor.GREEN + "Ocean floor level set to " + this.floorLevel);
+        vm.custom(Component.text("THIS BRUSH DOES NOT UNDO.").color(NamedTextColor.RED));
+        vm.custom(Component.text("Water level set to " + this.waterLevel).color(NamedTextColor.GREEN));
+        vm.custom(Component.text("Ocean floor level set to " + this.floorLevel).color(NamedTextColor.GREEN));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " water [number]  -- Set the y-level the water will rise to. (default: 29)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " floor [number]  -- Set the y-level the ocean floor will rise to. (default: 8)");
-            v.sendMessage(ChatColor.RED + "BEWARE! THIS BRUSH DOES NOT UNDO.");
+            v.getVoxelMessage().commandParameters("Entity Brush Parameters:"
+                    , Component.text("BEWARE! THIS BRUSH DOES NOT UNDO.").color(NamedTextColor.RED)
+                    , "/b " + triggerHandle + " water [number]  -- Set the y-level the water will rise to. (default: 29)"
+                    , "/b " + triggerHandle + " floor [number]  -- Set the y-level the ocean floor will rise to. (default: 8)"
+            );
             return;
         }
 
@@ -89,7 +91,7 @@ public class FlatOceanBrush extends Brush {
             }
 
             this.waterLevel = newWaterLevel;
-            v.sendMessage(ChatColor.GREEN + "Water level set to " + this.waterLevel);
+            v.sendMessage(Component.text("Water level set to " + this.waterLevel).color(NamedTextColor.GREEN));
             return;
         }
 
@@ -105,11 +107,11 @@ public class FlatOceanBrush extends Brush {
             }
 
             this.floorLevel = newFloorLevel;
-            v.sendMessage(ChatColor.GREEN + "Ocean floor level set to " + this.floorLevel);
+            v.sendMessage(Component.text("Ocean floor level set to " + this.floorLevel).color(NamedTextColor.GREEN));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
     }
 
     @Override

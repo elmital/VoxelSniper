@@ -3,7 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
@@ -96,7 +97,7 @@ public class ShellVoxelBrush extends Brush {
         }
         v.owner().storeUndo(undo);
 
-        v.owner().getPlayer().sendMessage(ChatColor.AQUA + "Shell complete.");
+        v.owner().getPlayer().sendMessage(Component.text("Shell complete.").color(NamedTextColor.AQUA));
     }
 
     @Override

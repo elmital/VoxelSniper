@@ -106,14 +106,11 @@ public class CloneStampBrush extends StampBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Component.empty()
-                    .append(Component.text("Clone / Stamp Cylinder Brush Parameters: ").color(NamedTextColor.GOLD))
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " fill  -- Change to Fill mode").color(NamedTextColor.AQUA))
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " air  -- Change to No-Air mode").color(NamedTextColor.AQUA))
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " default  -- Change to Default mode").color(NamedTextColor.AQUA))
+            v.getVoxelMessage().commandParameters("Clone / Stamp Cylinder Brush Parameters: "
+                    , null
+                    , "/b " + triggerHandle + " fill  -- Change to Fill mode"
+                    , "/b " + triggerHandle + " air  -- Change to No-Air mode"
+                    , "/b " + triggerHandle + " default  -- Change to Default mode"
             );
             return;
         }

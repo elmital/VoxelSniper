@@ -3,7 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.util.Vector;
 
@@ -34,7 +35,7 @@ public class RulerBrush extends Brush {
         this.coords = this.getTargetBlock().getLocation().toVector();
 
         if (this.xOff == 0 && this.yOff == 0 && this.zOff == 0) {
-            v.sendMessage(ChatColor.DARK_PURPLE + "First point selected.");
+            v.sendMessage(Component.text("First point selected.").color(NamedTextColor.DARK_PURPLE));
             this.first = !this.first;
         } else {
             final Undo undo = new Undo();
@@ -48,19 +49,24 @@ public class RulerBrush extends Brush {
     @Override
     protected final void powder(final SnipeData v) {
         if (this.coords == null || this.coords.lengthSquared() == 0) {
-            v.sendMessage(ChatColor.RED + "Warning: You did not select a first coordinate with the arrow. Comparing to point 0,0,0 instead.");
+            v.getVoxelMessage().brushMessageError("Warning: You did not select a first coordinate with the arrow. Comparing to point 0,0,0 instead.");
             return;
         }
 
-        v.sendMessage(ChatColor.BLUE + "Format = (second coord - first coord)");
-        v.sendMessage(ChatColor.AQUA + "X change: " + (this.getTargetBlock().getX() - this.coords.getX()));
-        v.sendMessage(ChatColor.AQUA + "Y change: " + (this.getTargetBlock().getY() - this.coords.getY()));
-        v.sendMessage(ChatColor.AQUA + "Z change: " + (this.getTargetBlock().getZ() - this.coords.getZ()));
         final double distance = (double) (Math.round(this.getTargetBlock().getLocation().toVector().subtract(this.coords).length() * 100) / 100);
         final double blockDistance = (double) (Math.round((Math.abs(Math.max(Math.max(Math.abs(this.getTargetBlock().getX() - coords.getX()), Math.abs(this.getTargetBlock().getY() - this.coords.getY())), Math.abs(this.getTargetBlock().getZ() - this.coords.getZ()))) + 1) * 100) / 100);
-
-        v.sendMessage(ChatColor.AQUA + "Euclidean distance = " + distance);
-        v.sendMessage(ChatColor.AQUA + "Block distance = " + blockDistance);
+        v.sendMessage(Component.text("Format = (second coord - first coord)").color(NamedTextColor.BLUE)
+                .append(Component.newline())
+                .append(Component.text("X change: " + (this.getTargetBlock().getX() - this.coords.getX())).color(NamedTextColor.AQUA))
+                .append(Component.newline())
+                .append(Component.text("Y change: " + (this.getTargetBlock().getY() - this.coords.getY())).color(NamedTextColor.AQUA))
+                .append(Component.newline())
+                .append(Component.text("Z change: " + (this.getTargetBlock().getZ() - this.coords.getZ())).color(NamedTextColor.AQUA))
+                .append(Component.newline())
+                .append(Component.text("Euclidean distance = " + distance).color(NamedTextColor.AQUA))
+                .append(Component.newline())
+                .append(Component.text("Block distance = " + blockDistance).color(NamedTextColor.AQUA))
+        );
     }
 
     @Override
@@ -73,11 +79,13 @@ public class RulerBrush extends Brush {
     // TODO: Implement block placing
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.BLUE + "Instructions: Right click first point with the arrow. Right click with powder for distances from that block (can repeat without getting a new first block.)");
+            v.getVoxelMessage().commandParameters(null
+                    , Component.text("Instructions: Right click first point with the arrow. Right click with powder for distances from that block (can repeat without getting a new first block.)").color(NamedTextColor.BLUE)
+            );
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
     }
 
     @Override

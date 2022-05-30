@@ -6,7 +6,8 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.MaterialTranslator;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -38,11 +39,16 @@ public class VoxelVoxelCommand extends VoxelCommand {
         // Default command
         // Command: /vr info, /vr help
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + "");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the block you are looking at as the active voxel material.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [material]");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the specified block as the active voxel material.");
+            player.sendMessage(Component.text(getName() + " Command Syntax:").color(NamedTextColor.DARK_AQUA)
+                    .append(Component.newline())
+                    .append(Component.text("/" + getActiveAlias()).color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("    Sets the block you are looking at as the active voxel material.").color(NamedTextColor.YELLOW))
+                    .append(Component.newline())
+                    .append(Component.text("/" + getActiveAlias() + " [material]").color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("    Sets the specified block as the active voxel material.").color(NamedTextColor.YELLOW))
+            );
             return true;
         }
 
@@ -53,7 +59,7 @@ public class VoxelVoxelCommand extends VoxelCommand {
                 snipeData.setVoxelSubstance(selectedBlock.getBlockData());
                 snipeData.getVoxelMessage().voxel();
             } else {
-                player.sendMessage(ChatColor.GOLD + "Nothing to set voxel substance. No changes were made.");
+                player.sendMessage(Component.text("Nothing to set voxel substance. No changes were made.").color(NamedTextColor.GOLD));
             }
             return true;
         }
@@ -73,7 +79,7 @@ public class VoxelVoxelCommand extends VoxelCommand {
             snipeData.getVoxelMessage().voxel();
             return true;
         } else {
-            player.sendMessage(ChatColor.RED + "You have entered an invalid Material ID.");
+            player.sendMessage(Component.text("You have entered an invalid Material ID.").color(NamedTextColor.RED));
             return true;
         }
     }

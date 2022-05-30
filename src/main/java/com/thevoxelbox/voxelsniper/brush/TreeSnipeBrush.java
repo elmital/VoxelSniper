@@ -5,7 +5,8 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.UndoDelegate;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
 import org.bukkit.block.Block;
@@ -57,16 +58,16 @@ public class TreeSnipeBrush extends Brush {
     }
 
     private void printTreeType(final VoxelMessage vm) {
-        String printout = "";
+        var printout = Component.empty();
 
         boolean delimiterHelper = true;
         for (final TreeType treeType : TreeType.values()) {
             if (delimiterHelper) {
                 delimiterHelper = false;
             } else {
-                printout += ", ";
+                printout = printout.append(Component.text(", "));
             }
-            printout += ((treeType.equals(this.treeType)) ? ChatColor.GRAY + treeType.name().toLowerCase() : ChatColor.DARK_GRAY + treeType.name().toLowerCase()) + ChatColor.WHITE;
+            printout = printout.append(Component.text(treeType.name().toLowerCase()).color((treeType.equals(this.treeType)) ? NamedTextColor.GRAY : NamedTextColor.DARK_GRAY));
         }
 
         vm.custom(printout);
@@ -92,8 +93,7 @@ public class TreeSnipeBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Tree Snipe Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [treeType]  -- Change tree type");
+            v.getVoxelMessage().commandParameters("Tree Snipe Brush Parameters:", null, "/b " + triggerHandle + " [treeType]  -- Change tree type");
             return;
         }
 
@@ -101,7 +101,7 @@ public class TreeSnipeBrush extends Brush {
             this.treeType = TreeType.valueOf(params[0].toUpperCase());
             this.printTreeType(v.getVoxelMessage());
         } catch (Exception e) {
-            v.getVoxelMessage().brushMessage(ChatColor.RED + "That tree type does not exist. Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
+            v.getVoxelMessage().invalidUseParameter(triggerHandle);
         }
     }
 

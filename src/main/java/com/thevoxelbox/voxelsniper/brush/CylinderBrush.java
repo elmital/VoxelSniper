@@ -92,14 +92,11 @@ public class CylinderBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Component.empty()
-                    .append(Component.text("Cylinder Brush Parameters:").color(NamedTextColor.GOLD))
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " height [number]  -- Set voxel height (default: 1)").color(NamedTextColor.AQUA))
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " shift [number]  -- Shifts the cylinder by [number] blocks on the y-axis (default: 0)").color(NamedTextColor.AQUA))
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " smooth  -- Toggle smooth circle (default: false)").color(NamedTextColor.AQUA))
+            v.getVoxelMessage().commandParameters("Cylinder Brush Parameters:"
+                    , null
+                    , "/b " + triggerHandle + " height [number]  -- Set voxel height (default: 1)"
+                    , "/b " + triggerHandle + " shift [number]  -- Shifts the cylinder by [number] blocks on the y-axis (default: 0)"
+                    , "/b " + triggerHandle + " smooth  -- Toggle smooth circle (default: false)"
             );
             return;
         }

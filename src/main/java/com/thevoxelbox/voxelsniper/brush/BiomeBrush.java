@@ -72,10 +72,7 @@ public class BiomeBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Component.text("Biome Brush Parameters:").color(NamedTextColor.GOLD)
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " [biomeType] -- Change brush to the specified biome").color(NamedTextColor.AQUA))
-            );
+            v.getVoxelMessage().commandParameters("Biome Brush Parameters:", null,"/b " + triggerHandle + " [biomeType] -- Change brush to the specified biome");
             return;
         }
 

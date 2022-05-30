@@ -193,16 +193,12 @@ public class EllipseBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(Component.empty()
-                    .append(Component.text("Ellipse Brush Parameters: ").color(NamedTextColor.GOLD))
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " x [number]  -- Set X size modifier").color(NamedTextColor.AQUA))
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " y [number]  -- Set Y size modifier").color(NamedTextColor.AQUA))
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + " t [number]  -- Set time steps").color(NamedTextColor.AQUA))
-                    .append(Component.newline())
-                    .append(Component.text("/b " + triggerHandle + "fill  -- Toggles fill mode").color(NamedTextColor.AQUA))
+            v.getVoxelMessage().commandParameters("Ellipse Brush Parameters: "
+                    , null
+                    , "/b " + triggerHandle + " x [number]  -- Set X size modifier"
+                    , "/b " + triggerHandle + " y [number]  -- Set Y size modifier"
+                    , "/b " + triggerHandle + " t [number]  -- Set time steps"
+                    , "/b " + triggerHandle + "fill  -- Toggles fill mode"
             );
             return;
         }

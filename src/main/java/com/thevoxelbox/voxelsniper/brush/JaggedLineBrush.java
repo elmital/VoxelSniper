@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.NumberConversions;
@@ -71,13 +72,13 @@ public class JaggedLineBrush extends PerformerBrush {
             originCoords = new Vector();
         }
         this.originCoords = this.getTargetBlock().getLocation().toVector();
-        v.sendMessage(ChatColor.DARK_PURPLE + "First point selected.");
+        v.sendMessage(Component.text("First point selected.").color(NamedTextColor.DARK_PURPLE));
     }
 
     @Override
     public final void powder(final SnipeData v) {
         if (originCoords == null) {
-            v.sendMessage(ChatColor.RED + "Warning: You did not select a first coordinate with the arrow");
+            v.getVoxelMessage().brushMessageError("Warning: You did not select a first coordinate with the arrow");
         } else {
             this.targetCoords = this.getTargetBlock().getLocation().toVector();
             this.jaggedP(v);
@@ -88,18 +89,18 @@ public class JaggedLineBrush extends PerformerBrush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.GRAY + String.format("Recursion set to: %d", this.recursion));
-        vm.custom(ChatColor.GRAY + String.format("Spread set to: %d", this.spread));
+        vm.custom(Component.text(String.format("Recursion set to: %d", this.recursion)).color(NamedTextColor.GRAY).append(Component.newline()).append(Component.text(String.format("Spread set to: %d", this.spread))));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Jagged Line Brush Parameters: ");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " recursion [number] - sets the number of recursions (default 3, must be 1-10)");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " spread [number] - sets the spread (default 3, must be 1-10)");
-            v.sendMessage(ChatColor.BLUE + "Instructions: Right click first point with the arrow. Right click with powder to draw a jagged line to set the second point.");
+            v.getVoxelMessage().commandParameters("Jagged Line Brush Parameters: "
+                    , Component.text("Instructions: Right click first point with the arrow. Right click with powder to draw a jagged line to set the second point.").color(NamedTextColor.BLUE)
+                    , "/b " + triggerHandle + " recursion [number] - sets the number of recursions (default 3, must be 1-10)"
+                    , "/b " + triggerHandle + " spread [number] - sets the spread (default 3, must be 1-10)"
+            );
             return;
         }
 
@@ -108,9 +109,9 @@ public class JaggedLineBrush extends PerformerBrush {
                 int newRecursion = Integer.parseInt(params[1]);
                 if (newRecursion >= RECURSION_MIN && newRecursion <= RECURSION_MAX) {
                     this.recursion = newRecursion;
-                    v.sendMessage(ChatColor.GREEN + "Recursion set to: " + this.recursion);
+                    v.sendMessage(Component.text("Recursion set to: " + this.recursion).color(NamedTextColor.GREEN));
                 } else {
-                    v.sendMessage(ChatColor.RED + "Recursion must be between " + RECURSION_MIN + " - " + RECURSION_MAX);
+                    v.getVoxelMessage().brushMessageError("Recursion must be between " + RECURSION_MIN + " - " + RECURSION_MAX);
                 }
 
                 return;
@@ -119,13 +120,13 @@ public class JaggedLineBrush extends PerformerBrush {
             if (params[0].equalsIgnoreCase("spread")) {
                 final int newSpread = Integer.parseInt(params[1]);
                 this.spread = newSpread;
-                v.sendMessage(ChatColor.GREEN + "Spread set to: " + this.spread);
+                v.sendMessage(Component.text("Spread set to: " + this.spread).color(NamedTextColor.GREEN));
                 return;
             }
         } catch (NumberFormatException e) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
         sendPerformerMessage(triggerHandle, v);
     }
 

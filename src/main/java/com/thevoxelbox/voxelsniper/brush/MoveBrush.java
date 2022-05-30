@@ -2,9 +2,11 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
+import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -202,7 +204,8 @@ public class MoveBrush extends Brush {
                 this.selection = null;
             }
         } catch (final Exception exception) {
-            v.sendMessage(exception.getMessage());
+            exception.printStackTrace();
+            v.getVoxelMessage().brushMessageError("An error occured");
         }
     }
 
@@ -220,25 +223,27 @@ public class MoveBrush extends Brush {
                 this.selection = null;
             }
         } catch (final Exception exception) {
-            v.sendMessage(exception.getMessage());
+            exception.printStackTrace();
+            v.getVoxelMessage().brushMessageError("An error occured");
         }
     }
 
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.BLUE + "Move selection blockPositionY " + ChatColor.GOLD + "x:" + this.moveDirections[0] + " y:" + this.moveDirections[1] + " z:" + this.moveDirections[2]);
+        vm.custom(Component.text("Move selection blockPositionY ").color(NamedTextColor.BLUE).append(Component.text("x:" + this.moveDirections[0] + " y:" + this.moveDirections[1] + " z:" + this.moveDirections[2]).color(NamedTextColor.GOLD)));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.getVoxelMessage().custom(ChatColor.GOLD + "Move Brush Parameters:");
-            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " x [number]  -- Set the x direction (positive => east)");
-            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " y [number]  -- Set the y direction (positive => up)");
-            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " z [number]  -- Set the z direction (positive => south)");
-            v.getVoxelMessage().custom(ChatColor.AQUA + "/b " + triggerHandle + " reset  -- Reset brush to default values");
-            v.getVoxelMessage().custom(ChatColor.BLUE + "Instructions: Use arrow and gunpowder to define two points.");
+            v.getVoxelMessage().commandParameters("Move Brush Parameters:"
+                    , Component.text("Instructions: Use arrow and gunpowder to define two points.").color(NamedTextColor.BLUE)
+                    , "/b " + triggerHandle + " x [number]  -- Set the x direction (positive => east)"
+                    , "/b " + triggerHandle + " y [number]  -- Set the y direction (positive => up)"
+                    , "/b " + triggerHandle + " z [number]  -- Set the z direction (positive => south)"
+                    , "/b " + triggerHandle + " reset  -- Reset brush to default values"
+            );
             return;
         }
 
@@ -246,32 +251,32 @@ public class MoveBrush extends Brush {
             this.moveDirections[0] = 0;
             this.moveDirections[1] = 0;
             this.moveDirections[2] = 0;
-            v.getVoxelMessage().custom(ChatColor.AQUA + "X, Y, Z direction set to 0. No movement will occur.");
+            v.getVoxelMessage().custom(Component.text("X, Y, Z direction set to 0. No movement will occur.").color(NamedTextColor.AQUA));
             return;
         }
 
         try {
             if (params[0].equalsIgnoreCase("x")) {
                 this.moveDirections[0] = Integer.valueOf(params[1]);
-                v.getVoxelMessage().custom(ChatColor.AQUA + "X direction set to: " + this.moveDirections[0]);
+                v.getVoxelMessage().custom(Component.text("X direction set to: " + this.moveDirections[0]).color(NamedTextColor.AQUA));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("y")) {
                 this.moveDirections[1] = Integer.valueOf(params[1]);
-                v.getVoxelMessage().custom(ChatColor.AQUA + "Y direction set to: " + this.moveDirections[1]);
+                v.getVoxelMessage().custom(Component.text("Y direction set to: " + this.moveDirections[1]).color(NamedTextColor.AQUA));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("z")) {
                 this.moveDirections[2] = Integer.valueOf(params[1]);
-                v.getVoxelMessage().custom(ChatColor.AQUA + "Z direction set to: " + this.moveDirections[2]);
+                v.getVoxelMessage().custom(Component.text("Z direction set to: " + this.moveDirections[2]).color(NamedTextColor.AQUA));
                 return;
             }
         } catch (NumberFormatException e) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+       v.getVoxelMessage().invalidUseParameter(triggerHandle);
     }
 
     @Override
@@ -334,7 +339,7 @@ public class MoveBrush extends Brush {
                     final int highY = (this.location1.getBlockY() >= this.location2.getBlockY()) ? this.location1.getBlockY() : this.location2.getBlockY();
                     final int highZ = (this.location1.getBlockZ() >= this.location2.getBlockZ()) ? this.location1.getBlockZ() : this.location2.getBlockZ();
                     if (Math.abs(highX - lowX) * Math.abs(highZ - lowZ) * Math.abs(highY - lowY) > Selection.MAX_BLOCK_COUNT) {
-                        throw new Exception(ChatColor.RED + "Selection size above hardcoded limit, please use a smaller selection.");
+                        VoxelSniper.getInstance().getSLF4JLogger().error("Selection size above hardcoded limit, please use a smaller selection.");
                     }
                     final World world = this.location1.getWorld();
                     for (int y = lowY; y <= highY; y++) {

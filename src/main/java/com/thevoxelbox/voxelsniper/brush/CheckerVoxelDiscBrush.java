@@ -61,11 +61,7 @@ public class CheckerVoxelDiscBrush extends PerformerBrush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
         if (params[0].equals("info")) {
-            v.sendMessage(
-                    Component.text("Checker Voxel Disc Parameters:").color(NamedTextColor.GOLD)
-                            .append(Component.newline())
-                            .append(Component.text("/b " + triggerHandle + " worldcoords -- Toggle to use World Coordinates or not (default: true)").color(NamedTextColor.AQUA))
-            );
+            v.getVoxelMessage().commandParameters("Checker Voxel Disc Parameters:", null, "/b " + triggerHandle + " worldcoords -- Toggle to use World Coordinates or not (default: true)");
             return;
         }
 
