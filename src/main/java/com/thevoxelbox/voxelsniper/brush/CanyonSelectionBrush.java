@@ -3,7 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Chunk;
 
 /**
@@ -31,10 +32,10 @@ public class CanyonSelectionBrush extends CanyonBrush {
             this.fx = chunk.getX();
             this.fz = chunk.getZ();
 
-            v.sendMessage(ChatColor.YELLOW + "First point selected!");
+            v.sendMessage(Component.text("First point selected!").color(NamedTextColor.YELLOW));
             this.first = !this.first;
         } else {
-            v.sendMessage(ChatColor.YELLOW + "Second point selected!");
+            v.sendMessage(Component.text("Second point selected!").color(NamedTextColor.YELLOW));
             selection(Math.min(fx, chunk.getX()), Math.min(fz, chunk.getZ()), Math.max(fx, chunk.getX()), Math.max(fz, chunk.getZ()), v);
 
             this.first = !this.first;
@@ -66,7 +67,7 @@ public class CanyonSelectionBrush extends CanyonBrush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.GREEN + "Shift Level set to " + this.getYLevel());
+        vm.custom(Component.text("Shift Level set to " + this.getYLevel()).color(NamedTextColor.GREEN));
     }
 
     @Override

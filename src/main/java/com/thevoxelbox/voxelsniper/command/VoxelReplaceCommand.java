@@ -6,7 +6,8 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
 import com.thevoxelbox.voxelsniper.util.MaterialTranslator;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -38,11 +39,17 @@ public class VoxelReplaceCommand extends VoxelCommand {
         // Default command
         // Command: /vr info, /vr help
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + "");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the block you are looking at as the active replace material.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [material]");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the specified block as the active replace material.");
+            player.sendMessage(Component.empty()
+                    .append(Component.text(getName() + " Command Syntax:").color(NamedTextColor.DARK_AQUA))
+                    .append(Component.newline())
+                    .append(Component.text("/" + getActiveAlias() + "").color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("    Sets the block you are looking at as the active replace material.").color(NamedTextColor.YELLOW))
+                    .append(Component.newline())
+                    .append(Component.text("/" + getActiveAlias() + " [material]").color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("    Sets the specified block as the active replace material.").color(NamedTextColor.YELLOW))
+            );
             return true;
         }
 
@@ -53,7 +60,7 @@ public class VoxelReplaceCommand extends VoxelCommand {
                 snipeData.setReplaceSubstance(selectedBlock.getBlockData());
                 snipeData.getVoxelMessage().replace();
             } else {
-                player.sendMessage(ChatColor.GOLD + "Nothing to imitate replace material. No changes were made.");
+                player.sendMessage(Component.text("Nothing to imitate replace material. No changes were made.").color(NamedTextColor.GOLD));
             }
             return true;
         }
@@ -72,7 +79,7 @@ public class VoxelReplaceCommand extends VoxelCommand {
             snipeData.getVoxelMessage().replace();
             return true;
         } else {
-            player.sendMessage(ChatColor.RED + "You have entered an invalid Item ID.");
+            player.sendMessage(Component.text("You have entered an invalid Item ID.").color(NamedTextColor.RED));
             return true;
         }
     }

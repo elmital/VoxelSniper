@@ -8,8 +8,9 @@ import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.event.SniperMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperReplaceMaterialChangedEvent;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -191,7 +192,7 @@ public class Sniper {
                     targetBlock = clickedBlock;
                     lastBlock = clickedBlock.getRelative(clickedFace);
                     if (lastBlock == null) {
-                        getPlayer().sendMessage(ChatColor.RED + "Snipe target block must be visible.");
+                        getPlayer().sendMessage(Component.text("Snipe target block must be visible.").color(NamedTextColor.RED));
                         return true;
                     }
                 } else {
@@ -200,7 +201,7 @@ public class Sniper {
                     lastBlock = rangeBlockHelper.getLastBlock();
 
                     if (targetBlock == null || lastBlock == null) {
-                        getPlayer().sendMessage(ChatColor.RED + "Snipe target block must be visible.");
+                        getPlayer().sendMessage(Component.text("Snipe target block must be visible.").color(NamedTextColor.RED));
                         return true;
                     }
                 }
@@ -297,7 +298,7 @@ public class Sniper {
     public int undo(int amount) {
         int changedBlocks = 0;
         if (this.undoList.isEmpty()) {
-            getPlayer().sendMessage(ChatColor.GREEN + "There's nothing to undo.");
+            getPlayer().sendMessage(Component.text("There's nothing to undo.").color(NamedTextColor.GREEN));
         } else {
             for (int x = 0; x < amount && !undoList.isEmpty(); x++) {
                 Undo undo = this.undoList.pop();
@@ -309,7 +310,7 @@ public class Sniper {
                 }
             }
 
-            getPlayer().sendMessage(ChatColor.GREEN + "Undo successful: " + ChatColor.RED + changedBlocks + ChatColor.GREEN + " blocks have been replaced.");
+            getPlayer().sendMessage(Component.text("Undo successful: ").color(NamedTextColor.GREEN).append(Component.text(changedBlocks).color(NamedTextColor.RED)).append(Component.text(" blocks have been replaced.")));
         }
         return changedBlocks;
     }

@@ -5,7 +5,8 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -141,9 +142,11 @@ public class UnderlayBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Underlay (Reverse Overlay) Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " depth [number]  -- Depth of blocks to overlay from surface");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " mode  -- Toggle between overlaying natural blocks or all blocks.");
+            v.getVoxelMessage().commandParameters("Underlay (Reverse Overlay) Brush Parameters:"
+                    , null
+                    , "/b " + triggerHandle + " depth [number]  -- Depth of blocks to overlay from surface"
+                    , "/b " + triggerHandle + " mode  -- Toggle between overlaying natural blocks or all blocks."
+            );
             return;
         }
 
@@ -155,7 +158,7 @@ public class UnderlayBrush extends PerformerBrush {
                     this.depth = 1;
                 }
 
-                v.sendMessage(ChatColor.AQUA + "Overlay depth set to " + this.depth);
+                v.sendMessage(Component.text("Overlay depth set to " + this.depth).color(NamedTextColor.AQUA));
                 return;
             } catch (NumberFormatException e) {
             }
@@ -172,11 +175,11 @@ public class UnderlayBrush extends PerformerBrush {
                 this.allBlocks = false;
                 this.useVoxelList = false;
             }
-            v.sendMessage(ChatColor.BLUE + "Will overlay on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks, " + this.depth + " blocks deep.");
+            v.sendMessage(Component.text("Will overlay on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks, " + this.depth + " blocks deep.").color(NamedTextColor.BLUE));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
         sendPerformerMessage(triggerHandle, v);
     }
 

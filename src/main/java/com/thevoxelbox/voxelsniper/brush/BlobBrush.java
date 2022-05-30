@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class BlobBrush extends PerformerBrush {
     private void checkValidGrowPercent(final SnipeData v) {
         if (this.growPercent < GROW_PERCENT_MIN || this.growPercent > GROW_PERCENT_MAX) {
             this.growPercent = GROW_PERCENT_DEFAULT;
-            v.sendMessage(ChatColor.BLUE + "Growth percent set to: 10%");
+            v.sendMessage(Component.text("Growth percent set to: 10%").color(NamedTextColor.BLUE));
         }
     }
 
@@ -217,14 +218,15 @@ public class BlobBrush extends PerformerBrush {
 
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(ChatColor.BLUE + "Growth percent set to: " + this.growPercent / 100 + "%");
+        vm.custom(Component.text("Growth percent set to: " + this.growPercent / 100 + "%").color(NamedTextColor.BLUE));
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Blob Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " growth [number] -- Set growth percentage (between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " to " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + ").  Default is " + String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100)));
+            v.getVoxelMessage().commandParameters("Blob Brush Parameters:", null
+                    , "/b " + triggerHandle + " growth [number] -- Set growth percentage (between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " to " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + ").  Default is " + String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100))
+            );
             return;
         }
 
@@ -232,23 +234,31 @@ public class BlobBrush extends PerformerBrush {
             try {
                 if (params.length == 1) {
                     this.growPercent = GROW_PERCENT_DEFAULT;
-                    v.sendMessage(ChatColor.AQUA + "Growth percent set to default value: " + String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100)) + "%");
+                    v.sendMessage(Component.text("Growth percent set to default value: " + String.format("%.2f", ((float) GROW_PERCENT_DEFAULT / 100)) + "%").color(NamedTextColor.AQUA));
                     return;
                 }
 
                 float growthValue = Float.parseFloat(params[1]);
                 if ((int) (growthValue * 100) >= GROW_PERCENT_MIN && (int) (growthValue * 100) <= GROW_PERCENT_MAX) {
-                    v.sendMessage(ChatColor.AQUA + "Growth percent set to: " + String.format("%.2f", growthValue) + "%");
+                    v.sendMessage(Component.text("Growth percent set to: " + String.format("%.2f", growthValue) + "%").color(NamedTextColor.AQUA));
                     this.growPercent = (int) growthValue * 100;
                 } else {
-                    v.sendMessage(ChatColor.RED + "Growth percent must be a number between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " and " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + "!");
+                    v.sendMessage(Component.text("Growth percent must be a number between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " and " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + "!").color(NamedTextColor.RED));
                 }
                 return;
             } catch (NumberFormatException e) {
             }
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(
+                Component.empty()
+                        .append(Component.text("Invalid parameter! Use ").color(NamedTextColor.RED))
+                        .append(Component.newline())
+                        .append(Component.text("'/b " + triggerHandle + " info'").color(NamedTextColor.LIGHT_PURPLE))
+                        .append(Component.newline())
+                        .append(Component.text(" to display valid parameters.").color(NamedTextColor.RED))
+                        .append(Component.newline())
+        );
         sendPerformerMessage(triggerHandle, v);
     }
 

@@ -5,7 +5,8 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -47,43 +48,45 @@ public class Rot3DBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         // which way is clockwise is less obvious for roll and pitch... should probably fix that / make it clear
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "3D Rotation Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " pitch [0-359] -- Set pitch rotation (rotation about the Z axis).");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " roll [0-359] -- Set roll rotation (rotation about the X axis).");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " yaw [0-359] -- Set yaw rotation (Rotation about the Y axis).");
+            v.getVoxelMessage().commandParameters("3D Rotation Brush Parameters:"
+                    , null
+                    , " pitch [0-359] -- Set pitch rotation (rotation about the Z axis)."
+                    , " roll [0-359] -- Set roll rotation (rotation about the X axis)."
+                    , " yaw [0-359] -- Set yaw rotation (Rotation about the Y axis)."
+            );
             return;
         }
         try {
             if (params[0].equalsIgnoreCase("pitch")) {
                 this.sePitch = Math.toRadians(Double.parseDouble(params[1]));
-                v.sendMessage(ChatColor.AQUA + "Around Z-axis degrees set to " + this.sePitch);
+                v.sendMessage(Component.text("Around Z-axis degrees set to " + this.sePitch).color(NamedTextColor.AQUA));
                 if (this.sePitch < 0 || this.sePitch > 359) {
-                    v.sendMessage(ChatColor.RED + "Invalid brush parameters! Angles must be from 1-359");
+                    v.getVoxelMessage().brushMessageError("Invalid brush parameters! Angles must be from 1-359");
                 }
                 return;
             }
 
             if (params[0].equalsIgnoreCase("roll")) {
                 this.seRoll = Math.toRadians(Double.parseDouble(params[1]));
-                v.sendMessage(ChatColor.AQUA + "Around X-axis degrees set to " + this.seRoll);
+                v.sendMessage(Component.text("Around X-axis degrees set to " + this.seRoll).color(NamedTextColor.AQUA));
                 if (this.seRoll < 0 || this.seRoll > 359) {
-                    v.sendMessage(ChatColor.RED + "Invalid brush parameters! Angles must be from 1-359");
+                    v.getVoxelMessage().brushMessageError("Invalid brush parameters! Angles must be from 1-359");
                 }
                 return;
             }
 
             if (params[0].equalsIgnoreCase("yaw")) {
                 this.seYaw = Math.toRadians(Double.parseDouble(params[1]));
-                v.sendMessage(ChatColor.AQUA + "Around Y-axis degrees set to " + this.seYaw);
+                v.sendMessage(Component.text("Around Y-axis degrees set to " + this.seYaw).color(NamedTextColor.AQUA));
                 if (this.seYaw < 0 || this.seYaw > 359) {
-                    v.sendMessage(ChatColor.RED + "Invalid brush parameters! Angles must be from 1-359");
+                    v.getVoxelMessage().brushMessageError("Invalid brush parameters! Angles must be from 1-359");
                 }
                 return;
             }
         } catch (NumberFormatException e) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
     }
 
     @Override
@@ -246,7 +249,7 @@ public class Rot3DBrush extends Brush {
                 break;
 
             default:
-                v.owner().getPlayer().sendMessage(ChatColor.RED + "Something went wrong.");
+                v.getVoxelMessage().brushMessageError("Something went wrong.");
                 break;
         }
     }
@@ -262,7 +265,7 @@ public class Rot3DBrush extends Brush {
                 break;
 
             default:
-                v.owner().getPlayer().sendMessage(ChatColor.RED + "Something went wrong.");
+                v.getVoxelMessage().brushMessageError("Something went wrong.");
                 break;
         }
     }

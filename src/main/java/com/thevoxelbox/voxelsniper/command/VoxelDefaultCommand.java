@@ -2,7 +2,8 @@ package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -23,15 +24,20 @@ public class VoxelDefaultCommand extends VoxelCommand {
         // Default command
         // Command: /d info, /d help
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias());
-            player.sendMessage(ChatColor.YELLOW + "    Resets tool to default values.");
+            player.sendMessage(
+                    Component.empty()
+                            .append(Component.text(getName() + " Command Syntax:").color(NamedTextColor.DARK_AQUA))
+                            .append(Component.newline())
+                            .append(Component.text("/" + getActiveAlias()).color(NamedTextColor.GOLD))
+                            .append(Component.newline())
+                            .append(Component.text("    Resets tool to default values.").color(NamedTextColor.YELLOW))
+            );
             return true;
         }
 
         if (args.length == 0) {
             sniper.reset(sniper.getCurrentToolId());
-            player.sendMessage(ChatColor.AQUA + "Brush settings reset to their default values.");
+            player.sendMessage(Component.text("Brush settings reset to their default values.").color(NamedTextColor.AQUA));
             return true;
         }
         

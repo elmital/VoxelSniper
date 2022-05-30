@@ -2,7 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 
 import java.util.HashMap;
@@ -113,8 +114,7 @@ public class BlendDiscBrush extends BlendBrushBase {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Blend Ball Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " water -- toggle include water (default: exclude)");
+            v.getVoxelMessage().commandParameters("Blend Ball Parameters:", null, "/b " + triggerHandle + " water -- toggle include water (default: exclude)");
             return;
         }
 

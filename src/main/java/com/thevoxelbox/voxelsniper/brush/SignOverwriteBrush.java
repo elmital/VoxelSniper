@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.VoxelSniper;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.ChatColor;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
@@ -66,7 +68,7 @@ public class SignOverwriteBrush extends Brush {
         if (this.getTargetBlock().getState() instanceof Sign) {
             setSignText((Sign) this.getTargetBlock().getState());
         } else {
-            v.sendMessage(ChatColor.RED + "Target block is not a sign.");
+            v.getVoxelMessage().brushMessageError("Target block is not a sign.");
             return;
         }
     }
@@ -99,7 +101,7 @@ public class SignOverwriteBrush extends Brush {
         }
 
         if (!signFound) {
-            v.sendMessage(ChatColor.RED + "Did not found any sign in selection box.");
+            v.getVoxelMessage().brushMessageError("Did not found any sign in selection box.");
         }
     }
 
@@ -125,7 +127,7 @@ public class SignOverwriteBrush extends Brush {
 
             displayBuffer(v);
         } else {
-            v.sendMessage(ChatColor.RED + "Target block is not a sign.");
+            v.getVoxelMessage().brushMessageError("Target block is not a sign.");
         }
     }
 
@@ -139,19 +141,18 @@ public class SignOverwriteBrush extends Brush {
 
             try {
                 if (parameter.equalsIgnoreCase("info")) {
-                    v.sendMessage(ChatColor.AQUA + "Sign Overwrite Brush Powder/Arrow:");
-                    v.sendMessage(ChatColor.BLUE + "The arrow writes the internal line buffer to the tearget sign.");
-                    v.sendMessage(ChatColor.BLUE + "The powder reads the text of the target sign into the internal buffer.");
-                    v.sendMessage(ChatColor.AQUA + "Sign Overwrite Brush Parameters:");
-                    v.sendMessage(ChatColor.GREEN + "-1[:(enabled|disabled)] ... " + ChatColor.BLUE + "-- Sets the text of the first sign line. (e.g. -1 Blah Blah)");
-                    v.sendMessage(ChatColor.GREEN + "-2[:(enabled|disabled)] ... " + ChatColor.BLUE + "-- Sets the text of the second sign line. (e.g. -2 Blah Blah)");
-                    v.sendMessage(ChatColor.GREEN + "-3[:(enabled|disabled)] ... " + ChatColor.BLUE + "-- Sets the text of the third sign line. (e.g. -3 Blah Blah)");
-                    v.sendMessage(ChatColor.GREEN + "-4[:(enabled|disabled)] ... " + ChatColor.BLUE + "-- Sets the text of the fourth sign line. (e.g. -4 Blah Blah)");
-                    v.sendMessage(ChatColor.GREEN + "-clear " + ChatColor.BLUE + "-- Clears the line buffer. (Alias: -c)");
-                    v.sendMessage(ChatColor.GREEN + "-clearall " + ChatColor.BLUE + "-- Clears the line buffer and sets all lines back to enabled. (Alias: -ca)");
-                    v.sendMessage(ChatColor.GREEN + "-multiple [on|off] " + ChatColor.BLUE + "-- Enables or disables ranged mode. (Alias: -m) (see Wiki for more information)");
-                    v.sendMessage(ChatColor.GREEN + "-save (name) " + ChatColor.BLUE + "-- Save your buffer to a file named [name]. (Alias: -s)");
-                    v.sendMessage(ChatColor.GREEN + "-open (name) " + ChatColor.BLUE + "-- Loads a buffer from a file named [name]. (Alias: -o)");
+                    v.getVoxelMessage().commandParameters("Sign Overwrite Brush Powder/Arrow:"
+                            , Component.text("The arrow writes the internal line buffer to the tearget sign.").color(NamedTextColor.BLUE).append(Component.text("The powder reads the text of the target sign into the internal buffer."))
+                            , "-1[:(enabled|disabled)] ... -- Sets the text of the first sign line. (e.g. -1 Blah Blah)"
+                            , "-2[:(enabled|disabled)] ... -- Sets the text of the second sign line. (e.g. -2 Blah Blah)"
+                            , "-3[:(enabled|disabled)] ... -- Sets the text of the third sign line. (e.g. -3 Blah Blah)"
+                            , "-4[:(enabled|disabled)] ... -- Sets the text of the fourth sign line. (e.g. -4 Blah Blah)"
+                            , "-clear -- Clears the line buffer. (Alias: -c)"
+                            , "-clearall -- Clears the line buffer and sets all lines back to enabled. (Alias: -ca)"
+                            , "-multiple [on|off] -- Enables or disables ranged mode. (Alias: -m) (see Wiki for more information)"
+                            , "-save (name) -- Save your buffer to a file named [name]. (Alias: -s)"
+                            , "-open (name) -- Loads a buffer from a file named [name]. (Alias: -o)"
+                    );
                 } else if (parameter.startsWith("-1")) {
                     textChanged = true;
                     i = parseSignLineFromParam(params, SIGN_LINE_1, v, i);
@@ -166,26 +167,28 @@ public class SignOverwriteBrush extends Brush {
                     i = parseSignLineFromParam(params, SIGN_LINE_4, v, i);
                 } else if (parameter.equalsIgnoreCase("-clear") || parameter.equalsIgnoreCase("-c")) {
                     clearBuffer();
-                    v.sendMessage(ChatColor.BLUE + "Internal text buffer cleard.");
+                    v.sendMessage(Component.text("Internal text buffer cleard.").color(NamedTextColor.BLUE));
                 } else if (parameter.equalsIgnoreCase("-clearall") || parameter.equalsIgnoreCase("-ca")) {
                     clearBuffer();
                     resetStates();
-                    v.sendMessage(ChatColor.BLUE + "Internal text buffer cleard and states back to enabled.");
+                    v.sendMessage(Component.text("Internal text buffer cleard and states back to enabled.").color(NamedTextColor.BLUE));
                 } else if (parameter.equalsIgnoreCase("-multiple") || parameter.equalsIgnoreCase("-m")) {
                     if ((i + 1) >= params.length) {
-                        v.sendMessage(ChatColor.RED + String.format("Missing parameter after %s.", parameter));
+                        v.getVoxelMessage().brushMessageError(String.format("Missing parameter after %s.", parameter));
                         continue;
                     }
 
                     rangedMode = (params[++i].equalsIgnoreCase("on") || params[++i].equalsIgnoreCase("yes"));
-                    v.sendMessage(ChatColor.BLUE + String.format("Ranged mode is %s", ChatColor.GREEN + (rangedMode ? "enabled" : "disabled")));
+                    v.sendMessage(Component.text(String.format("Ranged mode is %s", (rangedMode ? "enabled" : "disabled"))).color(NamedTextColor.BLUE));
                     if (this.rangedMode) {
-                        v.sendMessage(ChatColor.GREEN + "Brush size set to " + ChatColor.RED + v.getBrushSize());
-                        v.sendMessage(ChatColor.AQUA + "Brush height set to " + ChatColor.RED + v.getVoxelHeight());
+                        v.sendMessage(Component.text("Brush size set to ").color(NamedTextColor.GREEN).append(Component.text(v.getBrushSize()).color(NamedTextColor.RED))
+                                .append(Component.newline())
+                                .append(Component.text("Brush height set to ").color(NamedTextColor.AQUA).append(Component.text(v.getVoxelHeight()).color(NamedTextColor.RED)))
+                        );
                     }
                 } else if (parameter.equalsIgnoreCase("-save") || parameter.equalsIgnoreCase("-s")) {
                     if ((i + 1) >= params.length) {
-                        v.sendMessage(ChatColor.RED + String.format("Missing parameter after %s.", parameter));
+                        v.getVoxelMessage().brushMessageError(String.format("Missing parameter after %s.", parameter));
                         continue;
                     }
 
@@ -193,7 +196,7 @@ public class SignOverwriteBrush extends Brush {
                     saveBufferToFile(fileName, v);
                 } else if (parameter.equalsIgnoreCase("-open") || parameter.equalsIgnoreCase("-o")) {
                     if ((i + 1) >= params.length) {
-                        v.sendMessage(ChatColor.RED + String.format("Missing parameter after %s.", parameter));
+                        v.getVoxelMessage().brushMessageError(String.format("Missing parameter after %s.", parameter));
                         continue;
                     }
 
@@ -202,7 +205,7 @@ public class SignOverwriteBrush extends Brush {
                     textChanged = true;
                 }
             } catch (Exception exception) {
-                v.sendMessage(ChatColor.RED + String.format("Error while parsing parameter %s", parameter));
+                v.getVoxelMessage().brushMessageError(String.format("Error while parsing parameter %s", parameter));
                 exception.printStackTrace();
             }
         }
@@ -230,7 +233,7 @@ public class SignOverwriteBrush extends Brush {
 
         if (parameter.contains(":")) {
             this.signLinesEnabled[lineIndex] = parameter.substring(parameter.indexOf(":")).equalsIgnoreCase(":enabled");
-            v.sendMessage(ChatColor.BLUE + "Line " + lineNumber + " is " + ChatColor.GREEN + (this.signLinesEnabled[lineIndex] ? "enabled" : "disabled"));
+            v.sendMessage(Component.text("Line " + lineNumber + " is ").color(NamedTextColor.BLUE).append(Component.text(this.signLinesEnabled[lineIndex] ? "enabled" : "disabled").color(NamedTextColor.GREEN)));
             statusSet = true;
         }
 
@@ -240,7 +243,7 @@ public class SignOverwriteBrush extends Brush {
                 return i;
             }
 
-            v.sendMessage(ChatColor.RED + "Warning: No text after -" + lineNumber + ". Setting buffer text to \"\" (empty string)");
+            v.getVoxelMessage().brushMessageError("Warning: No text after -" + lineNumber + ". Setting buffer text to \"\" (empty string)");
             signTextLines[lineIndex] = "";
             return i;
         }
@@ -259,7 +262,7 @@ public class SignOverwriteBrush extends Brush {
             }
         }
 
-        newText = ChatColor.translateAlternateColorCodes('&', newText);
+        newText = ChatColor.translateAlternateColorCodes('&', newText); //TODO find a way to produce same result with Paper/Adventure api and use it instead ChatColor
 
         // remove last space or return if the string is empty and the user just wanted to set the status
         if (!newText.isEmpty() && newText.endsWith(" ")) {
@@ -268,12 +271,12 @@ public class SignOverwriteBrush extends Brush {
             if (statusSet) {
                 return i;
             }
-            v.sendMessage(ChatColor.RED + "Warning: No text after -" + lineNumber + ". Setting buffer text to \"\" (empty string)");
+            v.getVoxelMessage().brushMessageError("Warning: No text after -" + lineNumber + ". Setting buffer text to \"\" (empty string)");
         }
 
         // check the line length and cut the text if needed
         if (newText.length() > MAX_SIGN_LINE_LENGTH) {
-            v.sendMessage(ChatColor.RED + "Warning: Text on line " + lineNumber + " exceeds the maximum line length of " + MAX_SIGN_LINE_LENGTH + " characters. Your text will be cut.");
+            v.getVoxelMessage().brushMessageError("Warning: Text on line " + lineNumber + " exceeds the maximum line length of " + MAX_SIGN_LINE_LENGTH + " characters. Your text will be cut.");
             newText = newText.substring(0, MAX_SIGN_LINE_LENGTH);
         }
 
@@ -282,9 +285,9 @@ public class SignOverwriteBrush extends Brush {
     }
 
     private void displayBuffer(final SnipeData v) {
-        v.sendMessage(ChatColor.BLUE + "Buffer text set to: ");
+        v.sendMessage(Component.text("Buffer text set to: ").color(NamedTextColor.BLUE));
         for (int i = 0; i < this.signTextLines.length; i++) {
-            v.sendMessage((this.signLinesEnabled[i] ? ChatColor.GREEN + "(E): " : ChatColor.RED + "(D): ") + ChatColor.BLACK + this.signTextLines[i]);
+            v.sendMessage((this.signLinesEnabled[i] ? Component.text("(E): ").color(NamedTextColor.GREEN) : Component.text("(D): ").color(NamedTextColor.RED)).append(Component.text(this.signTextLines[i]).color(NamedTextColor.BLACK)));
         }
     }
 
@@ -297,7 +300,7 @@ public class SignOverwriteBrush extends Brush {
     private void saveBufferToFile(final String fileName, final SnipeData v) {
         final File store = new File(VoxelSniper.getInstance().getDataFolder() + "/" + fileName + ".vsign");
         if (store.exists()) {
-            v.sendMessage("This file already exists.");
+            v.getVoxelMessage().brushMessageError("This file already exists.");
             return;
         }
 
@@ -314,9 +317,9 @@ public class SignOverwriteBrush extends Brush {
             outStream.close();
             outFile.close();
 
-            v.sendMessage(ChatColor.BLUE + "File saved successfully.");
+            v.sendMessage(Component.text("File saved successfully.").color(NamedTextColor.BLUE));
         } catch (IOException exception) {
-            v.sendMessage(ChatColor.RED + "Failed to save file. " + exception.getMessage());
+            v.getVoxelMessage().brushMessageError("Failed to save file. " + exception.getMessage());
             exception.printStackTrace();
         }
     }
@@ -331,7 +334,7 @@ public class SignOverwriteBrush extends Brush {
     private void loadBufferFromFile(final String fileName, final String userDomain, final SnipeData v) {
         final File store = new File(VoxelSniper.getInstance().getDataFolder() + "/" + fileName + ".vsign");
         if (!store.exists()) {
-            v.sendMessage("This file does not exist.");
+            v.getVoxelMessage().brushMessageError("This file does not exist.");
             return;
         }
 
@@ -347,9 +350,9 @@ public class SignOverwriteBrush extends Brush {
             inStream.close();
             inFile.close();
 
-            v.sendMessage(ChatColor.BLUE + "File loaded successfully.");
+            v.sendMessage(Component.text("File loaded successfully.").color(NamedTextColor.BLUE));
         } catch (IOException exception) {
-            v.sendMessage(ChatColor.RED + "Failed to load file. " + exception.getMessage());
+            v.getVoxelMessage().brushMessageError("Failed to load file. " + exception.getMessage());
             exception.printStackTrace();
         }
     }
@@ -376,12 +379,12 @@ public class SignOverwriteBrush extends Brush {
     public final void info(final VoxelMessage vm) {
         vm.brushName("Sign Overwrite Brush");
 
-        vm.custom(ChatColor.BLUE + "Buffer text: ");
+        vm.custom(Component.text("Buffer text: ").color(NamedTextColor.BLUE));
         for (int i = 0; i < this.signTextLines.length; i++) {
-            vm.custom((this.signLinesEnabled[i] ? ChatColor.GREEN + "(E): " : ChatColor.RED + "(D): ") + ChatColor.BLACK + this.signTextLines[i]);
+            vm.custom((this.signLinesEnabled[i] ? Component.text("(E): ").color(NamedTextColor.GREEN) : Component.text("(D): ").color(NamedTextColor.RED)).append(Component.text(this.signTextLines[i]).color(NamedTextColor.BLACK)));
         }
 
-        vm.custom(ChatColor.BLUE + String.format("Ranged mode is %s", ChatColor.GREEN + (rangedMode ? "enabled" : "disabled")));
+        vm.custom(Component.text(String.format("Ranged mode is %s", rangedMode ? "enabled" : "disabled")).color(NamedTextColor.BLUE));
         if (rangedMode) {
             vm.size();
             vm.height();

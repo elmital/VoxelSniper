@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
 
@@ -71,18 +72,20 @@ public class DiscBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Disc Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " smooth  -- Toggle smooth circle (default: false)");
+            v.getVoxelMessage().commandParameters("Disc Brush Parameters:", null, "/b " + triggerHandle + " smooth  -- Toggle smooth circle (default: false)");
             return;
         }
 
         if (params[0].startsWith("smooth")) {
             this.smoothCircle = !this.smoothCircle;
-            v.sendMessage(ChatColor.AQUA + "Using smooth circle: " + this.smoothCircle);
+            v.sendMessage(Component.text("Using smooth circle: " + this.smoothCircle).color(NamedTextColor.AQUA));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Component.text("Invalid parameter! Use ").color(NamedTextColor.RED)
+                .append(Component.text("'/b " + triggerHandle + " info'").color(NamedTextColor.LIGHT_PURPLE))
+                .append(Component.text(" to display valid parameters."))
+        );
         sendPerformerMessage(triggerHandle, v);
     }
 

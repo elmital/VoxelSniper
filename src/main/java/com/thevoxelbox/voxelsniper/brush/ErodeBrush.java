@@ -4,7 +4,8 @@ import com.google.common.base.Objects;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -159,15 +160,14 @@ public class ErodeBrush extends Brush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.size();
-        vm.custom(ChatColor.GOLD + "Active brush preset is " + ChatColor.YELLOW + this.presetName + ChatColor.GOLD + ".");
+        vm.custom(Component.text("Active brush preset is ").color(NamedTextColor.GOLD).append(Component.text(this.presetName).color(NamedTextColor.YELLOW)).append(Component.text(".")));
     }
 
     @Override
     // TODO: Implement changing of individual variables | fill erode fillrecursion eroderecursion
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Erode Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [preset]  -- Change active erode brush preset");
+            v.getVoxelMessage().commandParameters("Erode Brush Parameters:", null, "/b " + triggerHandle + " [preset]  -- Change active erode brush preset");
             return;
         }
 
@@ -175,9 +175,9 @@ public class ErodeBrush extends Brush {
             Preset preset = Preset.valueOf(params[0].toUpperCase());
             this.currentPreset = preset.getPreset();
             this.presetName = preset.name();
-            v.sendMessage(ChatColor.GOLD + "Brush preset changed to " + ChatColor.YELLOW + this.presetName + ChatColor.GOLD + ".");
+            v.sendMessage(Component.text("Brush preset changed to ").color(NamedTextColor.GOLD).append(Component.text(this.presetName).color(NamedTextColor.YELLOW)).append(Component.text(".")));
         } catch (IllegalArgumentException e) {
-            v.getVoxelMessage().brushMessage(ChatColor.RED + "That preset does not exist.");
+            v.getVoxelMessage().brushMessageError("That preset does not exist.");
         }
     }
 
@@ -186,7 +186,7 @@ public class ErodeBrush extends Brush {
         List<String> arguments = new ArrayList<>();
 
         arguments.addAll(Arrays.stream(Preset.values()).map(e -> e.name()).collect(Collectors.toList()));
-        
+
         return arguments;
     }
 

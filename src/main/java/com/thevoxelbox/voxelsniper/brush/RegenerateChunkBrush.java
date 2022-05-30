@@ -3,6 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Chunk;
 
 /**
@@ -32,7 +34,7 @@ public class RegenerateChunkBrush extends Brush {
         }
         v.owner().storeUndo(undo);
 
-        v.sendMessage("Generate that chunk! " + chunk.getX() + " " + chunk.getZ());
+        v.sendMessage(Component.text("Generate that chunk! " + chunk.getX() + " " + chunk.getZ()).color(NamedTextColor.GREEN));
         this.getWorld().regenerateChunk(chunk.getX(), chunk.getZ());
         this.getWorld().refreshChunk(chunk.getX(), chunk.getZ());
     }

@@ -2,7 +2,8 @@ package com.thevoxelbox.voxelsniper.brush;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.EntityType;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class EntityBrush extends Brush {
             try {
                 this.getWorld().spawn(this.getLastBlock().getLocation(), this.entityType.getEntityClass());
             } catch (final IllegalArgumentException exception) {
-                v.sendMessage(ChatColor.RED + "Cannot spawn entity!");
+                v.sendMessage(Component.text("Cannot spawn entity!").color(NamedTextColor.RED));
             }
         }
     }
@@ -47,7 +48,7 @@ public class EntityBrush extends Brush {
     @SuppressWarnings("deprecation")
     @Override
     public final void info(final VoxelMessage vm) {
-        vm.brushMessage(ChatColor.LIGHT_PURPLE + "Entity Brush" + " (" + this.entityType.getName() + ")");
+        vm.brushMessage("Entity Brush" + " (" + this.entityType.getName() + ")");
         vm.size();
     }
 
@@ -55,16 +56,15 @@ public class EntityBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Entity Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [entityType] -- Change brush to the specified entity type");
+            v.getVoxelMessage().commandParameters("Entity Brush Parameters:", null, "/b " + triggerHandle + " [entityType] -- Change brush to the specified entity type");
             return;
         }
 
         try {
             this.entityType = EntityType.valueOf(params[0]);
-            v.sendMessage(ChatColor.GOLD + "Entity type: " + ChatColor.DARK_GREEN + this.entityType.name());
+            v.sendMessage(Component.text("Entity type: ").color(NamedTextColor.GOLD).append(Component.text(this.entityType.name()).color(NamedTextColor.DARK_GREEN)));
         } catch (IllegalArgumentException e) {
-            v.sendMessage(ChatColor.RED + "That entity type does not exist.");
+            v.sendMessage(Component.text("That entity type does not exist.").color(NamedTextColor.RED));
         }
     }
 

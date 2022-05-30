@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class SplineBrush extends PerformerBrush {
             }
 
             this.endPts.add(targetBlock);
-            v.sendMessage(ChatColor.GRAY + "Added block " + ChatColor.RED + "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") " + ChatColor.GRAY + "to endpoint selection");
+            v.sendMessage(Component.text("Added block ").color(NamedTextColor.GRAY).append(Component.text("(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") ").color(NamedTextColor.RED)).append(Component.text("to endpoint selection")));
             return;
         }
 
@@ -45,31 +46,28 @@ public class SplineBrush extends PerformerBrush {
         }
 
         this.ctrlPts.add(targetBlock);
-        v.sendMessage(ChatColor.GRAY + "Added block " + ChatColor.RED + "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") " + ChatColor.GRAY
-                + "to control point selection");
+        v.sendMessage(Component.text("Added block ").color(NamedTextColor.GRAY).append(Component.text("(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") ").color(NamedTextColor.RED)).append(Component.text("to control point selection")));
     }
 
     public final void removeFromSet(final SnipeData v, final boolean ep, Block targetBlock) {
         if (ep) {
             if (!this.endPts.contains(targetBlock)) {
-                v.sendMessage(ChatColor.RED + "That block is not in the endpoint selection set.");
+                v.getVoxelMessage().brushMessageError("That block is not in the endpoint selection set.");
                 return;
             }
 
             this.endPts.add(targetBlock);
-            v.sendMessage(ChatColor.GRAY + "Removed block " + ChatColor.RED + "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") " + ChatColor.GRAY
-                    + "from endpoint selection");
+            v.sendMessage(Component.text("Removed block ").color(NamedTextColor.GRAY).append(Component.text("(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") ").color(NamedTextColor.RED)).append(Component.text("from endpoint selection")));
             return;
         }
 
         if (!this.ctrlPts.contains(targetBlock)) {
-            v.sendMessage(ChatColor.RED + "That block is not in the control point selection set.");
+            v.getVoxelMessage().brushMessageError("That block is not in the control point selection set.");
             return;
         }
 
         this.ctrlPts.remove(targetBlock);
-        v.sendMessage(ChatColor.GRAY + "Removed block " + ChatColor.RED + "(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") " + ChatColor.GRAY
-                + "from control point selection");
+        v.sendMessage(Component.text("Removed block ").color(NamedTextColor.GRAY).append(Component.text("(" + targetBlock.getX() + ", " + targetBlock.getY() + ", " + targetBlock.getZ() + ") ").color(NamedTextColor.RED)).append(Component.text("from control point selection")));
     }
 
     public final boolean spline(final Point start, final Point end, final Point c1, final Point c2, final SnipeData v) {
@@ -92,7 +90,7 @@ public class SplineBrush extends PerformerBrush {
 
             return true;
         } catch (final Exception exception) {
-            v.sendMessage(ChatColor.RED + "Not enough points selected; " + this.endPts.size() + " endpoints, " + this.ctrlPts.size() + " control points");
+            v.getVoxelMessage().brushMessageError("Not enough points selected; " + this.endPts.size() + " endpoints, " + this.ctrlPts.size() + " control points");
             return false;
         }
     }
@@ -122,7 +120,7 @@ public class SplineBrush extends PerformerBrush {
         this.spline.clear();
         this.ctrlPts.clear();
         this.endPts.clear();
-        v.sendMessage(ChatColor.GRAY + "Bezier curve cleared.");
+        v.sendMessage(Component.text("Bezier curve cleared.").color(NamedTextColor.GRAY));
     }
 
     @Override
@@ -140,22 +138,24 @@ public class SplineBrush extends PerformerBrush {
         vm.brushName(this.getName());
 
         if (this.set) {
-            vm.custom(ChatColor.GRAY + "Endpoint selection mode ENABLED.");
+            vm.custom(Component.text("Endpoint selection mode ENABLED.").color(NamedTextColor.GRAY));
         } else if (this.ctrl) {
-            vm.custom(ChatColor.GRAY + "Control point selection mode ENABLED.");
+            vm.custom(Component.text("Control point selection mode ENABLED.").color(NamedTextColor.GRAY));
         } else {
-            vm.custom(ChatColor.AQUA + "No selection mode enabled.");
+            vm.custom(Component.text("No selection mode enabled.").color(NamedTextColor.AQUA));
         }
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Spline Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " ss  -- Enable endpoint selection mode for desired curve");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " sc  -- Enable control point selection mode for desired curve");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " clear  -- Clear out the curve selection");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " render  -- Render curve from control points");
+            v.getVoxelMessage().commandParameters("Spline Brush Parameters:"
+                    , null
+                    , "/b " + triggerHandle + " ss  -- Enable endpoint selection mode for desired curve"
+                    , "/b " + triggerHandle + " sc  -- Enable control point selection mode for desired curve"
+                    , "/b " + triggerHandle + " clear  -- Clear out the curve selection"
+                    , "/b " + triggerHandle + " render  -- Render curve from control points"
+            );
             return;
         }
 
@@ -163,10 +163,10 @@ public class SplineBrush extends PerformerBrush {
             if (!this.ctrl) {
                 this.set = false;
                 this.ctrl = true;
-                v.sendMessage(ChatColor.GRAY + "Control point selection mode ENABLED.");
+                v.sendMessage(Component.text("Control point selection mode ENABLED.").color(NamedTextColor.GRAY));
             } else {
                 this.ctrl = false;
-                v.sendMessage(ChatColor.AQUA + "Control point selection mode disabled.");
+                v.sendMessage(Component.text("Control point selection mode disabled.").color(NamedTextColor.AQUA));
             }
             return;
         }
@@ -175,10 +175,10 @@ public class SplineBrush extends PerformerBrush {
             if (!this.set) {
                 this.set = true;
                 this.ctrl = false;
-                v.sendMessage(ChatColor.GRAY + "Endpoint selection mode ENABLED.");
+                v.sendMessage(Component.text("Endpoint selection mode ENABLED.").color(NamedTextColor.GRAY));
             } else {
                 this.set = false;
-                v.sendMessage(ChatColor.AQUA + "Endpoint selection mode disabled.");
+                v.sendMessage(Component.text("Endpoint selection mode disabled.").color(NamedTextColor.AQUA));
             }
             return;
         }
@@ -195,7 +195,7 @@ public class SplineBrush extends PerformerBrush {
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
         sendPerformerMessage(triggerHandle, v);
     }
 

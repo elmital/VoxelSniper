@@ -3,8 +3,9 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -179,7 +180,7 @@ public class PunishBrush extends Brush {
     @Override
     protected final void arrow(final SnipeData v) {
         if (!v.owner().getPlayer().hasPermission("voxelsniper.punish")) {
-            v.sendMessage("The server says no!");
+            v.getVoxelMessage().brushMessageError("The server says no!");
             return;
         }
 
@@ -189,7 +190,7 @@ public class PunishBrush extends Brush {
         if (this.specificPlayer) {
             final Player punishedPlayer = Bukkit.getPlayer(this.punishPlayerName);
             if (punishedPlayer == null) {
-                v.sendMessage("No player " + this.punishPlayerName + " found.");
+                v.getVoxelMessage().brushMessageError("No player " + this.punishPlayerName + " found.");
                 return;
             }
 
@@ -212,7 +213,7 @@ public class PunishBrush extends Brush {
                         }
                     } catch (final Exception exception) {
                         exception.printStackTrace();
-                        v.sendMessage("An error occured.");
+                        v.getVoxelMessage().brushMessageError();
                         return;
                     }
                 } else if (v.getBrushSize() == PunishBrush.INFINIPUNISH_SIZE) {
@@ -221,13 +222,13 @@ public class PunishBrush extends Brush {
                 }
             }
         }
-        v.sendMessage(ChatColor.DARK_RED + "Punishment applied to " + numPunishApps + " living entities.");
+        v.sendMessage(Component.text("Punishment applied to " + numPunishApps + " living entities.").color(NamedTextColor.DARK_RED));
     }
 
     @Override
     protected final void powder(final SnipeData v) {
         if (!v.owner().getPlayer().hasPermission("voxelsniper.punish")) {
-            v.sendMessage("The server says no!");
+            v.getVoxelMessage().brushMessageError("The server says no!");
             return;
         }
 
@@ -251,7 +252,7 @@ public class PunishBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.GREEN + "Punishment: " + this.punishment.toString());
+        vm.custom(Component.text("Punishment: " + this.punishment.toString()).color(NamedTextColor.GREEN));
         vm.size();
         vm.center();
     }
@@ -259,14 +260,6 @@ public class PunishBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Punish Brush Options:");
-            v.sendMessage(ChatColor.BLUE + "Punishment level can be set with /vc [level]");
-            v.sendMessage(ChatColor.BLUE + "Punishment duration in seconds can be set with /vh [duration]");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [punishment]  -- Sets the punishment");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " -hypno  -- Toggle whether Hypno will affect landscape only");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " -player [playername]  -- Target specific player, clear with empty playername");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " -self  -- Toggle whether you will be affected");
-            v.sendMessage(ChatColor.AQUA + "Available Punishment Options:");
             final StringBuilder punishmentOptions = new StringBuilder();
             for (final Punishment punishment : Punishment.values()) {
                 if (punishmentOptions.length() != 0) {
@@ -274,39 +267,53 @@ public class PunishBrush extends Brush {
                 }
                 punishmentOptions.append(punishment.name());
             }
-            v.sendMessage(ChatColor.GOLD + punishmentOptions.toString());
+            v.getVoxelMessage().commandParameters("Punish Brush Options:"
+                    , Component.text("Punishment level can be set with /vc [level]").color(NamedTextColor.BLUE)
+                            .append(Component.newline())
+                            .append(Component.text("Punishment duration in seconds can be set with /vh [duration]"))
+                            .append(Component.newline())
+                            .append(Component.text("Available Punishment Options:").color(NamedTextColor.AQUA))
+                            .append(Component.newline())
+                            .append(Component.text(punishmentOptions.toString()).color(NamedTextColor.GOLD))
+                    , "/b " + triggerHandle + " [punishment]  -- Sets the punishment"
+                    , "/b " + triggerHandle + " -hypno  -- Toggle whether Hypno will affect landscape only"
+                    , "/b " + triggerHandle + " -player [playername]  -- Target specific player, clear with empty playername"
+                    , "/b " + triggerHandle + " -self  -- Toggle whether you will be affected"
+            );
             return;
         }
 
         if (params[0].equalsIgnoreCase("-player")) {
             if (params.length == 1) {
                 this.specificPlayer = false;
-                v.sendMessage("No longer targeting a specific player.");
+                v.sendMessage(Component.text("No longer targeting a specific player.").color(NamedTextColor.YELLOW));
             } else {
                 this.specificPlayer = true;
                 this.punishPlayerName = params[1];
-                v.sendMessage("Now targeting a specific player: " + params[1]);
+                v.sendMessage(Component.text("Now targeting a specific player: " + params[1]).color(NamedTextColor.YELLOW));
+
+                v.getVoxelMessage().brushMessageError();
             }
             return;
         }
 
         if (params[0].equalsIgnoreCase("-self")) {
             this.hitsSelf = !this.hitsSelf;
-            v.sendMessage("Punishments will now " + (this.hitsSelf ? "affect you." : "not affect you."));
+            v.sendMessage(Component.text("Punishments will now " + (this.hitsSelf ? "affect you." : "not affect you.")).color(NamedTextColor.YELLOW));
             return;
         }
 
         if (params[0].equalsIgnoreCase("-hypno")) {
             this.hypnoAffectLandscape = !this.hypnoAffectLandscape;
-            v.sendMessage("Hypno will now " + (this.hypnoAffectLandscape ? "affect landscape only" : "give the full experience"));
+            v.sendMessage(Component.text("Hypno will now " + (this.hypnoAffectLandscape ? "affect landscape only" : "give the full experience")).color(NamedTextColor.YELLOW));
             return;
         }
 
         try {
             this.punishment = Punishment.valueOf(params[0].toUpperCase());
-            v.sendMessage(ChatColor.YELLOW + this.punishment.name() + ChatColor.GOLD + " punishment selected.");
+            v.sendMessage(Component.text(this.punishment.name() + " punishment selected.").color(NamedTextColor.YELLOW));
         } catch (final IllegalArgumentException exception) {
-            v.sendMessage(ChatColor.GOLD + "That punishment does not exist! Use " + ChatColor.LIGHT_PURPLE + " /b " + triggerHandle + " info " + ChatColor.GOLD + " to see brush parameters.");
+            v.getVoxelMessage().invalidUseParameter(triggerHandle);
         }
     }
 

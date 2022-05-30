@@ -3,7 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Triangle_Brush
@@ -31,33 +32,32 @@ public class TriangleBrush extends PerformerBrush {
 
     private void triangleA(final SnipeData v) {
         switch (this.cornernumber) {
-            case 1:
+            case 1 -> {
                 this.coordsOne[0] = this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()); // I hate you sometimes, Notch. Really? Every quadrant is
                 // different?
                 this.coordsOne[1] = this.getTargetBlock().getY() + .5;
                 this.coordsOne[2] = this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ());
                 this.cornernumber = 2;
-                v.sendMessage(ChatColor.GRAY + "First Corner set.");
-                break;
-            case 2:
+                v.sendMessage(Component.text("First Corner set.").color(NamedTextColor.GRAY));
+            }
+            case 2 -> {
                 this.coordsTwo[0] = this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()); // I hate you sometimes, Notch. Really? Every quadrant is
                 // different?
                 this.coordsTwo[1] = this.getTargetBlock().getY() + .5;
                 this.coordsTwo[2] = this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ());
                 this.cornernumber = 3;
-                v.sendMessage(ChatColor.GRAY + "Second Corner set.");
-                break;
-            case 3:
+                v.sendMessage(Component.text("Second Corner set.").color(NamedTextColor.GRAY));
+            }
+            case 3 -> {
                 this.coordsThree[0] = this.getTargetBlock().getX() + .5 * this.getTargetBlock().getX() / Math.abs(this.getTargetBlock().getX()); // I hate you sometimes, Notch. Really? Every quadrant is
                 // different?
                 this.coordsThree[1] = this.getTargetBlock().getY() + .5;
                 this.coordsThree[2] = this.getTargetBlock().getZ() + .5 * this.getTargetBlock().getZ() / Math.abs(this.getTargetBlock().getZ());
                 this.cornernumber = 1;
-                v.sendMessage(ChatColor.GRAY + "Third Corner set.");
-                break;
-            default:
-                break;
-
+                v.sendMessage(Component.text("Third Corner set.").color(NamedTextColor.GRAY));
+            }
+            default -> {
+            }
         }
 
     }
@@ -95,7 +95,7 @@ public class TriangleBrush extends PerformerBrush {
         heronBig = .25 * Math.pow(Math.pow(Math.pow(lengthOne, 2) + Math.pow(lengthTwo, 2) + Math.pow(lengthThree, 2), 2) - 2 * (Math.pow(lengthOne, 4) + Math.pow(lengthTwo, 4) + Math.pow(lengthThree, 4)), .5);
 
         if (lengthOne == 0 || lengthTwo == 0 || (this.coordsOne[0] == 0 && this.coordsOne[1] == 0 && this.coordsOne[2] == 0) || (this.coordsTwo[0] == 0 && this.coordsTwo[1] == 0 && this.coordsTwo[2] == 0) || (this.coordsThree[0] == 0 && this.coordsThree[1] == 0 && this.coordsThree[2] == 0)) {
-            v.sendMessage(ChatColor.RED + "ERROR: Invalid corners, please try again.");
+            v.getVoxelMessage().brushMessageError("ERROR: Invalid corners, please try again.");
         } else {
             // Make the Changes
             final double[] cVectorOne = new double[3];
@@ -289,11 +289,11 @@ public class TriangleBrush extends PerformerBrush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.BLUE + "Instructions: Select three corners with the arrow brush, then generate the triangle with the powder brush.");
+            v.getVoxelMessage().commandParameters(null, Component.text("Instructions: Select three corners with the arrow brush, then generate the triangle with the powder brush.").color(NamedTextColor.BLUE));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
         sendPerformerMessage(triggerHandle, v);
     }
 

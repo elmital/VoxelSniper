@@ -8,8 +8,9 @@ import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
 import com.thevoxelbox.voxelsniper.event.SniperBrushSizeChangedEvent;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -44,19 +45,26 @@ public class VoxelBrushCommand extends VoxelCommand {
         // Default command
         // Command: /b, /b help, /b info
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [brushHandle] [arguments...]");
-            player.sendMessage(ChatColor.YELLOW + "    Changes to the brush with the specified brush handle, with the specified arguments.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " p [performerHandle]");
-            player.sendMessage(ChatColor.YELLOW + "    Changes to the brush with the specified brush handle and the specified performer.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [brushSize]");
-            player.sendMessage(ChatColor.YELLOW + "    Sets the brush size of the active brush.");
+            player.sendMessage(Component.empty()
+                    .append(Component.text(getName() + " Command Syntax:").color(NamedTextColor.DARK_AQUA))
+                    .append(Component.newline())
+                    .append(Component.text("/" + getActiveAlias() + " [brushHandle] [arguments...]").color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("    Changes to the brush with the specified brush handle, with the specified arguments.").color(NamedTextColor.YELLOW))
+                    .append(Component.newline())
+                    .append(Component.text("/" + getActiveAlias() + " p [performerHandle]").color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("    Changes to the brush with the specified brush handle and the specified performer.").color(NamedTextColor.YELLOW))
+                    .append(Component.newline())
+                    .append(Component.text("/" + getActiveAlias() + " [brushSize]").color(NamedTextColor.GOLD))
+                    .append(Component.newline())
+                    .append(Component.text("    Sets the brush size of the active brush.").color(NamedTextColor.YELLOW)));
             return true;
         }
 
         // No arguments -> show brush settings
         if (args.length == 0) {
-            player.sendMessage(ChatColor.DARK_RED + "VoxelSniper - Current Brush Settings:");
+            player.sendMessage(Component.text("VoxelSniper - Current Brush Settings:").color(NamedTextColor.DARK_RED));
             sniper.displayInfo();
             return true;
         }
@@ -87,13 +95,13 @@ public class VoxelBrushCommand extends VoxelCommand {
             Class<? extends IBrush> brush = VoxelBrushManager.getInstance().getBrushForHandle(args[0]);
 
             if (brush == null) {
-                player.sendMessage(ChatColor.RED + "No brush exists with the brush handle '" + args[0] + "'.");
+                player.sendMessage(Component.text("No brush exists with the brush handle '" + args[0] + "'.").color(NamedTextColor.RED));
             } else {
                 IBrush oldBrush = sniper.getBrush(currentToolId);
                 IBrush newBrush = sniper.setBrush(currentToolId, brush);
 
                 if (newBrush == null) {
-                    player.sendMessage(ChatColor.RED + "You do not have the required permissions to use that brush.");
+                    player.sendMessage(Component.text("You do not have the required permissions to use that brush.").color(NamedTextColor.RED));
                     return true;
                 }
 

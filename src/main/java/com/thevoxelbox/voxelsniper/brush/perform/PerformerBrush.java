@@ -9,8 +9,9 @@ import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.Brush;
 import com.thevoxelbox.voxelsniper.event.SniperBrushChangedEvent;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public abstract class PerformerBrush extends Brush implements IPerformerBrush {
     }
 
     public void sendPerformerMessage(String triggerHandle, SnipeData v) {
-        v.sendMessage(ChatColor.DARK_AQUA + "You can use " + ChatColor.YELLOW + "'/b " + triggerHandle + " p [performer]'" + ChatColor.DARK_AQUA + " to change performers now.");
+        v.sendMessage(Component.text("You can use ").color(NamedTextColor.DARK_AQUA).append(Component.text("'/b " + triggerHandle + " p [performer]'").color(NamedTextColor.YELLOW).append(Component.text(" to change performers now.").color(NamedTextColor.DARK_AQUA))));
     }
 
     @Override

@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.util.BlockWrapper;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -146,7 +147,7 @@ public class Rot2DvertBrush extends Brush {
                 break;
 
             default:
-                v.owner().getPlayer().sendMessage(ChatColor.RED + "Something went wrong.");
+                v.getVoxelMessage().brushMessageError("Something went wrong.");
                 break;
         }
     }
@@ -162,7 +163,7 @@ public class Rot2DvertBrush extends Brush {
                 break;
 
             default:
-                v.owner().getPlayer().sendMessage(ChatColor.RED + "Something went wrong.");
+                v.getVoxelMessage().brushMessageError("Something went wrong.");
                 break;
         }
     }
@@ -175,18 +176,17 @@ public class Rot2DvertBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "2D Rotation Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [number]  -- Set angle in degrees");
+            v.getVoxelMessage().commandParameters("2D Rotation Brush Parameters:", null, "/b " + triggerHandle + " [number]  -- Set angle in degrees");
             return;
         }
 
         try {
             this.se = Math.toRadians(Double.parseDouble(params[0]));
-            v.sendMessage(ChatColor.GREEN + "Angle set to " + this.se);
+            v.sendMessage(Component.text("Angle set to " + this.se).color(NamedTextColor.GREEN));
         } catch (NumberFormatException e) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
     }
 
     @Override

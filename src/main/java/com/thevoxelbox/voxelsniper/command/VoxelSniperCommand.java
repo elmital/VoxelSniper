@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -27,13 +28,21 @@ public class VoxelSniperCommand extends VoxelCommand {
         // Default command
         // Command: /sniper, /sniper help, /sniper info
         if ((args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info")))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " <enable | disable>");
-            player.sendMessage(ChatColor.YELLOW + "    Activates or deactivates VoxelSniper for yourself.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " range");
-            player.sendMessage(ChatColor.YELLOW + "    Toggles whether range limit is enabled or not.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " range [number]");
-            player.sendMessage(ChatColor.YELLOW + "    Sets and enables the range limitation.");
+            player.sendMessage(Component.empty()
+                            .append(Component.text(getName() + " Command Syntax:").color(NamedTextColor.DARK_AQUA))
+                            .append(Component.newline())
+                            .append(Component.text("/" + getActiveAlias() + " <enable | disable>").color(NamedTextColor.GOLD))
+                            .append(Component.newline())
+                            .append(Component.text("    Activates or deactivates VoxelSniper for yourself.").color(NamedTextColor.YELLOW))
+                            .append(Component.newline())
+                            .append(Component.text("/" + getActiveAlias() + " range").color(NamedTextColor.GOLD))
+                            .append(Component.newline())
+                            .append(Component.text("    Toggles whether range limit is enabled or not.").color(NamedTextColor.YELLOW))
+                            .append(Component.newline())
+                            .append(Component.text("/" + getActiveAlias() + " range [number]").color(NamedTextColor.GOLD))
+                            .append(Component.newline())
+                            .append(Component.text("    Sets and enables the range limitation.").color(NamedTextColor.YELLOW))
+            );
             // TODO: List all bound tools
             // player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " list"); 
             // player.sendMessage(ChatColor.YELLOW + "    Lists all items that you have bound an action to.");
@@ -41,7 +50,7 @@ public class VoxelSniperCommand extends VoxelCommand {
         }
 
         if (args.length == 0) {
-            player.sendMessage(ChatColor.DARK_RED + "VoxelSniper - Current Brush Settings:");
+            player.sendMessage(Component.text("VoxelSniper - Current Brush Settings:").color(NamedTextColor.DARK_RED));
             sniper.displayInfo();
             return true;
         }
@@ -59,24 +68,24 @@ public class VoxelSniperCommand extends VoxelCommand {
                     try {
                         int range = Integer.parseInt(args[1]);
                         if (range < 0) {
-                            player.sendMessage("Negative values are not allowed.");
+                            player.sendMessage(Component.text("Negative values are not allowed."));
                         } else {
                             snipeData.setRange(range);
                             snipeData.setRanged(true);
                             snipeData.getVoxelMessage().toggleRange();
                         }
                     } catch (NumberFormatException exception) {
-                        player.sendMessage("Can't parse number.");
+                        player.sendMessage(Component.text("Can't parse number."));
                     }
                 }
                 return true;
             } else if (args[0].equalsIgnoreCase("enable")) {
                 sniper.setEnabled(true);
-                player.sendMessage("VoxelSniper is now enabled for you.");
+                player.sendMessage(Component.text("VoxelSniper is now enabled for you."));
                 return true;
             } else if (args[0].equalsIgnoreCase("disable")) {
                 sniper.setEnabled(false);
-                player.sendMessage("VoxelSniper is now disabled for you.");
+                player.sendMessage(Component.text("VoxelSniper is now disabled for you."));
                 return true;
             } else {
                 return false;

@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.command;
 
 import com.thevoxelbox.voxelsniper.VoxelCommandManager;
+import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -33,13 +34,13 @@ public abstract class VoxelCommand implements TabExecutor {
         this.activeAlias = label;   // This is the alias that was executed.
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Only players can execute commands!");
+            sender.sendMessage(Component.text("Only players can execute commands!"));
             return true;
         } else {
             if (command.getPermission() == null || getPermission().isEmpty() || sender.hasPermission(getPermission())) {
                 return doCommand((Player) sender, args);
             } else {
-                sender.sendMessage("You do not have the '" + getPermission() + "' permission node to do that.");
+                sender.sendMessage(Component.text("You do not have the '" + getPermission() + "' permission node to do that."));
                 return true;
             }
         }

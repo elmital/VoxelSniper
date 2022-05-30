@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -99,24 +100,29 @@ public class DrainBrush extends Brush {
         vm.brushName(this.getName());
         vm.size();
 
-        vm.custom(ChatColor.AQUA + ((this.trueCircle == 0.5) ? "True circle mode ON" : "True circle mode OFF"));
-        vm.custom(ChatColor.AQUA + ((this.disc) ? "Disc drain mode ON" : "Disc drain mode OFF"));
+        vm.custom(
+                Component.text(this.trueCircle == 0.5 ? "True circle mode ON" : "True circle mode OFF").color(NamedTextColor.AQUA)
+                        .append(Component.newline())
+                        .append(Component.text(this.disc ? "Disc drain mode ON" : "Disc drain mode OFF"))
+        );
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Drain Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " shape  -- Toggle between brush shapes (default: ball)");
+            v.getVoxelMessage().commandParameters("Drain Brush Parameters:", null, "/b " + triggerHandle + " shape  -- Toggle between brush shapes (default: ball)");
             return;
         }
         if (params[0].startsWith("shape")) {
             this.disc = !this.disc;
-            v.sendMessage(ChatColor.AQUA + "Drain Brush Shape: " + (this.disc ? "Disc" : "Ball"));
+            v.sendMessage(Component.text("Drain Brush Shape: " + (this.disc ? "Disc" : "Ball")).color(NamedTextColor.AQUA));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.sendMessage(Component.text("Invalid parameter! Use ").color(NamedTextColor.RED)
+                .append(Component.text("'/b " + triggerHandle + " info'").color(NamedTextColor.LIGHT_PURPLE))
+                .append(Component.text(" to display valid parameters."))
+        );
     }
 
     @Override

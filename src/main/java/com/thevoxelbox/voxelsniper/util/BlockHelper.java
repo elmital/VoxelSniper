@@ -1,7 +1,8 @@
 package com.thevoxelbox.voxelsniper.util;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Art;
-import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -322,21 +323,21 @@ public class BlockHelper {
                     final int i = bestMatch.getArt().getId() + (back ? -1 : 1) + Art.values().length % Art.values().length;
                     Art art = Art.getById(i);
                     if (art == null) {
-                        p.sendMessage(ChatColor.RED + "This is the final painting, try scrolling to the other direction.");
+                        p.sendMessage(Component.text("This is the final painting, try scrolling to the other direction.").color(NamedTextColor.RED));
                         return;
                     }
                     bestMatch.setArt(art);
-                    p.sendMessage(ChatColor.GREEN + "Painting set to ID: " + (i));
+                    p.sendMessage(Component.text("Painting set to ID: " + (i)).color(NamedTextColor.GREEN));
                 } catch (final Exception e) {
-                    p.sendMessage(ChatColor.RED + "Oops. Something went wrong.");
+                    p.sendMessage(Component.text("Oops. Something went wrong.").color(NamedTextColor.RED));
                 }
             } else {
                 try {
                     Art art = Art.getById(choice);
                     bestMatch.setArt(art);
-                    p.sendMessage(ChatColor.GREEN + "Painting set to ID: " + choice);
+                    p.sendMessage(Component.text("Painting set to ID: " + choice).color(NamedTextColor.GREEN));
                 } catch (final Exception exception) {
-                    p.sendMessage(ChatColor.RED + "Your input was invalid somewhere.");
+                    p.sendMessage(Component.text("Your input was invalid somewhere.").color(NamedTextColor.RED));
                 }
             }
         }

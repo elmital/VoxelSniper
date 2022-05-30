@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Undo;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -196,9 +197,12 @@ public class HeatRayBrush extends Brush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.GREEN + "Octaves: " + this.octaves);
-        vm.custom(ChatColor.GREEN + "Amplitude: " + this.amplitude);
-        vm.custom(ChatColor.GREEN + "Frequency: " + this.frequency);
+        vm.custom(Component.text("Octaves: " + this.octaves).color(NamedTextColor.GREEN)
+                .append(Component.newline())
+                .append(Component.text("Amplitude: " + this.amplitude))
+                .append(Component.newline())
+                .append(Component.text("Frequency: " + this.frequency))
+        );
         vm.size();
     }
 
@@ -206,11 +210,13 @@ public class HeatRayBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
 
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Heat Ray brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " octave [number]  -- Octaves for the noise generator.");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " amplitude [number]  -- Amplitude for the noise generator.");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " frequency [number]  -- Frequency for the noise generator.");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " default  -- Reset to default values.");
+            v.getVoxelMessage().commandParameters("Heat Ray brush Parameters:"
+                    , null
+                    , "/b " + triggerHandle + " octave [number]  -- Octaves for the noise generator."
+                    , "/b " + triggerHandle + " amplitude [number]  -- Amplitude for the noise generator."
+                    , "/b " + triggerHandle + " frequency [number]  -- Frequency for the noise generator."
+                    , "/b " + triggerHandle + " default  -- Reset to default values."
+            );
             return;
         }
 
@@ -218,31 +224,31 @@ public class HeatRayBrush extends Brush {
             this.octaves = 5;
             this.amplitude = 0.3;
             this.frequency = 1;
-            v.sendMessage(ChatColor.GOLD + "Values were set to default values.");
+            v.sendMessage(Component.text("Values were set to default values.").color(NamedTextColor.GOLD));
             return;
         }
 
         try {
             if (params[0].equalsIgnoreCase("octave")) {
                 this.octaves = Integer.valueOf(params[1]);
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Octave: " + this.octaves);
+                v.getVoxelMessage().custom(Component.text("Octave: " + this.octaves).color(NamedTextColor.GREEN));
                 return;
             }
             if (params[0].equalsIgnoreCase("amplitude")) {
                 this.amplitude = Double.valueOf(params[1]);
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Amplitude: " + this.amplitude);
+                v.getVoxelMessage().custom(Component.text("Amplitude: " + this.amplitude).color(NamedTextColor.GREEN));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("frequency")) {
                 this.frequency = Double.valueOf(params[1]);
-                v.getVoxelMessage().custom(ChatColor.GREEN + "Frequency: " + this.frequency);
+                v.getVoxelMessage().custom(Component.text("Frequency: " + this.frequency).color(NamedTextColor.GREEN));
                 return;
             }
         } catch (NumberFormatException e) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
     }
 
     @Override

@@ -4,7 +4,8 @@ import com.thevoxelbox.voxelsniper.VoxelProfileManager;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import com.thevoxelbox.voxelsniper.util.BlockHelper;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
@@ -30,12 +31,20 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
         // Default command
         // Command: /vir info, /vir help
         if (args.length == 1 && (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("info"))) {
-            player.sendMessage(ChatColor.DARK_AQUA + getName() + " Command Syntax:");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + "");
-            player.sendMessage(ChatColor.YELLOW + "    Copy data value of the block you are looking at into the active replace material.");
-            player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " [dataValue]");
-            player.sendMessage(ChatColor.YELLOW + "    Set specified data value to the active replace material.");
-            player.sendMessage(ChatColor.DARK_AQUA + "    Example: /" + getActiveAlias() + "rotation=3 waterlogged=false");
+            player.sendMessage(
+                    Component.newline()
+                            .append(Component.text(getName() + " Command Syntax:").color(NamedTextColor.DARK_AQUA))
+                            .append(Component.newline())
+                            .append(Component.text("/" + getActiveAlias()).color(NamedTextColor.GOLD))
+                            .append(Component.newline())
+                            .append(Component.text("    Copy data value of the block you are looking at into the active replace material.").color(NamedTextColor.YELLOW))
+                            .append(Component.newline())
+                            .append(Component.text("/" + getActiveAlias() + " [dataValue]").color(NamedTextColor.GOLD))
+                            .append(Component.newline())
+                            .append(Component.text("    Set specified data value to the active replace material.").color(NamedTextColor.YELLOW))
+                            .append(Component.newline())
+                            .append(Component.text("    Example: /" + getActiveAlias() + "rotation=3 waterlogged=false").color(NamedTextColor.DARK_AQUA))
+            );
             return true;
         }
 
@@ -44,13 +53,13 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
             Block selectedBlock = new BlockHelper(player, player.getWorld()).getTargetBlock();
             if (selectedBlock != null) {
                 if (selectedBlock.getType() != snipeData.getReplaceMaterial()) {
-                    player.sendMessage(ChatColor.RED + "That block is not the same as your active replace material.");
+                    player.sendMessage(Component.text("That block is not the same as your active replace material.").color(NamedTextColor.RED));
                 } else {
                     snipeData.setReplaceSubstance(selectedBlock.getBlockData());
                     snipeData.getVoxelMessage().replaceData();
                 }
             } else {
-                player.sendMessage(ChatColor.GOLD + "No block to imitate replace material data values. No changes were made.");
+                player.sendMessage(Component.text("No block to imitate replace material data values. No changes were made.").color(NamedTextColor.GOLD));
             }
             return true;
         }
@@ -64,7 +73,7 @@ public class VoxelInkReplaceCommand extends VoxelCommand {
                 snipeData.setReplaceSubstance(activeData.merge(newData));
                 snipeData.getVoxelMessage().replaceData();
             } catch (IllegalArgumentException e) {
-                player.sendMessage(ChatColor.RED + "The data value(s) cannot be imitated to the active voxel material.");
+                player.sendMessage(Component.text("The data value(s) cannot be imitated to the active voxel material.").color(NamedTextColor.RED));
             }
             return true;
         }

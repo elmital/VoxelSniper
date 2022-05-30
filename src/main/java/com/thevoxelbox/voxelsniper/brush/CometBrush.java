@@ -3,7 +3,8 @@ package com.thevoxelbox.voxelsniper.brush;
 import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.SmallFireball;
@@ -43,23 +44,22 @@ public class CometBrush extends Brush {
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Comet Brush Parameters:");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " [big|small]  -- Sets your ball size");
+            v.getVoxelMessage().commandParameters("Comet Brush Parameters:", null, "/b " + triggerHandle + " [big|small]  -- Sets your ball size");
         }
 
         if (params[0].equalsIgnoreCase("big")) {
             useBigBalls = true;
-            v.sendMessage("Your balls are " + ChatColor.DARK_RED + ("BIG"));
+            v.sendMessage(Component.text("Your balls are ").color(NamedTextColor.DARK_RED).append(Component.text("BIG")));
             return;
         }
 
         if (params[0].equalsIgnoreCase("small")) {
             useBigBalls = false;
-            v.sendMessage("Your balls are " + ChatColor.DARK_RED + ("small"));
+            v.sendMessage(Component.text("Your balls are ").color(NamedTextColor.DARK_RED).append(Component.text("small")));
             return;
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class CometBrush extends Brush {
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
         vm.voxel();
-        vm.custom("Your balls are " + ChatColor.DARK_RED + (useBigBalls ? "BIG" : "small"));
+        vm.custom(Component.text("Your balls are ").append(Component.text(useBigBalls ? "BIG" : "small").color(NamedTextColor.DARK_RED)));
     }
 
     @Override

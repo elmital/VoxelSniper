@@ -2,6 +2,7 @@ package com.thevoxelbox.voxelsniper.snipe;
 
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.util.VoxelList;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
@@ -147,7 +148,7 @@ public class SnipeData {
         this.voxelList = new VoxelList();
     }
 
-    public final void sendMessage(final String message) {
+    public final void sendMessage(final Component message) {
         this.owner.getPlayer().sendMessage(message);
     }
 

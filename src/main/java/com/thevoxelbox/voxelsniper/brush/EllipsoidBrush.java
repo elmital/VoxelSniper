@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.thevoxelbox.voxelsniper.VoxelMessage;
 import com.thevoxelbox.voxelsniper.brush.perform.PerformerBrush;
 import com.thevoxelbox.voxelsniper.snipe.SnipeData;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;
@@ -79,42 +80,43 @@ public class EllipsoidBrush extends PerformerBrush {
     @Override
     public final void info(final VoxelMessage vm) {
         vm.brushName(this.getName());
-        vm.custom(ChatColor.AQUA + "X radius set to: " + ChatColor.DARK_AQUA + this.xRad);
-        vm.custom(ChatColor.AQUA + "Y radius set to: " + ChatColor.DARK_AQUA + this.yRad);
-        vm.custom(ChatColor.AQUA + "Z radius set to: " + ChatColor.DARK_AQUA + this.zRad);
+        vm.custom(Component.empty()
+                .append(Component.text("X radius set to: ").color(NamedTextColor.AQUA).append(Component.text(this.xRad).color(NamedTextColor.DARK_AQUA)))
+                .append(Component.newline())
+                .append(Component.text("Y radius set to: ").color(NamedTextColor.AQUA).append(Component.text(this.yRad).color(NamedTextColor.DARK_AQUA)))
+                .append(Component.newline())
+                .append(Component.text("Z radius set to: ").color(NamedTextColor.AQUA).append(Component.text(this.zRad).color(NamedTextColor.DARK_AQUA)))
+        );
     }
 
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final com.thevoxelbox.voxelsniper.snipe.SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
-            v.sendMessage(ChatColor.GOLD + "Ellipse Brush Parameters: ");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " x [number]  -- Set X radius");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " y [number]  -- Set Y radius");
-            v.sendMessage(ChatColor.AQUA + "/b " + triggerHandle + " z [number]  -- Set Z radius");
+            v.getVoxelMessage().commandParameters("Ellipse Brush Parameters: ", null, "/b " + triggerHandle + " x [number]  -- Set X radius", "/b " + triggerHandle + " y [number]  -- Set Y radius", "/b " + triggerHandle + " z [number]  -- Set Z radius");
             return;
         }
         try {
             if (params[0].startsWith("x")) {
                 this.xRad = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.AQUA + "X radius set to: " + this.xRad);
+                v.sendMessage(Component.text("X radius set to: " + this.xRad).color(NamedTextColor.AQUA));
                 return;
             }
 
             if (params[0].startsWith("y")) {
                 this.yRad = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.AQUA + "Y radius set to: " + this.yRad);
+                v.sendMessage(Component.text("Y radius set to: " + this.yRad).color(NamedTextColor.AQUA));
                 return;
             }
 
             if (params[0].startsWith("z")) {
                 this.zRad = Integer.parseInt(params[1]);
-                v.sendMessage(ChatColor.AQUA + "Z radius set to: " + this.zRad);
+                v.sendMessage(Component.text("Z radius set to: " + this.zRad).color(NamedTextColor.AQUA));
                 return;
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
         }
 
-        v.sendMessage(ChatColor.RED + "Invalid parameter! Use " + ChatColor.LIGHT_PURPLE + "'/b " + triggerHandle + " info'" + ChatColor.RED + " to display valid parameters.");
+        v.getVoxelMessage().invalidUseParameter(triggerHandle);
         sendPerformerMessage(triggerHandle, v);
     }
 
