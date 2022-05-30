@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class DrainBrush extends Brush {
 
-    private double trueCircle = 0.5;
+    private final double trueCircle = 0.5;
     private boolean disc = false;
 
     /**
@@ -29,7 +29,6 @@ public class DrainBrush extends Brush {
         this.setName("Drain");
     }
 
-    @SuppressWarnings("deprecation")
     private void drain(final SnipeData v) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + this.trueCircle, 2);
@@ -127,11 +126,7 @@ public class DrainBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("shape"));
-        
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("shape"));
     }
 
     @Override

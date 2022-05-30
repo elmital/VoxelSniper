@@ -11,6 +11,7 @@ import org.bukkit.block.Block;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Ellipse_Brush
@@ -45,7 +46,7 @@ public class EllipseBrush extends PerformerBrush {
                 final int x = (int) Math.round(this.xscl * Math.cos(steps));
                 final int y = (int) Math.round(this.yscl * Math.sin(steps));
 
-                switch (getTargetBlock().getFace(this.getLastBlock())) {
+                switch (Objects.requireNonNull(getTargetBlock().getFace(this.getLastBlock()))) {
                     case NORTH:
                     case SOUTH:
                         currentPerformer.perform(targetBlock.getRelative(0, x, y));
@@ -85,7 +86,7 @@ public class EllipseBrush extends PerformerBrush {
                         final int x = (int) Math.round(ix * Math.cos(steps));
                         final int y = (int) Math.round(iy * Math.sin(steps));
 
-                        switch (getTargetBlock().getFace(this.getLastBlock())) {
+                        switch (Objects.requireNonNull(getTargetBlock().getFace(this.getLastBlock()))) {
                             case NORTH:
                             case SOUTH:
                                 currentPerformer.perform(targetBlock.getRelative(0, x, y));
@@ -113,7 +114,7 @@ public class EllipseBrush extends PerformerBrush {
                         final int x = (int) Math.round(ix * Math.cos(steps));
                         final int y = (int) Math.round(iy * Math.sin(steps));
 
-                        switch (getTargetBlock().getFace(this.getLastBlock())) {
+                        switch (Objects.requireNonNull(getTargetBlock().getFace(this.getLastBlock()))) {
                             case NORTH:
                             case SOUTH:
                                 currentPerformer.perform(targetBlock.getRelative(0, x, y));
@@ -248,7 +249,7 @@ public class EllipseBrush extends PerformerBrush {
                 v.sendMessage(Component.text("Render step number set to: " + this.steps).color(NamedTextColor.AQUA));
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
         }
 
         v.sendMessage(Component.text("Invalid parameter! Use ").color(NamedTextColor.RED)

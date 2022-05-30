@@ -21,7 +21,6 @@ import java.util.List;
 // original 2d horizontal brush if you wish to make anything similar to this, and start there. I didn't bother renaming everything.
 public class Rot2DvertBrush extends Brush {
 
-    private int mode = 0;
     private int bSize;
     private int brushSize;
     private BlockWrapper[][][] snap;
@@ -34,7 +33,6 @@ public class Rot2DvertBrush extends Brush {
         this.setName("2D Rotation");
     }
 
-    @SuppressWarnings("deprecation")
     private void getMatrix() {
         this.brushSize = (this.bSize * 2) + 1;
 
@@ -63,7 +61,7 @@ public class Rot2DvertBrush extends Brush {
         }
     }
 
-    private void rotate(final SnipeData v) {
+    private void rotate() {
         final double brushSizeSquared = Math.pow(this.bSize + 0.5, 2);
         final double cos = Math.cos(this.se);
         final double sin = Math.sin(this.se);
@@ -140,32 +138,16 @@ public class Rot2DvertBrush extends Brush {
     protected final void arrow(final SnipeData v) {
         this.bSize = v.getBrushSize();
 
-        switch (this.mode) {
-            case 0:
-                this.getMatrix();
-                this.rotate(v);
-                break;
-
-            default:
-                v.getVoxelMessage().brushMessageError("Something went wrong.");
-                break;
-        }
+        this.getMatrix();
+        this.rotate();
     }
 
     @Override
     protected final void powder(final SnipeData v) {
         this.bSize = v.getBrushSize();
 
-        switch (this.mode) {
-            case 0:
-                this.getMatrix();
-                this.rotate(v);
-                break;
-
-            default:
-                v.getVoxelMessage().brushMessageError("Something went wrong.");
-                break;
-        }
+        this.getMatrix();
+        this.rotate();
     }
 
     @Override
@@ -183,7 +165,7 @@ public class Rot2DvertBrush extends Brush {
         try {
             this.se = Math.toRadians(Double.parseDouble(params[0]));
             v.sendMessage(Component.text("Angle set to " + this.se).color(NamedTextColor.GREEN));
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.getVoxelMessage().invalidUseParameter(triggerHandle);
@@ -191,11 +173,7 @@ public class Rot2DvertBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-
-        arguments.addAll(Lists.newArrayList("[number]"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("[number]"));
     }
 
     @Override

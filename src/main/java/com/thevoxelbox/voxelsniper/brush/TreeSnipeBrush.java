@@ -107,11 +107,7 @@ public class TreeSnipeBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-
-        arguments.addAll(Arrays.stream(TreeType.values()).map(e -> e.name()).collect(Collectors.toList()));
-
-        return arguments;
+        return new ArrayList<>(Arrays.stream(TreeType.values()).map(Enum::name).toList());
     }
 
     @Override

@@ -55,23 +55,11 @@ public class VoxelDiscFaceBrush extends PerformerBrush {
             return;
         }
         switch (bf) {
-            case NORTH:
-            case SOUTH:
-                this.discNS(v, targetBlock);
-                break;
-
-            case EAST:
-            case WEST:
-                this.discEW(v, targetBlock);
-                break;
-
-            case UP:
-            case DOWN:
-                this.disc(v, targetBlock);
-                break;
-
-            default:
-                break;
+            case NORTH, SOUTH -> this.discNS(v, targetBlock);
+            case EAST, WEST -> this.discEW(v, targetBlock);
+            case UP, DOWN -> this.disc(v, targetBlock);
+            default -> {
+            }
         }
     }
 

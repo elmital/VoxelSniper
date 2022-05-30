@@ -30,7 +30,6 @@ public class StampBrush extends Brush {
          * @param bly
          * @param blz
          */
-        @SuppressWarnings("deprecation")
         public BlockWrapper(final Block b, final int blx, final int bly, final int blz) {
             this.blockData = b.getBlockData();
             this.x = blx;
@@ -46,10 +45,10 @@ public class StampBrush extends Brush {
         NO_AIR, FILL, DEFAULT
     }
 
-    protected HashSet<BlockWrapper> clone = new HashSet<BlockWrapper>();
-    protected HashSet<BlockWrapper> fall = new HashSet<BlockWrapper>();
-    protected HashSet<BlockWrapper> drop = new HashSet<BlockWrapper>();
-    protected HashSet<BlockWrapper> solid = new HashSet<BlockWrapper>();
+    protected HashSet<BlockWrapper> clone = new HashSet<>();
+    protected HashSet<BlockWrapper> fall = new HashSet<>();
+    protected HashSet<BlockWrapper> drop = new HashSet<>();
+    protected HashSet<BlockWrapper> solid = new HashSet<>();
     protected Undo undo;
     protected boolean sorted = false;
 
@@ -86,22 +85,20 @@ public class StampBrush extends Brush {
      * @return
      */
     protected final boolean fallsOff(final Material material) {
-        switch (material) {
+        return switch (material) {
             // TODO: Translate this
             // 6, 37, 38, 39, 40, 50, 51, 55, 59, 63, 64, 65, 66, 69, 70, 71, 72, 75, 76, 77, 83
-            /**
+            /*
              * case (6): case (37): case (38): case (39): case (40): case (50): case (51): case (55): case (59): case (63): case (64): case (65): case (66):
              * case (68): case (69): case (70): case (71): case (72): case (75): case (76): case (77): case (78): case (83): case (93): case (94):
              */
-            default:
-                return false;
-        }
+            default -> false;
+        };
     }
 
     /**
      * @param cb
      */
-    @SuppressWarnings("deprecation")
     protected final void setBlock(final BlockWrapper cb) {
         final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
         this.undo.put(block);
@@ -111,7 +108,6 @@ public class StampBrush extends Brush {
     /**
      * @param cb
      */
-    @SuppressWarnings("deprecation")
     protected final void setBlockFill(final BlockWrapper cb) {
         final Block block = this.clampY(this.getTargetBlock().getX() + cb.x, this.getTargetBlock().getY() + cb.y, this.getTargetBlock().getZ() + cb.z);
         if (block.getType().isAir()) {
@@ -258,21 +254,10 @@ public class StampBrush extends Brush {
     @Override
     protected final void arrow(final SnipeData v) {
         switch (this.stamp) {
-            case DEFAULT:
-                this.stamp(v);
-                break;
-
-            case NO_AIR:
-                this.stampNoAir(v);
-                break;
-
-            case FILL:
-                this.stampFill(v);
-                break;
-
-            default:
-                v.getVoxelMessage().brushMessageError("Error while stamping! Report");
-                break;
+            case DEFAULT -> this.stamp(v);
+            case NO_AIR -> this.stampNoAir(v);
+            case FILL -> this.stampFill(v);
+            default -> v.getVoxelMessage().brushMessageError("Error while stamping! Report");
         }
     }
 

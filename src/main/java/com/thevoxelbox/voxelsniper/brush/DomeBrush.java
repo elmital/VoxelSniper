@@ -38,7 +38,6 @@ public class DomeBrush extends Brush {
      * @param v
      * @param targetBlock
      */
-    @SuppressWarnings("deprecation")
     private void generateDome(final SnipeData v, final Block targetBlock) {
 
         if (v.getVoxelHeight() == 0) {
@@ -54,7 +53,7 @@ public class DomeBrush extends Brush {
         final Undo undo = new Undo();
 
         final int brushSizeTimesVoxelHeight = v.getBrushSize() * absoluteHeight;
-        final double stepScale = ((v.getBrushSize() * v.getBrushSize()) + brushSizeTimesVoxelHeight + brushSizeTimesVoxelHeight) / 5;
+        final double stepScale = ((v.getBrushSize() * v.getBrushSize()) + brushSizeTimesVoxelHeight + brushSizeTimesVoxelHeight) / 5.0;
 
         final double stepSize = 1 / stepScale;
 

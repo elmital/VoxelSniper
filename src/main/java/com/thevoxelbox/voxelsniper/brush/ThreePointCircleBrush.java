@@ -178,7 +178,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
         
-        arguments.addAll(Arrays.stream(Tolerance.values()).map(e -> e.name()).collect(Collectors.toList()));
+        arguments.addAll(Arrays.stream(Tolerance.values()).map(Enum::name).toList());
 
         arguments.addAll(super.registerArguments());
         return arguments;
@@ -191,7 +191,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
      */
     private enum Tolerance {
         DEFAULT(1000), ACCURATE(10), SMOOTH(2000);
-        private int value;
+        private final int value;
 
         Tolerance(final int value) {
             this.value = value;

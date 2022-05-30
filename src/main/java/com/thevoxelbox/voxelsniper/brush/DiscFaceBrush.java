@@ -95,23 +95,11 @@ public class DiscFaceBrush extends PerformerBrush {
             return;
         }
         switch (blockFace) {
-            case NORTH:
-            case SOUTH:
-                this.discNS(v, targetBlock);
-                break;
-
-            case EAST:
-            case WEST:
-                this.discEW(v, targetBlock);
-                break;
-
-            case UP:
-            case DOWN:
-                this.discUD(v, targetBlock);
-                break;
-
-            default:
-                break;
+            case NORTH, SOUTH -> this.discNS(v, targetBlock);
+            case EAST, WEST -> this.discEW(v, targetBlock);
+            case UP, DOWN -> this.discUD(v, targetBlock);
+            default -> {
+            }
         }
     }
 

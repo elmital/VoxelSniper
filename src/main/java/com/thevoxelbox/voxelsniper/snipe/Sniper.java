@@ -27,11 +27,11 @@ import java.util.UUID;
  */
 public class Sniper {
 
-    private VoxelSniper plugin;
+    private final VoxelSniper plugin;
     private final UUID player;
     private boolean enabled = true;
-    private LinkedList<Undo> undoList = new LinkedList<Undo>();
-    private Map<String, SnipeTool> tools = Maps.newHashMap();
+    private final LinkedList<Undo> undoList = new LinkedList<Undo>();
+    private final Map<String, SnipeTool> tools = Maps.newHashMap();
 
     public Sniper(VoxelSniper plugin, Player player) {
         this.plugin = plugin;

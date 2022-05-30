@@ -29,7 +29,6 @@ public class FlatOceanBrush extends Brush {
         this.setName("FlatOcean");
     }
 
-    @SuppressWarnings("deprecation")
     private void flatOcean(final Chunk chunk) {
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int z = 0; z < CHUNK_SIZE; z++) {
@@ -116,11 +115,7 @@ public class FlatOceanBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("water", "floor"));
-        
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("water", "floor"));
     }
 
     @Override

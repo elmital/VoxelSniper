@@ -60,7 +60,7 @@ public class EntityRemovalBrush extends Brush {
         try {
             entityCount += removeEntities(targetChunk);
 
-            int radius = Math.round(v.getBrushSize() / 16);
+            int radius = v.getBrushSize() / 16;
 
             for (int x = targetChunk.getX() - radius; x <= targetChunk.getX() + radius; x++) {
                 for (int z = targetChunk.getZ() - radius; z <= targetChunk.getZ() + radius; z++) {
@@ -169,7 +169,7 @@ public class EntityRemovalBrush extends Brush {
                 }
 
                 return;
-            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException ignored) {
             }
         }
 
@@ -178,11 +178,7 @@ public class EntityRemovalBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("+", "-", "reset", "clear", "list"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("+", "-", "reset", "clear", "list"));
     }
 
     @Override

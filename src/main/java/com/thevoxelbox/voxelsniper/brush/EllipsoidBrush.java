@@ -21,7 +21,7 @@ public class EllipsoidBrush extends PerformerBrush {
     private double xRad;
     private double yRad;
     private double zRad;
-    private boolean istrue = false;
+    private final boolean isTrue = false;
 
     /**
      *
@@ -32,22 +32,22 @@ public class EllipsoidBrush extends PerformerBrush {
 
     private void execute(final SnipeData v, Block targetBlock) {
         this.currentPerformer.perform(targetBlock);
-        double istrueoffset = istrue ? 0.5 : 0;
+        double isTrueOffset = isTrue ? 0.5 : 0;
         int blockPositionX = targetBlock.getX();
         int blockPositionY = targetBlock.getY();
         int blockPositionZ = targetBlock.getZ();
 
         for (double x = 0; x <= xRad; x++) {
 
-            final double xSquared = (x / (xRad + istrueoffset)) * (x / (xRad + istrueoffset));
+            final double xSquared = (x / (xRad + isTrueOffset)) * (x / (xRad + isTrueOffset));
 
             for (double z = 0; z <= zRad; z++) {
 
-                final double zSquared = (z / (zRad + istrueoffset)) * (z / (zRad + istrueoffset));
+                final double zSquared = (z / (zRad + isTrueOffset)) * (z / (zRad + isTrueOffset));
 
                 for (double y = 0; y <= yRad; y++) {
 
-                    final double ySquared = (y / (yRad + istrueoffset)) * (y / (yRad + istrueoffset));
+                    final double ySquared = (y / (yRad + isTrueOffset)) * (y / (yRad + isTrueOffset));
 
                     if (xSquared + ySquared + zSquared <= 1) {
                         this.currentPerformer.perform(this.clampY((int) (blockPositionX + x), (int) (blockPositionY + y), (int) (blockPositionZ + z)));
@@ -113,7 +113,7 @@ public class EllipsoidBrush extends PerformerBrush {
                 v.sendMessage(Component.text("Z radius set to: " + this.zRad).color(NamedTextColor.AQUA));
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
         }
 
         v.getVoxelMessage().invalidUseParameter(triggerHandle);

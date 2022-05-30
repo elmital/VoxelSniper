@@ -32,7 +32,7 @@ public class SplatterVoxelBrush extends PerformerBrush {
     private int seedPercent; // Chance block on first pass is made active
     private int growPercent; // chance block on recursion pass is made active
     private int splatterRecursions; // How many times you grow the seeds
-    private Random generator = new Random();
+    private final Random generator = new Random();
 
     /**
      *
@@ -212,7 +212,7 @@ public class SplatterVoxelBrush extends PerformerBrush {
 
                 if (temp >= GROW_PERCENT_MIN && temp <= GROW_PERCENT_MAX) {
                     v.sendMessage(Component.text("Growth percent set to: " + String.format("%.2f", (double) temp / 100) + "%").color(NamedTextColor.AQUA));
-                    this.growPercent = (int) temp;
+                    this.growPercent = temp;
                 } else {
                     v.getVoxelMessage().brushMessageError("Growth percent must be a decimal between 0.01 - 99.99!");
                 }
@@ -230,7 +230,7 @@ public class SplatterVoxelBrush extends PerformerBrush {
                 }
                 return;
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.getVoxelMessage().invalidUseParameter(triggerHandle);

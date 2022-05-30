@@ -112,7 +112,7 @@ public class CylinderBrush extends PerformerBrush {
                 v.setVoxelHeight(Integer.parseInt(params[1]));
                 v.getVoxelMessage().height();
                 return;
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
             }
         }
 
@@ -121,7 +121,7 @@ public class CylinderBrush extends PerformerBrush {
                 v.setcCen(Integer.parseInt(params[1]));
                 v.sendMessage(Component.text("Cylinder will shift by " + v.getcCen() + " blocks on y-axis").color(NamedTextColor.AQUA));
                 return;
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
             }
         }
 

@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class Rot3DBrush extends Brush {
 
-    private final int mode = 0;
     private int bSize;
     private int brushSize;
     private BlockWrapper[][][] snap;
@@ -83,7 +82,7 @@ public class Rot3DBrush extends Brush {
                 }
                 return;
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.getVoxelMessage().invalidUseParameter(triggerHandle);
@@ -91,11 +90,7 @@ public class Rot3DBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-
-        arguments.addAll(Lists.newArrayList("pitch", "roll", "yaw"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("pitch", "roll", "yaw"));
     }
 
     @Override
@@ -110,7 +105,6 @@ public class Rot3DBrush extends Brush {
         return argumentValues;
     }
 
-    @SuppressWarnings("deprecation")
     private void getMatrix() { // only need to do once. But y needs to change + sphere
         final double brushSizeSquared = Math.pow(this.bSize + 0.5, 2);
         this.brushSize = (this.bSize * 2) + 1;
@@ -147,10 +141,10 @@ public class Rot3DBrush extends Brush {
 
     private void rotate(final SnipeData v) {
         // basically 1) make it a sphere we are rotating in, not a cylinder
-        // 2) do three rotations in a row, one in each dimension, unless some dimensions are set to zero or udnefined or whatever, then skip those.
-        // --> Why not utilize Sniper'world new oportunities and have arrow rotate all 3, powder rotate x, goldsisc y, otherdisc z. Or something like that. Or
+        // 2) do three rotations in a row, one in each dimension, unless some dimensions are set to zero or undefined or whatever, then skip those.
+        // --> Why not utilize Sniper's world new opportunities and have arrow rotate all 3, powder rotate x, goldsisc y, otherdisc z. Or something like that. Or
         // we
-        // could just use arrow and powder and just differenciate between left and right click that gis 4 different situations
+        // could just use arrow and powder and just differentiate between left and right click that gis 4 different situations
         // --> Well, there would be 7 different possibilities... X, Y, Z, XY, XZ, YZ, XYZ, and different numbers of parameters for each, so I think each having
         // and item is too confusing. How about this: arrow = rotate one dimension, based on the face you click, and takes 1 param... powder: rotates all three
         // at once, and takes 3 params.
@@ -242,32 +236,16 @@ public class Rot3DBrush extends Brush {
     protected final void arrow(final SnipeData v) {
         this.bSize = v.getBrushSize();
 
-        switch (this.mode) {
-            case 0:
-                this.getMatrix();
-                this.rotate(v);
-                break;
-
-            default:
-                v.getVoxelMessage().brushMessageError("Something went wrong.");
-                break;
-        }
+        this.getMatrix();
+        this.rotate(v);
     }
 
     @Override
     protected final void powder(final SnipeData v) {
         this.bSize = v.getBrushSize();
 
-        switch (this.mode) {
-            case 0:
-                this.getMatrix();
-                this.rotate(v);
-                break;
-
-            default:
-                v.getVoxelMessage().brushMessageError("Something went wrong.");
-                break;
-        }
+        this.getMatrix();
+        this.rotate(v);
     }
 
     @Override

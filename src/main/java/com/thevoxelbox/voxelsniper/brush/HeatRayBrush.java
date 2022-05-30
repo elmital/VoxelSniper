@@ -29,7 +29,7 @@ public class HeatRayBrush extends Brush {
     private static final double REQUIRED_FIRE_DENSITY = -0.25;
     private static final double REQUIRED_AIR_DENSITY = 0;
 
-    private static final ArrayList<Material> FLAMMABLE_BLOCKS = new ArrayList<Material>();
+    private static final ArrayList<Material> FLAMMABLE_BLOCKS = new ArrayList<>();
 
     private int octaves = 5;
     private double amplitude = 0.3;
@@ -131,7 +131,7 @@ public class HeatRayBrush extends Brush {
 
                     if (currentLocation.toVector().isInSphere(targetLocation, v.getBrushSize())) {
                         currentBlock = currentLocation.getBlock();
-                        if (currentBlock == null || currentBlock.getType() == Material.CHEST) {
+                        if (currentBlock.getType() == Material.CHEST) {
                             continue;
                         }
 
@@ -230,22 +230,22 @@ public class HeatRayBrush extends Brush {
 
         try {
             if (params[0].equalsIgnoreCase("octave")) {
-                this.octaves = Integer.valueOf(params[1]);
+                this.octaves = Integer.parseInt(params[1]);
                 v.getVoxelMessage().custom(Component.text("Octave: " + this.octaves).color(NamedTextColor.GREEN));
                 return;
             }
             if (params[0].equalsIgnoreCase("amplitude")) {
-                this.amplitude = Double.valueOf(params[1]);
+                this.amplitude = Double.parseDouble(params[1]);
                 v.getVoxelMessage().custom(Component.text("Amplitude: " + this.amplitude).color(NamedTextColor.GREEN));
                 return;
             }
 
             if (params[0].equalsIgnoreCase("frequency")) {
-                this.frequency = Double.valueOf(params[1]);
+                this.frequency = Double.parseDouble(params[1]);
                 v.getVoxelMessage().custom(Component.text("Frequency: " + this.frequency).color(NamedTextColor.GREEN));
                 return;
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.getVoxelMessage().invalidUseParameter(triggerHandle);
@@ -253,11 +253,7 @@ public class HeatRayBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-
-        arguments.addAll(Lists.newArrayList("octave", "amplitude", "frequency", "default"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("octave", "amplitude", "frequency", "default"));
     }
 
     @Override

@@ -31,12 +31,12 @@ public class PunishBrush extends Brush {
 
     private static final int MAXIMAL_RANDOM_TELEPORTATION_RANGE = 400;
     private static final int TICKS_PER_SECOND = 20;
-    private static final int INFINIPUNISH_SIZE = -3;
+    private static final int INFINITE_PUNISH_SIZE = -3;
     private static final int DEFAULT_PUNISH_LEVEL = 10;
-    private static final int DEFAULT_PUSNIH_DURATION = 60;
+    private static final int DEFAULT_PUNISH_DURATION = 60;
     private Punishment punishment = Punishment.FIRE;
     private int punishLevel = DEFAULT_PUNISH_LEVEL;
-    private int punishDuration = DEFAULT_PUSNIH_DURATION;
+    private int punishDuration = DEFAULT_PUNISH_DURATION;
     private boolean specificPlayer = false;
     private String punishPlayerName = "";
     private boolean hypnoAffectLandscape = false;
@@ -130,8 +130,8 @@ public class PunishBrush extends Brush {
             case RANDOMTP:
                 final Random random = new Random();
                 final Location targetLocation = entity.getLocation();
-                targetLocation.setX(targetLocation.getX() + (random.nextInt(MAXIMAL_RANDOM_TELEPORTATION_RANGE) - (MAXIMAL_RANDOM_TELEPORTATION_RANGE / 2)));
-                targetLocation.setZ(targetLocation.getZ() + (random.nextInt(PunishBrush.MAXIMAL_RANDOM_TELEPORTATION_RANGE) - PunishBrush.MAXIMAL_RANDOM_TELEPORTATION_RANGE / 2));
+                targetLocation.setX(targetLocation.getX() + (random.nextInt(MAXIMAL_RANDOM_TELEPORTATION_RANGE) - (MAXIMAL_RANDOM_TELEPORTATION_RANGE / 2.0)));
+                targetLocation.setZ(targetLocation.getZ() + (random.nextInt(PunishBrush.MAXIMAL_RANDOM_TELEPORTATION_RANGE) - PunishBrush.MAXIMAL_RANDOM_TELEPORTATION_RANGE / 2.0));
                 entity.teleport(targetLocation);
                 break;
             case ALL_POTION:
@@ -145,9 +145,9 @@ public class PunishBrush extends Brush {
                 final Vector direction = entity.getLocation().toVector().clone();
                 direction.subtract(playerVector);
                 final double length = direction.length();
-                final double stregth = (1 - (length / v.getBrushSize())) * this.punishLevel;
+                final double strength = (1 - (length / v.getBrushSize())) * this.punishLevel;
                 direction.normalize();
-                direction.multiply(stregth);
+                direction.multiply(strength);
                 entity.setVelocity(direction);
                 break;
             case HYPNO:
@@ -216,7 +216,7 @@ public class PunishBrush extends Brush {
                         v.getVoxelMessage().brushMessageError();
                         return;
                     }
-                } else if (v.getBrushSize() == PunishBrush.INFINIPUNISH_SIZE) {
+                } else if (v.getBrushSize() == PunishBrush.INFINITE_PUNISH_SIZE) {
                     numPunishApps++;
                     this.applyPunishment(entity, v);
                 }
@@ -319,14 +319,10 @@ public class PunishBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        List<String> punishArguments = Arrays.stream(Punishment.values()).map(e -> e.name()).collect(Collectors.toList());
+        List<String> punishArguments = Arrays.stream(Punishment.values()).map(Enum::name).collect(Collectors.toList());
         punishArguments.addAll(Lists.newArrayList("-hypno", "-self", "-player"));
-        
-        arguments.addAll(punishArguments);
 
-        return arguments;
+        return new ArrayList<>(punishArguments);
     }
 
     @Override

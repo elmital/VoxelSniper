@@ -23,7 +23,7 @@ public class BlobBrush extends PerformerBrush {
     private static final int GROW_PERCENT_MIN = 1;
     private static final int GROW_PERCENT_MAX = 9999;
 
-    private Random randomGenerator = new Random();
+    private final Random randomGenerator = new Random();
     private int growPercent = GROW_PERCENT_DEFAULT; // chance block on recursion pass is made active
 
     public BlobBrush() {
@@ -246,7 +246,7 @@ public class BlobBrush extends PerformerBrush {
                     v.sendMessage(Component.text("Growth percent must be a number between " + String.format("%.2f", ((float) GROW_PERCENT_MIN / 100)) + " and " + String.format("%.2f", ((float) GROW_PERCENT_MAX / 100)) + "!").color(NamedTextColor.RED));
                 }
                 return;
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ignored) {
             }
         }
 

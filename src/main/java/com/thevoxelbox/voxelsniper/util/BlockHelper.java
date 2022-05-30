@@ -304,8 +304,8 @@ public class BlockHelper {
      */
     @SuppressWarnings(value = "deprecation")
     public static void paint(final Player p, final boolean auto, final boolean back, final int choice) {
-        Location targetLocation = p.getTargetBlock((Set<Material>) null, 4).getLocation();
-        Chunk paintingChunk = p.getTargetBlock((Set<Material>) null, 4).getLocation().getChunk();
+        Location targetLocation = p.getTargetBlock(null, 4).getLocation();
+        Chunk paintingChunk = p.getTargetBlock(null, 4).getLocation().getChunk();
         Double bestDistanceMatch = 50.0;
         Painting bestMatch = null;
         for (Entity entity : paintingChunk.getEntities()) {
