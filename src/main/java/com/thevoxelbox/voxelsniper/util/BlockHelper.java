@@ -156,6 +156,11 @@ public class BlockHelper {
      * @return Block
      */
     public final Block getFaceBlock() {
+        while (this.getNextBlock() != null) {
+            var c = this.getCurBlock();
+            if(c != null && !c.getType().isAir())
+                break;
+        }
         if (this.getCurBlock() != null) {
             return this.getLastBlock();
         } else {
@@ -225,6 +230,11 @@ public class BlockHelper {
      */
     public final Block getTargetBlock() {
         this.fromOffWorld();
+        while (this.getNextBlock() != null) {
+            var c = this.getCurBlock();
+            if(c != null && !c.getType().isAir())
+                break;
+        }
         return this.getCurBlock();
     }
 
