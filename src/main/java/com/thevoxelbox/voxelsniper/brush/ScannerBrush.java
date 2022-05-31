@@ -147,6 +147,7 @@ public class ScannerBrush extends Brush {
             if (params[0].startsWith("depth")) {
                 this.depth = this.clamp(Integer.parseInt(params[1]), DEPTH_MIN, DEPTH_MAX);
                 v.sendMessage(Component.text("Scanner depth set to " + this.depth).color(NamedTextColor.AQUA));
+                return;
             }
         } catch (NumberFormatException ignored) {
         }

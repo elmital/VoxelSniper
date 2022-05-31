@@ -179,7 +179,6 @@ public class JockeyBrush extends Brush {
                 } else {
                     jockeyType = JockeyType.INVERSE_ALL_ENTITIES;
                 }
-                return;
             }
             if (params[0].equalsIgnoreCase("stack")) {
                 if (playerOnly) {

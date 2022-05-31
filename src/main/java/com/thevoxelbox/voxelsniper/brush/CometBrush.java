@@ -45,6 +45,7 @@ public class CometBrush extends Brush {
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
             v.getVoxelMessage().commandParameters("Comet Brush Parameters:", null, "/b " + triggerHandle + " [big|small]  -- Sets your ball size");
+            return;
         }
 
         if (params[0].equalsIgnoreCase("big")) {

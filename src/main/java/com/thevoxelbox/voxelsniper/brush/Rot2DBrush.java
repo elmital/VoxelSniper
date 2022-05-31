@@ -163,6 +163,7 @@ public class Rot2DBrush extends Brush {
         try {
             this.se = Math.toRadians(Double.parseDouble(params[0]));
             v.sendMessage(Component.text("Angle set to " + this.se).color(NamedTextColor.GREEN));
+            return;
         } catch (NumberFormatException ignored) {
         }
 

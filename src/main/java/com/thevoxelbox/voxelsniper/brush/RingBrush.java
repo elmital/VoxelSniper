@@ -88,9 +88,11 @@ public class RingBrush extends PerformerBrush {
 
         try {
             if (params[0].startsWith("inner")) {
-                this.innerSize = Double.parseDouble(params[1]);
-                v.sendMessage(Component.text("The inner radius has been set to ").color(NamedTextColor.AQUA).append(Component.text(this.innerSize).color(NamedTextColor.YELLOW)).append(Component.text(".")));
-                return;
+                if(params.length == 2) {
+                    this.innerSize = Double.parseDouble(params[1]);
+                    v.sendMessage(Component.text("The inner radius has been set to ").color(NamedTextColor.AQUA).append(Component.text(this.innerSize).color(NamedTextColor.YELLOW)).append(Component.text(".")));
+                    return;
+                }
             }
         } catch (final NumberFormatException ignored) {
         }
