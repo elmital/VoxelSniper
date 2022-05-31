@@ -94,11 +94,7 @@ public class CleanSnowBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("smooth"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("smooth"));
     }
 
     @Override

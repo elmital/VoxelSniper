@@ -33,9 +33,9 @@ public class SplatterOverlayBrush extends PerformerBrush {
     private int seedPercent; // Chance block on first pass is made active
     private int growPercent; // chance block on recursion pass is made active
     private int splatterRecursions; // How many times you grow the seeds
-    private int yOffset = 0;
-    private boolean randomizeHeight = false;
-    private Random generator = new Random();
+    private final int yOffset = 0;
+    private final boolean randomizeHeight = false;
+    private final Random generator = new Random();
     private int depth = 3;
 
     private boolean allBlocks = false;
@@ -48,7 +48,6 @@ public class SplatterOverlayBrush extends PerformerBrush {
         this.setName("Splatter Overlay");
     }
 
-    @SuppressWarnings("deprecation")
     private void sOverlay(final SnipeData v) {
 
         // Splatter Time
@@ -225,6 +224,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
+    @SuppressWarnings("deprecation")
     private boolean isIgnoredBlock(Material material) {
         return material == Material.WATER || material.isTransparent() || material == Material.CACTUS;
     }
@@ -238,28 +238,10 @@ public class SplatterOverlayBrush extends PerformerBrush {
             return true;
         }
 
-        switch (material) {
-            case STONE:
-            case ANDESITE:
-            case DIORITE:
-            case GRANITE:
-            case GRASS_BLOCK:
-            case DIRT:
-            case COARSE_DIRT:
-            case PODZOL:
-            case SAND:
-            case RED_SAND:
-            case GRAVEL:
-            case SANDSTONE:
-            case MOSSY_COBBLESTONE:
-            case CLAY:
-            case SNOW:
-            case OBSIDIAN:
-                return true;
-
-            default:
-                return false;
-        }
+        return switch (material) {
+            case STONE, ANDESITE, DIORITE, GRANITE, GRASS_BLOCK, DIRT, COARSE_DIRT, PODZOL, SAND, RED_SAND, GRAVEL, SANDSTONE, MOSSY_COBBLESTONE, CLAY, SNOW, OBSIDIAN -> true;
+            default -> false;
+        };
     }
 
     @Override
@@ -323,12 +305,10 @@ public class SplatterOverlayBrush extends PerformerBrush {
         if (params[0].startsWith("mode")) {
             if (!this.allBlocks && !this.useVoxelList) {
                 this.allBlocks = true;
-                this.useVoxelList = false;
             } else if (this.allBlocks && !this.useVoxelList) {
                 this.allBlocks = false;
                 this.useVoxelList = true;
-            } else if (!this.allBlocks && this.useVoxelList) {
-                this.allBlocks = false;
+            } else if (!this.allBlocks) {
                 this.useVoxelList = false;
             }
             v.sendMessage(Component.text("Will overlay on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks, " + this.depth + " blocks deep.").color(NamedTextColor.BLUE));
@@ -364,7 +344,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
 
                 if (temp >= GROW_PERCENT_MIN && temp <= GROW_PERCENT_MAX) {
                     v.sendMessage(Component.text("Growth percent set to: " + String.format("%.2f", (double) temp / 100) + "%").color(NamedTextColor.AQUA));
-                    this.growPercent = (int) temp;
+                    this.growPercent = temp;
                 } else {
                     v.getVoxelMessage().brushMessageError("Growth percent must be a decimal between 0.01 - 99.99!");
                 }
@@ -382,7 +362,7 @@ public class SplatterOverlayBrush extends PerformerBrush {
                 }
                 return;
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.getVoxelMessage().invalidUseParameter(triggerHandle);

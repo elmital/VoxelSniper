@@ -28,7 +28,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
 
     @Override
     public List<String> registerTabCompletion() {
-        return Arrays.stream(Material.values()).filter(e -> e.isBlock()).map(e -> e.getKey().toString()).collect(Collectors.toList());
+        return Arrays.stream(Material.values()).filter(Material::isBlock).map(e -> e.getKey().toString()).collect(Collectors.toList());
     }
 
     @Override
@@ -65,12 +65,12 @@ public class VoxelVariablesCommand extends VoxelCommand {
         }
 
         if (getActiveAlias().equalsIgnoreCase("vl")) {
-            if (args.length == 0 && args[0].equalsIgnoreCase("clear")) {
+            if (args.length == 1 && args[0].equalsIgnoreCase("clear")) {
                 snipeData.getVoxelList().clear();
                 snipeData.getVoxelMessage().voxelList();
                 return true;
             }
-            
+
             if (args.length == 0 || (args.length == 1 && (args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("help")))) {
                 player.sendMessage(Component.text("Using Voxel List:").color(NamedTextColor.DARK_AQUA)
                         .append(Component.newline())
@@ -209,7 +209,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
                 if (!invalidMaterials.isEmpty()) {
                     player.sendMessage(Component.text("Couldn't add because item is non-existent or aren't blocks:- ").color(NamedTextColor.RED)
                             .append(Component.newline())
-                            .append(Component.text("    " + invalidMaterials.stream().collect(Collectors.joining(", "))).color(NamedTextColor.GOLD))
+                            .append(Component.text("    " + String.join(", ", invalidMaterials)).color(NamedTextColor.GOLD))
                     );
                 }
                 return true;
@@ -232,14 +232,14 @@ public class VoxelVariablesCommand extends VoxelCommand {
             args[0] = args[0].toLowerCase().replace("-", "");
 
             if (!args[0].startsWith("minecraft:")) {
-                if (args[0].startsWith("mi") && !args[0].equals("minecraft:")) {
+                if (args[0].startsWith("mi") && !args[0].equalsIgnoreCase("minecraft:")) {
                     return Lists.newArrayList("minecraft:");
                 }
 
                 args[0] = "minecraft:" + args[0];
             }
 
-            return getTabCompletion(1);
+            return getTabCompletion();
         }
 
         if (getActiveIdentifier().equalsIgnoreCase(getIdentifier())) {
@@ -248,9 +248,7 @@ public class VoxelVariablesCommand extends VoxelCommand {
             }
 
             if (args[0].equalsIgnoreCase("center") || args[0].equals("height")) {
-                if (args.length == 1) {
-                    return Lists.newArrayList("[number]");
-                }
+                return Lists.newArrayList("[number]");
             }
 
             if (args[0].equalsIgnoreCase("list")) {
@@ -258,14 +256,14 @@ public class VoxelVariablesCommand extends VoxelCommand {
                 args[0] = args[0].toLowerCase().replace("-", "");
 
                 if (!args[0].startsWith("minecraft:")) {
-                    if (args[0].startsWith("mi") && !args[0].equals("minecraft:")) {
+                    if (args[0].startsWith("mi") && !args[0].equalsIgnoreCase("minecraft:")) {
                         return Lists.newArrayList("minecraft:");
                     }
 
                     args[0] = "minecraft:" + args[0];
                 }
 
-                return getTabCompletion(1);
+                return getTabCompletion();
             }
         }
 

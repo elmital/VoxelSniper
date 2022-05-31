@@ -76,9 +76,11 @@ public class JockeyBrush extends Brush {
 
             if (!playerTeleportEvent.isCancelled()) {
                 if (jockeyType == JockeyType.INVERSE_PLAYER_ONLY || jockeyType == JockeyType.INVERSE_ALL_ENTITIES) {
-                    player.setPassenger(closest);
+                    player.getPassengers().clear();
+                    player.addPassenger(closest);
                 } else {
-                    closest.setPassenger(player);
+                    player.getPassengers().clear();
+                    player.addPassenger(closest);
                     jockeyedEntity = closest;
                 }
                 v.sendMessage(Component.text("You are now sitting on the most nearby entity!").color(NamedTextColor.GOLD));
@@ -98,12 +100,14 @@ public class JockeyBrush extends Brush {
         for (Entity entity : nearbyEntities) {
             if (!(stackHeight >= ENTITY_STACK_LIMIT)) {
                 if (jockeyType == JockeyType.STACK_ALL_ENTITIES) {
-                    lastEntity.setPassenger(entity);
+                    lastEntity.getPassengers().clear();
+                    lastEntity.addPassenger(entity);
                     lastEntity = entity;
                     stackHeight++;
                 } else if (jockeyType == JockeyType.STACK_PLAYER_ONLY) {
                     if (entity instanceof Player) {
-                        lastEntity.setPassenger(entity);
+                        lastEntity.getPassengers().clear();
+                        lastEntity.addPassenger(entity);
                         lastEntity = entity;
                         stackHeight++;
                     }
@@ -194,17 +198,13 @@ public class JockeyBrush extends Brush {
                 }
             }
             v.sendMessage(Component.text("Current Jockey Mode: " + jockeyType.toString()).color(NamedTextColor.GREEN));
-        } catch (ArrayIndexOutOfBoundsException exception) {
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
     }
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("inverse", "stack", "normal", "player"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("inverse", "stack", "normal", "player"));
     }
 
     /**
@@ -218,7 +218,7 @@ public class JockeyBrush extends Brush {
         STACK_ALL_ENTITIES("Stack (All)"),
         STACK_PLAYER_ONLY("Stack (Player only)");
 
-        private String name;
+        private final String name;
 
         JockeyType(String name) {
             this.name = name;

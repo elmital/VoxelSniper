@@ -28,6 +28,9 @@ public class EntityBrush extends Brush {
     private void spawn(final SnipeData v) {
         for (int x = 0; x < v.getBrushSize(); x++) {
             try {
+                if(this.entityType.getEntityClass() == null)
+                    throw new IllegalArgumentException();
+
                 this.getWorld().spawn(this.getLastBlock().getLocation(), this.entityType.getEntityClass());
             } catch (final IllegalArgumentException exception) {
                 v.sendMessage(Component.text("Cannot spawn entity!").color(NamedTextColor.RED));
@@ -52,7 +55,6 @@ public class EntityBrush extends Brush {
         vm.size();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public final void parseParameters(final String triggerHandle, final String[] params, final SnipeData v) {
         if (params[0].equalsIgnoreCase("info")) {
@@ -70,16 +72,13 @@ public class EntityBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
         List<String> entities = new ArrayList<>();
 
         for (EntityType entity : EntityType.values()) {
             entities.add(entity.name());
         }
 
-        arguments.addAll(entities);
-        
-        return arguments;
+        return new ArrayList<>(entities);
     }
 
     @Override

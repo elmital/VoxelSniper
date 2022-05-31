@@ -16,6 +16,7 @@ import com.thevoxelbox.voxelsniper.command.VoxelVoxCommand;
 import com.thevoxelbox.voxelsniper.command.VoxelVoxelCommand;
 import org.bukkit.command.PluginCommand;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,20 +74,26 @@ public class VoxelCommandManager {
         PluginCommand bukkitCommand = VoxelSniper.getInstance().getCommand(command.getIdentifier());
         argumentsMap.put(command.getIdentifier(), command.registerTabCompletion());
 
+        if(bukkitCommand == null) {
+            VoxelSniper.getInstance().getLogger().severe("Command " + command.getIdentifier() + " not found!");
+            return;
+        }
+
         bukkitCommand.setExecutor(command);
-        bukkitCommand.getAliases().stream().forEach(e -> {
-            argumentsMap.put(e, command.registerTabCompletion());
-        });
+        bukkitCommand.getAliases().forEach(e -> argumentsMap.put(e, command.registerTabCompletion()));
 
         // Initializes command alternates that use the same executors
         command.getOtherIdentifiers().forEach((otherIdentifier) -> {
             PluginCommand bukkitCommandAlt = VoxelSniper.getInstance().getCommand(otherIdentifier);
             argumentsMap.put(otherIdentifier, command.registerTabCompletion());
 
+            if(bukkitCommandAlt == null) {
+                VoxelSniper.getInstance().getLogger().severe("Command alt " + otherIdentifier + " not found!");
+                return;
+            }
+
             bukkitCommandAlt.setExecutor(command);
-            bukkitCommandAlt.getAliases().stream().forEach(e -> {
-                argumentsMap.put(e, command.registerTabCompletion());
-            });
+            bukkitCommandAlt.getAliases().forEach(e -> argumentsMap.put(e, command.registerTabCompletion()));
         });
     }
 
@@ -94,7 +101,7 @@ public class VoxelCommandManager {
         try {
             for (String brushHandle : VoxelBrushManager.getInstance().getBrushHandles()) {
                 // Initialize brush to retrieve subcommand map
-                IBrush brush = VoxelBrushManager.getInstance().getBrushForHandle(brushHandle).newInstance();
+                IBrush brush = VoxelBrushManager.getInstance().getBrushForHandle(brushHandle).getConstructor().newInstance();
 
                 if (argumentsMap.containsKey(BRUSH_SUBCOMMAND_PREFIX + brushHandle)) {
                     VoxelSniper.getInstance().getLogger().log(Level.WARNING, "Did not add clashing argument map: {0}, Brush handle: {1}", new Object[]{BRUSH_SUBCOMMAND_PREFIX + brushHandle, brushHandle});
@@ -112,18 +119,17 @@ public class VoxelCommandManager {
                     argumentsMap.put(BRUSH_SUBCOMMAND_PREFIX + brushHandle + BRUSH_SUBCOMMAND_SUFFIX + identifier, arguments);
                 });
             }
-        } catch (InstantiationException | IllegalAccessException ex) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
             Logger.getLogger(VoxelCommandManager.class.getName()).log(Level.SEVERE, "Could not initialize brush subcommand arguments!", ex);
         }
     }
 
-    public List<String> getCommandArgumentsList(String commandName, int argumentNumber) {
+    public List<String> getCommandArgumentsList(String commandName) {
         // If not defined, return an empty list.
         if (!argumentsMap.containsKey(commandName)) {
             return new ArrayList<>();
         }
 
-        List<String> arguments = argumentsMap.getOrDefault(commandName, new ArrayList<>());
-        return arguments;
+        return argumentsMap.getOrDefault(commandName, new ArrayList<>());
     }
 }

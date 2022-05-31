@@ -11,6 +11,8 @@ import com.thevoxelbox.voxelsniper.brush.IBrush;
 import com.thevoxelbox.voxelsniper.brush.SnipeBrush;
 import org.bukkit.Material;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  *
  * @author ervinnnc
@@ -21,7 +23,7 @@ public class SnipeTool {
     VoxelMessage messageHelper;
     ClassToInstanceMap<IBrush> brushes = MutableClassToInstanceMap.create();
     private Class<? extends IBrush> previousBrush;
-    private BiMap<SnipeAction, Material> actionTools = HashBiMap.create();
+    private final BiMap<SnipeAction, Material> actionTools = HashBiMap.create();
     SnipeData snipeData;
 
     protected SnipeTool(Sniper owner) {
@@ -33,7 +35,7 @@ public class SnipeTool {
         messageHelper = new VoxelMessage(snipeData);
         snipeData.setVoxelMessage(messageHelper);
 
-        IBrush newBrushInstance = instanciateBrush(currentBrush);
+        IBrush newBrushInstance = instantiateBrush(currentBrush);
         if (snipeData.owner().getPlayer().hasPermission(newBrushInstance.getPermissionNode())) {
             brushes.put(currentBrush, newBrushInstance);
             this.currentBrush = currentBrush;
@@ -74,7 +76,7 @@ public class SnipeTool {
         Preconditions.checkNotNull(brush, "Can't set brush to null.");
         IBrush brushInstance = brushes.get(brush);
         if (brushInstance == null) {
-            brushInstance = instanciateBrush(brush);
+            brushInstance = instantiateBrush(brush);
             Preconditions.checkNotNull(brushInstance, "Could not instanciate brush class.");
             if (snipeData.owner().getPlayer().hasPermission(brushInstance.getPermissionNode())) {
                 brushes.put(brush, brushInstance);
@@ -103,12 +105,10 @@ public class SnipeTool {
         return ImmutableBiMap.copyOf(actionTools);
     }
 
-    IBrush instanciateBrush(Class<? extends IBrush> brush) {
+    IBrush instantiateBrush(Class<? extends IBrush> brush) {
         try {
-            return brush.newInstance();
-        } catch (InstantiationException e) {
-            return null;
-        } catch (IllegalAccessException e) {
+            return brush.getConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             return null;
         }
     }

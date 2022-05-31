@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,7 @@ public abstract class VoxelCommand implements TabExecutor {
     }
 
     @Override
-    public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public final boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
         this.activeIdentifier = command.getLabel(); // This is the root command.
         this.activeAlias = label;   // This is the alias that was executed.
 
@@ -49,7 +50,7 @@ public abstract class VoxelCommand implements TabExecutor {
     public abstract boolean doCommand(Player player, String[] args);
 
     @Override
-    public final List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public final List<String> onTabComplete(@NotNull CommandSender sender, Command command, @NotNull String alias, String[] args) {
         this.activeIdentifier = command.getLabel(); // This is the root command.
         this.activeAlias = alias;   // This is the alias that was executed.
         
@@ -112,12 +113,12 @@ public abstract class VoxelCommand implements TabExecutor {
         return new ArrayList<>();
     }
 
-    public final List<String> getTabCompletion(int argumentNumber) {
-        return getTabCompletion(this.getIdentifier(), argumentNumber);
+    public final List<String> getTabCompletion() {
+        return getTabCompletion(this.getIdentifier());
     }
 
-    public final List<String> getTabCompletion(String identifier, int argumentNumber) {
-        return this.getCommandManager().getCommandArgumentsList(identifier, argumentNumber);
+    public final List<String> getTabCompletion(String identifier) {
+        return this.getCommandManager().getCommandArgumentsList(identifier);
     }
 
     public final VoxelCommandManager getCommandManager() {

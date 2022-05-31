@@ -5,6 +5,7 @@ import org.bukkit.BlockChangeDelegate;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -26,18 +27,17 @@ public class UndoDelegate implements BlockChangeDelegate {
     }
 
     @Override
-    public boolean setBlockData(int x, int y, int z, BlockData blockData) {
+    public boolean setBlockData(int x, int y, int z, @NotNull BlockData blockData) {
         this.currentUndo.put(targetWorld.getBlockAt(x, y, z));
         this.targetWorld.getBlockAt(x, y, z).setBlockData(blockData, false);
         return true;
     }
 
     @Override
-    public BlockData getBlockData(int x, int y, int z) {
+    public @NotNull BlockData getBlockData(int x, int y, int z) {
         return this.targetWorld.getBlockAt(x, y, z).getBlockData();
     }
 
-    @SuppressWarnings("deprecation")
     public boolean setBlock(Block b) {
         this.currentUndo.put(this.targetWorld.getBlockAt(b.getLocation()));
         this.targetWorld.getBlockAt(b.getLocation()).setBlockData(b.getBlockData(), true);

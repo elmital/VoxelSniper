@@ -7,12 +7,10 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#Three-Point_Circle_Brush
@@ -178,7 +176,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
     public List<String> registerArguments() {
         List<String> arguments = new ArrayList<>();
         
-        arguments.addAll(Arrays.stream(Tolerance.values()).map(e -> e.name()).collect(Collectors.toList()));
+        arguments.addAll(Arrays.stream(Tolerance.values()).map(Enum::name).toList());
 
         arguments.addAll(super.registerArguments());
         return arguments;
@@ -191,7 +189,7 @@ public class ThreePointCircleBrush extends PerformerBrush {
      */
     private enum Tolerance {
         DEFAULT(1000), ACCURATE(10), SMOOTH(2000);
-        private int value;
+        private final int value;
 
         Tolerance(final int value) {
             this.value = value;

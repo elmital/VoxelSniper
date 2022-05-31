@@ -34,7 +34,6 @@ public class UnderlayBrush extends PerformerBrush {
         this.setName("Underlay (Reverse Overlay)");
     }
 
-    @SuppressWarnings("deprecation")
     private void underlay(final SnipeData v) {
         final int[][] memory = new int[v.getBrushSize() * 2 + 1][v.getBrushSize() * 2 + 1];
         final double brushSizeSquared = Math.pow(v.getBrushSize() + 0.5, 2);
@@ -99,28 +98,10 @@ public class UnderlayBrush extends PerformerBrush {
             return true;
         }
 
-        switch (material) {
-            case STONE:
-            case ANDESITE:
-            case DIORITE:
-            case GRANITE:
-            case GRASS_BLOCK:
-            case DIRT:
-            case COARSE_DIRT:
-            case PODZOL:
-            case SAND:
-            case RED_SAND:
-            case GRAVEL:
-            case SANDSTONE:
-            case MOSSY_COBBLESTONE:
-            case CLAY:
-            case SNOW:
-            case OBSIDIAN:
-                return true;
-
-            default:
-                return false;
-        }
+        return switch (material) {
+            case STONE, ANDESITE, DIORITE, GRANITE, GRASS_BLOCK, DIRT, COARSE_DIRT, PODZOL, SAND, RED_SAND, GRAVEL, SANDSTONE, MOSSY_COBBLESTONE, CLAY, SNOW, OBSIDIAN -> true;
+            default -> false;
+        };
     }
 
     @Override
@@ -160,19 +141,17 @@ public class UnderlayBrush extends PerformerBrush {
 
                 v.sendMessage(Component.text("Overlay depth set to " + this.depth).color(NamedTextColor.AQUA));
                 return;
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ignored) {
             }
         }
 
         if (params[0].startsWith("mode")) {
             if (!this.allBlocks && !this.useVoxelList) {
                 this.allBlocks = true;
-                this.useVoxelList = false;
             } else if (this.allBlocks && !this.useVoxelList) {
                 this.allBlocks = false;
                 this.useVoxelList = true;
-            } else if (!this.allBlocks && this.useVoxelList) {
-                this.allBlocks = false;
+            } else if (!this.allBlocks) {
                 this.useVoxelList = false;
             }
             v.sendMessage(Component.text("Will overlay on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks, " + this.depth + " blocks deep.").color(NamedTextColor.BLUE));

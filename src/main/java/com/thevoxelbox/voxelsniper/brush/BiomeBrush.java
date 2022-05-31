@@ -7,7 +7,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -86,11 +85,7 @@ public class BiomeBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Arrays.stream(Biome.values()).map(e -> e.name()).collect(Collectors.toList()));
-        
-        return arguments;
+        return Arrays.stream(Biome.values()).map(Enum::name).collect(Collectors.toList());
     }
 
     @Override

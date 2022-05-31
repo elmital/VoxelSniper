@@ -18,7 +18,6 @@ import java.util.List;
  */
 public class Rot2DBrush extends Brush {
 
-    private int mode = 0;
     private int bSize;
     private int brushSize;
     private BlockWrapper[][][] snap;
@@ -31,7 +30,6 @@ public class Rot2DBrush extends Brush {
         this.setName("2D Rotation");
     }
 
-    @SuppressWarnings("deprecation")
     private void getMatrix() {
         this.brushSize = (this.bSize * 2) + 1;
 
@@ -39,8 +37,8 @@ public class Rot2DBrush extends Brush {
 
         final double brushSizeSquared = Math.pow(this.bSize + 0.5, 2);
         int sx = this.getTargetBlock().getX() - this.bSize;
-        int sy = this.getTargetBlock().getY() - this.bSize;
-        int sz = this.getTargetBlock().getZ() - this.bSize;
+        int sy;
+        int sz;
 
         for (int x = 0; x < this.snap.length; x++) {
             sz = this.getTargetBlock().getZ() - this.bSize;
@@ -138,32 +136,16 @@ public class Rot2DBrush extends Brush {
     protected final void arrow(final SnipeData v) {
         this.bSize = v.getBrushSize();
 
-        switch (this.mode) {
-            case 0:
-                this.getMatrix();
-                this.rotate(v);
-                break;
-
-            default:
-                v.getVoxelMessage().brushMessageError("Something went wrong.");
-                break;
-        }
+        this.getMatrix();
+        this.rotate(v);
     }
 
     @Override
     protected final void powder(final SnipeData v) {
         this.bSize = v.getBrushSize();
 
-        switch (this.mode) {
-            case 0:
-                this.getMatrix();
-                this.rotate(v);
-                break;
-
-            default:
-                v.getVoxelMessage().brushMessageError("Something went wrong.");
-                break;
-        }
+        this.getMatrix();
+        this.rotate(v);
     }
 
     @Override
@@ -181,7 +163,7 @@ public class Rot2DBrush extends Brush {
         try {
             this.se = Math.toRadians(Double.parseDouble(params[0]));
             v.sendMessage(Component.text("Angle set to " + this.se).color(NamedTextColor.GREEN));
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.getVoxelMessage().invalidUseParameter(triggerHandle);
@@ -189,11 +171,7 @@ public class Rot2DBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-
-        arguments.addAll(Lists.newArrayList("[number]"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("[number]"));
     }
 
     @Override

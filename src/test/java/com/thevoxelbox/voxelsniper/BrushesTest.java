@@ -131,7 +131,7 @@ public class BrushesTest {
         System.out.println("PERFORMER ARGUMENTS VALUES TEST");
         System.out.println("HINT A:     If this fails, you need go to registerArgumentValues where the class is failing, and add super.registerArgumentValues() into your own arguments map.");
         System.out.println("EXAMPLE:    argumentValues.putAll(super.registerArgumentValues());");
-        System.out.println("");
+        System.out.println();
         System.out.println("HINT Z:     If this fails, your own argument values are overriding the performer argument values. Please rename your arguments to something else other than \"p\".");
         System.out.println("======================================================================");
 

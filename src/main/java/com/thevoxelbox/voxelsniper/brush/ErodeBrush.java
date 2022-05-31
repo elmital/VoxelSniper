@@ -18,7 +18,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * http://www.voxelwiki.com/minecraft/VoxelSniper#The_Erosion_Brush
@@ -49,7 +48,6 @@ public class ErodeBrush extends Brush {
         this.erosion(v, this.currentPreset.getInverted());
     }
 
-    @SuppressWarnings("deprecation")
     private void erosion(final SnipeData v, final ErosionPreset erosionPreset) {
         final BlockChangeTracker blockChangeTracker = new BlockChangeTracker(this.getTargetBlock().getWorld());
 
@@ -119,7 +117,7 @@ public class ErodeBrush extends Brush {
 
                         int count = 0;
 
-                        final Map<BlockWrapper, Integer> blockCount = new HashMap<BlockWrapper, Integer>();
+                        final Map<BlockWrapper, Integer> blockCount = new HashMap<>();
 
                         for (final Vector vector : ErodeBrush.FACES_TO_CHECK) {
                             final Vector relativePosition = currentPosition.clone().add(vector);
@@ -183,11 +181,7 @@ public class ErodeBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-
-        arguments.addAll(Arrays.stream(Preset.values()).map(e -> e.name()).collect(Collectors.toList()));
-
-        return arguments;
+        return new ArrayList<>(Arrays.stream(Preset.values()).map(Enum::name).toList());
     }
 
     /**
@@ -199,9 +193,9 @@ public class ErodeBrush extends Brush {
         FILL(new ErosionPreset(5, 1, 2, 1)),
         SMOOTH(new ErosionPreset(3, 1, 3, 1)),
         LIFT(new ErosionPreset(6, 0, 1, 1)),
-        FLOATCLEAN(new ErosionPreset(6, 1, 6, 1));
+        FLOAT_CLEAN(new ErosionPreset(6, 1, 6, 1));
 
-        private ErosionPreset preset;
+        private final ErosionPreset preset;
 
         Preset(final ErosionPreset preset) {
             this.preset = preset;
@@ -214,18 +208,18 @@ public class ErodeBrush extends Brush {
          * @return
          */
         public static String getValuesString(String seperator) {
-            String valuesString = "";
+            StringBuilder valuesString = new StringBuilder();
 
             boolean delimiterHelper = true;
             for (final Preset preset : Preset.values()) {
                 if (delimiterHelper) {
                     delimiterHelper = false;
                 } else {
-                    valuesString += seperator;
+                    valuesString.append(seperator);
                 }
-                valuesString += preset.name();
+                valuesString.append(preset.name());
             }
-            return valuesString;
+            return valuesString.toString();
         }
 
         public ErosionPreset getPreset() {
@@ -244,13 +238,13 @@ public class ErodeBrush extends Brush {
         private int nextIterationId = 0;
 
         public BlockChangeTracker(final World world) {
-            this.blockChanges = new HashMap<Integer, Map<Vector, BlockWrapper>>();
-            this.flatChanges = new HashMap<Vector, BlockWrapper>();
+            this.blockChanges = new HashMap<>();
+            this.flatChanges = new HashMap<>();
             this.world = world;
         }
 
         public BlockWrapper get(final Vector position, final int iteration) {
-            BlockWrapper changedBlock = null;
+            BlockWrapper changedBlock;
 
             for (int i = iteration - 1; i >= 0; --i) {
                 if (this.blockChanges.containsKey(i) && this.blockChanges.get(i).containsKey(position)) {
@@ -274,7 +268,7 @@ public class ErodeBrush extends Brush {
 
         public void put(final Vector position, final BlockWrapper changedBlock, final int iteration) {
             if (!this.blockChanges.containsKey(iteration)) {
-                this.blockChanges.put(iteration, new HashMap<Vector, BlockWrapper>());
+                this.blockChanges.put(iteration, new HashMap<>());
             }
 
             this.blockChanges.get(iteration).put(position, changedBlock);
@@ -290,7 +284,6 @@ public class ErodeBrush extends Brush {
         private final Block block;
         private final BlockData blockData;
 
-        @SuppressWarnings("deprecation")
         public BlockWrapper(final Block block) {
             this.block = block;
             this.blockData = block.getBlockData();
@@ -333,13 +326,10 @@ public class ErodeBrush extends Brush {
          * @return if the block is a Liquid.
          */
         public boolean isLiquid() {
-            switch (this.getMaterial()) {
-                case WATER:
-                case LAVA:
-                    return true;
-                default:
-                    return false;
-            }
+            return switch (this.getMaterial()) {
+                case WATER, LAVA -> true;
+                default -> false;
+            };
         }
 
     }
@@ -368,8 +358,7 @@ public class ErodeBrush extends Brush {
 
         @Override
         public boolean equals(final Object obj) {
-            if (obj instanceof ErosionPreset) {
-                ErosionPreset other = (ErosionPreset) obj;
+            if (obj instanceof ErosionPreset other) {
                 return Objects.equal(this.erosionFaces, other.erosionFaces) && Objects.equal(this.erosionRecursion, other.erosionRecursion) && Objects.equal(this.fillFaces, other.fillFaces) && Objects.equal(this.fillRecursion, other.fillRecursion);
             }
             return false;

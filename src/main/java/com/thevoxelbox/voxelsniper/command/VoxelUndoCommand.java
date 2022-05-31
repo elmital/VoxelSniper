@@ -5,6 +5,7 @@ import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class VoxelUndoCommand extends VoxelCommand {
             try {
                 sniper.undo(Integer.parseInt(args[0]));
                 return true;
-            } catch (NumberFormatException exception) {
+            } catch (NumberFormatException ignored) {
             }
         }
 
@@ -109,7 +110,7 @@ public class VoxelUndoCommand extends VoxelCommand {
         }
 
         if (args.length == 1) {
-            Bukkit.getOnlinePlayers().stream().map(e -> e.getName()).forEach(suggestions::add);
+            Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).forEach(suggestions::add);
         }
 
         return suggestions;

@@ -27,13 +27,13 @@ public class CopyPastaBrush extends Brush {
     private int numBlocks = 0;
     private int[] firstPoint = new int[3];
     private int[] secondPoint = new int[3];
-    private int[] pastePoint = new int[3];
-    private int[] minPoint = new int[3];
-    private int[] offsetPoint = new int[3];
+    private final int[] pastePoint = new int[3];
+    private final int[] minPoint = new int[3];
+    private final int[] offsetPoint = new int[3];
 
     private BlockData[] substanceArray;
 
-    private int[] arraySize = new int[3];
+    private final int[] arraySize = new int[3];
     private int pivot = 0; // ccw degrees    
 
     /**
@@ -43,7 +43,6 @@ public class CopyPastaBrush extends Brush {
         this.setName("CopyPasta");
     }
 
-    @SuppressWarnings("deprecation")
     private void doCopy(final SnipeData v) {
         for (int i = 0; i < 3; i++) {
             this.arraySize[i] = Math.abs(this.firstPoint[i] - this.secondPoint[i]) + 1;
@@ -71,7 +70,6 @@ public class CopyPastaBrush extends Brush {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void doPasta(final SnipeData v) {
         final Undo undo = new Undo();
 
@@ -79,22 +77,13 @@ public class CopyPastaBrush extends Brush {
             for (int j = 0; j < this.arraySize[1]; j++) {
                 for (int k = 0; k < this.arraySize[2]; k++) {
                     final int currentPosition = i + this.arraySize[0] * j + this.arraySize[0] * this.arraySize[1] * k;
-                    Block block;
-
-                    switch (this.pivot) {
-                        case 180:
-                            block = this.clampY(this.pastePoint[0] - this.offsetPoint[0] - i, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] - this.offsetPoint[2] - k);
-                            break;
-                        case 270:
-                            block = this.clampY(this.pastePoint[0] + this.offsetPoint[2] + k, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] - this.offsetPoint[0] - i);
-                            break;
-                        case 90:
-                            block = this.clampY(this.pastePoint[0] - this.offsetPoint[2] - k, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] + this.offsetPoint[0] + i);
-                            break;
-                        default: // assume no rotation
-                            block = this.clampY(this.pastePoint[0] + this.offsetPoint[0] + i, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] + this.offsetPoint[2] + k);
-                            break;
-                    }
+                    Block block = switch (this.pivot) {
+                        case 180 -> this.clampY(this.pastePoint[0] - this.offsetPoint[0] - i, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] - this.offsetPoint[2] - k);
+                        case 270 -> this.clampY(this.pastePoint[0] + this.offsetPoint[2] + k, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] - this.offsetPoint[0] - i);
+                        case 90 -> this.clampY(this.pastePoint[0] - this.offsetPoint[2] - k, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] + this.offsetPoint[0] + i);
+                        default -> // assume no rotation
+                                this.clampY(this.pastePoint[0] + this.offsetPoint[0] + i, this.pastePoint[1] + this.offsetPoint[1] + j, this.pastePoint[2] + this.offsetPoint[2] + k);
+                    };
 
                     if (!(this.substanceArray[currentPosition].getMaterial().isAir() && !this.pasteAir)) {
                         if (block.getType() != this.substanceArray[currentPosition].getMaterial() || !block.getBlockData().matches(this.substanceArray[currentPosition])) {
@@ -203,11 +192,7 @@ public class CopyPastaBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("rotate", "air"));
-        
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("rotate", "air"));
     }
 
     @Override

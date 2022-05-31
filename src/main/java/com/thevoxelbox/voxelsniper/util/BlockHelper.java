@@ -5,7 +5,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Art;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -13,7 +12,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 
-import java.util.Set;
 
 /**
  * @author Voxel
@@ -89,13 +87,13 @@ public class BlockHelper {
     public BlockHelper(final Player player, final World world, final double range) {
         this.world = world;
         this.init(player.getLocation(), range, BlockHelper.DEFAULT_STEP, BlockHelper.DEFAULT_PLAYER_VIEW_HEIGHT);
-        this.fromOffworld();
+        this.fromOffWorld();
     }
 
     /**
      *
      */
-    public final void fromOffworld() {
+    public final void fromOffWorld() {
         if (this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT) {
             while (this.targetY > BlockHelper.MAXIMUM_WORLD_HEIGHT && this.length <= this.range) {
                 this.lastX = this.targetX;
@@ -157,11 +155,7 @@ public class BlockHelper {
      *
      * @return Block
      */
-    @SuppressWarnings("deprecation")
     public final Block getFaceBlock() {
-        while ((this.getNextBlock() != null) && (this.getCurBlock().getType().isAir())) {
-        }
-
         if (this.getCurBlock() != null) {
             return this.getLastBlock();
         } else {
@@ -216,7 +210,7 @@ public class BlockHelper {
      * @return Block
      */
     public final Block getRangeBlock() {
-        this.fromOffworld();
+        this.fromOffWorld();
         if (this.length > this.range) {
             return null;
         } else {
@@ -229,16 +223,11 @@ public class BlockHelper {
      *
      * @return Block
      */
-    @SuppressWarnings("deprecation")
     public final Block getTargetBlock() {
-        this.fromOffworld();
-        while ((this.getNextBlock() != null) && (this.getCurBlock().getType().isAir())) {
-
-        }
+        this.fromOffWorld();
         return this.getCurBlock();
     }
 
-    @SuppressWarnings("deprecation")
     private Block getRange() {
         this.lastX = this.targetX;
         this.lastY = this.targetY;
@@ -304,13 +293,13 @@ public class BlockHelper {
      */
     @SuppressWarnings(value = "deprecation")
     public static void paint(final Player p, final boolean auto, final boolean back, final int choice) {
-        Location targetLocation = p.getTargetBlock((Set<Material>) null, 4).getLocation();
-        Chunk paintingChunk = p.getTargetBlock((Set<Material>) null, 4).getLocation().getChunk();
-        Double bestDistanceMatch = 50.0;
+        Location targetLocation = p.getTargetBlock(null, 4).getLocation();
+        Chunk paintingChunk = p.getTargetBlock(null, 4).getLocation().getChunk();
+        double bestDistanceMatch = 50.0;
         Painting bestMatch = null;
         for (Entity entity : paintingChunk.getEntities()) {
             if (entity.getType() == EntityType.PAINTING) {
-                Double distance = targetLocation.distanceSquared(entity.getLocation());
+                double distance = targetLocation.distanceSquared(entity.getLocation());
                 if (distance <= 4 && distance < bestDistanceMatch) {
                     bestDistanceMatch = distance;
                     bestMatch = (Painting) entity;
@@ -320,7 +309,7 @@ public class BlockHelper {
         if (bestMatch != null) {
             if (auto) {
                 try {
-                    final int i = bestMatch.getArt().getId() + (back ? -1 : 1) + Art.values().length % Art.values().length;
+                    final int i = bestMatch.getArt().getId() + (back ? -1 : 1);
                     Art art = Art.getById(i);
                     if (art == null) {
                         p.sendMessage(Component.text("This is the final painting, try scrolling to the other direction.").color(NamedTextColor.RED));
@@ -334,6 +323,8 @@ public class BlockHelper {
             } else {
                 try {
                     Art art = Art.getById(choice);
+                    if(art == null)
+                        throw new Exception();
                     bestMatch.setArt(art);
                     p.sendMessage(Component.text("Painting set to ID: " + choice).color(NamedTextColor.GREEN));
                 } catch (final Exception exception) {

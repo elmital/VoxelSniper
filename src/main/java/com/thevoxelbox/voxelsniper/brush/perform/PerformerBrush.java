@@ -52,7 +52,7 @@ public abstract class PerformerBrush extends Brush implements IPerformerBrush {
     @Override
     public final void parsePerformer(String triggerHandle, String[] args, SnipeData v) {
         if (args.length > 1 && args[0].equalsIgnoreCase("p")) {
-            if (parsePerformer(args[1], v) == false) {
+            if (!parsePerformer(args[1], v)) {
                 parseParameters(triggerHandle, args, v);
             }
         } else {
@@ -69,11 +69,7 @@ public abstract class PerformerBrush extends Brush implements IPerformerBrush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-
-        arguments.addAll(Lists.newArrayList("p"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("p"));
     }
 
     @Override

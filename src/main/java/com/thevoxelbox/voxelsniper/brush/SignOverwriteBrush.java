@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Overwrites signs. (Wiki: http://www.voxelwiki.com/minecraft/VoxelSniper#Sign_Overwrite_Brush)
@@ -30,8 +31,8 @@ public class SignOverwriteBrush extends Brush {
     private static final int SIGN_LINE_2 = 2;
     private static final int SIGN_LINE_3 = 3;
     private static final int SIGN_LINE_4 = 4;
-    private String[] signTextLines = new String[NUM_SIGN_LINES];
-    private boolean[] signLinesEnabled = new boolean[NUM_SIGN_LINES];
+    private final String[] signTextLines = new String[NUM_SIGN_LINES];
+    private final boolean[] signLinesEnabled = new boolean[NUM_SIGN_LINES];
     private boolean rangedMode = false;
 
     /**
@@ -69,7 +70,6 @@ public class SignOverwriteBrush extends Brush {
             setSignText((Sign) this.getTargetBlock().getState());
         } else {
             v.getVoxelMessage().brushMessageError("Target block is not a sign.");
-            return;
         }
     }
 
@@ -116,9 +116,7 @@ public class SignOverwriteBrush extends Brush {
 
     @Override
     protected final void powder(final SnipeData v) {
-        if (this.getTargetBlock().getState() instanceof Sign) {
-            Sign sign = (Sign) this.getTargetBlock().getState();
-
+        if (this.getTargetBlock().getState() instanceof Sign sign) {
             for (int i = 0; i < this.signTextLines.length; i++) {
                 if (this.signLinesEnabled[i]) {
                     this.signTextLines[i] = sign.getLine(i);
@@ -201,7 +199,7 @@ public class SignOverwriteBrush extends Brush {
                     }
 
                     String fileName = params[++i];
-                    loadBufferFromFile(fileName, "", v);
+                    loadBufferFromFile(fileName, v);
                     textChanged = true;
                 }
             } catch (Exception exception) {
@@ -248,7 +246,7 @@ public class SignOverwriteBrush extends Brush {
             return i;
         }
 
-        String newText = "";
+        StringBuilder newText = new StringBuilder();
 
         // go through the array until the next top level parameter is found
         for (i++; i < params.length; i++) {
@@ -258,16 +256,16 @@ public class SignOverwriteBrush extends Brush {
                 i--;
                 break;
             } else {
-                newText += currentParameter + " ";
+                newText.append(currentParameter).append(" ");
             }
         }
 
-        newText = ChatColor.translateAlternateColorCodes('&', newText); //TODO find a way to produce same result with Paper/Adventure api and use it instead ChatColor
+        newText = new StringBuilder(ChatColor.translateAlternateColorCodes('&', newText.toString())); //TODO find a way to produce same result with Paper/Adventure api and use it instead ChatColor
 
         // remove last space or return if the string is empty and the user just wanted to set the status
-        if (!newText.isEmpty() && newText.endsWith(" ")) {
-            newText = newText.substring(0, newText.length() - 1);
-        } else if (newText.isEmpty()) {
+        if ((newText.length() > 0) && newText.toString().endsWith(" ")) {
+            newText = new StringBuilder(newText.substring(0, newText.length() - 1));
+        } else if (newText.length() == 0) {
             if (statusSet) {
                 return i;
             }
@@ -277,10 +275,10 @@ public class SignOverwriteBrush extends Brush {
         // check the line length and cut the text if needed
         if (newText.length() > MAX_SIGN_LINE_LENGTH) {
             v.getVoxelMessage().brushMessageError("Warning: Text on line " + lineNumber + " exceeds the maximum line length of " + MAX_SIGN_LINE_LENGTH + " characters. Your text will be cut.");
-            newText = newText.substring(0, MAX_SIGN_LINE_LENGTH);
+            newText = new StringBuilder(newText.substring(0, MAX_SIGN_LINE_LENGTH));
         }
 
-        this.signTextLines[lineIndex] = newText;
+        this.signTextLines[lineIndex] = newText.toString();
         return i;
     }
 
@@ -310,7 +308,7 @@ public class SignOverwriteBrush extends Brush {
             BufferedWriter outStream = new BufferedWriter(outFile);
 
             for (int i = 0; i < this.signTextLines.length; i++) {
-                outStream.write(String.valueOf(this.signLinesEnabled[i]) + "\n");
+                outStream.write(this.signLinesEnabled[i] + "\n");
                 outStream.write(this.signTextLines[i] + "\n");
             }
 
@@ -328,10 +326,9 @@ public class SignOverwriteBrush extends Brush {
      * Loads a buffer from a file.
      *
      * @param fileName
-     * @param userDomain
      * @param v
      */
-    private void loadBufferFromFile(final String fileName, final String userDomain, final SnipeData v) {
+    private void loadBufferFromFile(final String fileName, final SnipeData v) {
         final File store = new File(VoxelSniper.getInstance().getDataFolder() + "/" + fileName + ".vsign");
         if (!store.exists()) {
             v.getVoxelMessage().brushMessageError("This file does not exist.");
@@ -343,7 +340,7 @@ public class SignOverwriteBrush extends Brush {
             BufferedReader inStream = new BufferedReader(inFile);
 
             for (int i = 0; i < this.signTextLines.length; i++) {
-                this.signLinesEnabled[i] = Boolean.valueOf(inStream.readLine());
+                this.signLinesEnabled[i] = Boolean.parseBoolean(inStream.readLine());
                 this.signTextLines[i] = inStream.readLine();
             }
 
@@ -361,18 +358,14 @@ public class SignOverwriteBrush extends Brush {
      * Clears the internal text buffer. (Sets it to empty strings)
      */
     private void clearBuffer() {
-        for (int i = 0; i < this.signTextLines.length; i++) {
-            this.signTextLines[i] = "";
-        }
+        Arrays.fill(this.signTextLines, "");
     }
 
     /**
      * Resets line enabled states to enabled.
      */
     private void resetStates() {
-        for (int i = 0; i < this.signLinesEnabled.length; i++) {
-            this.signLinesEnabled[i] = true;
-        }
+        Arrays.fill(this.signLinesEnabled, true);
     }
 
     @Override

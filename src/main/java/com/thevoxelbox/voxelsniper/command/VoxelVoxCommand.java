@@ -85,13 +85,13 @@ public class VoxelVoxCommand extends VoxelCommand {
 
         // Command: /vox paint
         if (args[0].equalsIgnoreCase("paint")) {
-            if (args.length == 0) {
+            if (args.length == 1) {
                 BlockHelper.paint(player, true, false, 0);
                 return true;
             }
 
             // Command: /vox paint [number]
-            if (args.length == 1) {
+            if (args.length == 2) {
                 try {
                     BlockHelper.paint(player, false, false, Integer.parseInt(args[0]));
                 } catch (NumberFormatException e) {

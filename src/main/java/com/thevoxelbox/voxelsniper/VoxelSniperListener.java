@@ -26,7 +26,8 @@ public class VoxelSniperListener implements Listener {
     /**
      * @param event
      */
-    @EventHandler(ignoreCancelled = false)
+    @EventHandler
+    @SuppressWarnings("unused")
     public final void onPlayerInteract(final PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
@@ -47,6 +48,7 @@ public class VoxelSniperListener implements Listener {
      * @param event
      */
     @EventHandler
+    @SuppressWarnings("unused")
     public final void onPlayerJoin(final PlayerJoinEvent event) {
         Player player = event.getPlayer();
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);

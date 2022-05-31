@@ -73,9 +73,9 @@ public class OverlayBrush extends PerformerBrush {
                 for (int y = this.getTargetBlock().getY(); y > 0 && !surfaceFound; y--) { // start scanning from the height you clicked at //TODO potentially broken with new world height
                     if (memory[x + brushSize][z + brushSize] != 1) { // if haven't already found the surface in this column
                         if ((Math.pow(x, 2) + Math.pow(z, 2)) <= brushSizeSquared) { // if inside of the column...
-                            if (!this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z).isAir()) { // if not a floating block (like one of Notch'world pools)
+                            if (!this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y - 1, this.getTargetBlock().getZ() + z).isAir()) { // if not a floating block (like one of Notch's world pools)
                                 if (this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y + 1, this.getTargetBlock().getZ() + z).isAir()) { // must start at surface... this prevents it filling stuff in if
-                                    // you click in a wall and it starts out below surface.
+                                    // you click in a wall, and it starts out below surface.
                                     final Material currentBlock = this.getBlockMaterialAt(this.getTargetBlock().getX() + x, y, this.getTargetBlock().getZ() + z);
                                     if (this.isOverrideableMaterial(v.getVoxelList(), currentBlock)) {
                                         for (int d = 1; (d < this.depth + 1); d++) {
@@ -96,6 +96,7 @@ public class OverlayBrush extends PerformerBrush {
         v.owner().storeUndo(this.currentPerformer.getUndo());
     }
 
+    @SuppressWarnings("deprecation")
     private boolean isIgnoredBlock(Material material) {
         return material == Material.WATER || material.isTransparent() || material == Material.CACTUS;
     }
@@ -109,28 +110,10 @@ public class OverlayBrush extends PerformerBrush {
             return true;
         }
 
-        switch (material) {
-            case STONE:
-            case ANDESITE:
-            case DIORITE:
-            case GRANITE:
-            case GRASS_BLOCK:
-            case DIRT:
-            case COARSE_DIRT:
-            case PODZOL:
-            case SAND:
-            case RED_SAND:
-            case GRAVEL:
-            case SANDSTONE:
-            case MOSSY_COBBLESTONE:
-            case CLAY:
-            case SNOW:
-            case OBSIDIAN:
-                return true;
-
-            default:
-                return false;
-        }
+        return switch (material) {
+            case STONE, ANDESITE, DIORITE, GRANITE, GRASS_BLOCK, DIRT, COARSE_DIRT, PODZOL, SAND, RED_SAND, GRAVEL, SANDSTONE, MOSSY_COBBLESTONE, CLAY, SNOW, OBSIDIAN -> true;
+            default -> false;
+        };
     }
 
     @Override
@@ -176,19 +159,17 @@ public class OverlayBrush extends PerformerBrush {
 
                 v.sendMessage(Component.text("Overlay depth set to " + this.depth).color(NamedTextColor.AQUA));
                 return;
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ignored) {
             }
         }
 
         if (params[0].startsWith("mode")) {
             if (!this.allBlocks && !this.useVoxelList) {
                 this.allBlocks = true;
-                this.useVoxelList = false;
             } else if (this.allBlocks && !this.useVoxelList) {
                 this.allBlocks = false;
                 this.useVoxelList = true;
-            } else if (!this.allBlocks && this.useVoxelList) {
-                this.allBlocks = false;
+            } else if (!this.allBlocks) {
                 this.useVoxelList = false;
             }
             v.sendMessage(Component.text("Will overlay on " + (this.allBlocks ? "all" : (this.useVoxelList ? "custom defined" : "natural")) + " blocks, " + this.depth + " blocks deep.").color(NamedTextColor.BLUE));

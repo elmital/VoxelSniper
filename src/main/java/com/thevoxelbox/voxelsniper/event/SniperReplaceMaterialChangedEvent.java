@@ -3,10 +3,12 @@ package com.thevoxelbox.voxelsniper.event;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
  */
+@SuppressWarnings("unused")
 public class SniperReplaceMaterialChangedEvent extends SniperMaterialChangedEvent {
 
     private static final HandlerList handlers = new HandlerList();
@@ -20,7 +22,7 @@ public class SniperReplaceMaterialChangedEvent extends SniperMaterialChangedEven
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 }

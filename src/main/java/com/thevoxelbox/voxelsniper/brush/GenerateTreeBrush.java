@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-// Proposal: Use /v and /vr for leave and wood material // or two more parameters -- Monofraps
 /**
  * http://www.voxelwiki.com/minecraft/Voxelsniper#VoxelTrees_Brush
  *
@@ -23,8 +22,8 @@ import java.util.Random;
 public class GenerateTreeBrush extends Brush {
 
     // Tree Variables.
-    private Random randGenerator = new Random();
-    private ArrayList<Block> branchBlocks = new ArrayList<Block>();
+    private final Random randGenerator = new Random();
+    private final ArrayList<Block> branchBlocks = new ArrayList<>();
     private Undo undo;
     // If these default values are edited. Remember to change default values in the default preset.
     private Material leavesMaterial = Material.OAK_LEAVES;
@@ -36,8 +35,8 @@ public class GenerateTreeBrush extends Brush {
     private int minRoots = 1;
     private int thickness = 1;
     private int slopeChance = 40;
-    private int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise messy.
-    private int heightMininmum = 14;
+    private final int twistChance = 5; // This is a hidden value not available through Parameters. Otherwise, messy.
+    private int heightMinimum = 14;
     private int heightMaximum = 18;
     private int branchLength = 8;
     private int nodeMax = 4;
@@ -55,7 +54,6 @@ public class GenerateTreeBrush extends Brush {
     }
 
     // Branch Creation based on direction chosen from the parameters passed.
-    @SuppressWarnings("deprecation")
     private void branchCreate(final int xDirection, final int zDirection) {
 
         // Sets branch origin.
@@ -72,10 +70,10 @@ public class GenerateTreeBrush extends Brush {
 
             // Alters direction according to preferences.
             if (this.randGenerator.nextInt(100) < xPreference) {
-                blockPositionX = blockPositionX + 1 * xDirection;
+                blockPositionX = blockPositionX + xDirection;
             }
             if (this.randGenerator.nextInt(100) < zPreference) {
-                blockPositionZ = blockPositionZ + 1 * zDirection;
+                blockPositionZ = blockPositionZ + zDirection;
             }
 
             // 50% chance to increase elevation every second block.
@@ -99,7 +97,6 @@ public class GenerateTreeBrush extends Brush {
         blockPositionZ = originZ;
     }
 
-    @SuppressWarnings("deprecation")
     private void leafNodeCreate() {
         // Generates the node size.
         final int nodeRadius = this.randGenerator.nextInt(this.nodeMax - this.nodeMin + 1) + this.nodeMin;
@@ -196,7 +193,6 @@ public class GenerateTreeBrush extends Brush {
      * @param xDirection
      * @param zDirection
      */
-    @SuppressWarnings("deprecation")
     private void rootCreate(final int xDirection, final int zDirection) {
         // Sets Origin.
         final int originX = blockPositionX;
@@ -284,7 +280,6 @@ public class GenerateTreeBrush extends Brush {
         this.rootCreate(-1, -1);
     }
 
-    @SuppressWarnings("deprecation")
     private void trunkCreate() {
         // Creates true circle discs of the set size using the wood type selected.
         final double bSquared = Math.pow(this.thickness + 0.5, 2);
@@ -355,7 +350,7 @@ public class GenerateTreeBrush extends Brush {
         }
 
         // Generates a height for trunk.
-        int height = this.randGenerator.nextInt(this.heightMaximum - this.heightMininmum + 1) + this.heightMininmum;
+        int height = this.randGenerator.nextInt(this.heightMaximum - this.heightMinimum + 1) + this.heightMinimum;
 
         for (int p = 0; p < height; p++) {
             if (p > 3) {
@@ -410,7 +405,7 @@ public class GenerateTreeBrush extends Brush {
         }
 
         // Generates a height for trunk.
-        height = this.randGenerator.nextInt(this.heightMaximum - this.heightMininmum + 1) + this.heightMininmum;
+        height = this.randGenerator.nextInt(this.heightMaximum - this.heightMinimum + 1) + this.heightMinimum;
 
         if (height > 4) {
             for (int p = 0; p < height; p++) {
@@ -421,10 +416,10 @@ public class GenerateTreeBrush extends Brush {
                     zDirection *= -1;
                 }
                 if (this.randGenerator.nextInt(100) < xPreference) {
-                    blockPositionX = blockPositionX + 1 * xDirection;
+                    blockPositionX = blockPositionX + xDirection;
                 }
                 if (this.randGenerator.nextInt(100) < zPreference) {
-                    blockPositionZ = blockPositionZ + 1 * zDirection;
+                    blockPositionZ = blockPositionZ + zDirection;
                 }
 
                 // Creates a trunk section
@@ -434,7 +429,7 @@ public class GenerateTreeBrush extends Brush {
                 blockPositionY = blockPositionY + 1;
             }
 
-            // Generates branchs at top of trunk for each quadrant.
+            // Generate branches at top of trunk for each quadrant.
             this.branchCreate(1, 1);
             this.branchCreate(-1, 1);
             this.branchCreate(1, -1);
@@ -605,20 +600,20 @@ public class GenerateTreeBrush extends Brush {
             }
 
             if (params[0].equalsIgnoreCase("heightMin")) { // Height Minimum
-                this.heightMininmum = Integer.parseInt(params[1]);
-                if (this.heightMininmum > this.heightMaximum) {
-                    this.heightMininmum = this.heightMaximum;
-                    v.getVoxelMessage().brushMessageError("Minimum height exceed than maximum height, has been set to " + this.heightMininmum + " instead!");
+                this.heightMinimum = Integer.parseInt(params[1]);
+                if (this.heightMinimum > this.heightMaximum) {
+                    this.heightMinimum = this.heightMaximum;
+                    v.getVoxelMessage().brushMessageError("Minimum height exceed than maximum height, has been set to " + this.heightMinimum + " instead!");
                 } else {
-                    v.sendMessage(Component.text("Minimum height set to " + this.heightMininmum).color(NamedTextColor.BLUE));
+                    v.sendMessage(Component.text("Minimum height set to " + this.heightMinimum).color(NamedTextColor.BLUE));
                 }
                 return;
             }
 
             if (params[0].equalsIgnoreCase("heightMax")) { // Height Maximum
                 this.heightMaximum = Integer.parseInt(params[1]);
-                if (this.heightMininmum > this.heightMaximum) {
-                    this.heightMaximum = this.heightMininmum;
+                if (this.heightMinimum > this.heightMaximum) {
+                    this.heightMaximum = this.heightMinimum;
                     v.getVoxelMessage().brushMessageError("Maximum height can't be lower than minimum height, has been set to " + this.heightMaximum + " instead!");
                 } else {
                     v.sendMessage(Component.text("Maximum height set to " + this.heightMaximum).color(NamedTextColor.BLUE));
@@ -637,7 +632,7 @@ public class GenerateTreeBrush extends Brush {
                 v.sendMessage(Component.text("Leaf thickness set to " + this.nodeMin).color(NamedTextColor.BLUE));
                 return;
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
 
         }
 
@@ -651,7 +646,7 @@ public class GenerateTreeBrush extends Brush {
             this.minRoots = 1;
             this.thickness = 1;
             this.slopeChance = 40;
-            this.heightMininmum = 14;
+            this.heightMinimum = 14;
             this.heightMaximum = 18;
             this.branchLength = 8;
             this.nodeMax = 4;
@@ -665,12 +660,8 @@ public class GenerateTreeBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-        
-        arguments.addAll(Lists.newArrayList("leaves", "wood", "thickness", "startHeight", "branchLength", "slope", "rootLength",
+        return new ArrayList<>(Lists.newArrayList("leaves", "wood", "thickness", "startHeight", "branchLength", "slope", "rootLength",
                 "rootFloat", "info", "rootMin", "rootMax", "heightMin", "heightMax", "leavesMin", "leavesMax", "default"));
-
-        return arguments;
     }
 
     @Override

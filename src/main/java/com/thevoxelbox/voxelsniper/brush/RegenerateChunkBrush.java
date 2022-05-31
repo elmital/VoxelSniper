@@ -21,6 +21,7 @@ public class RegenerateChunkBrush extends Brush {
         this.setName("Chunk Generator 40k");
     }
 
+    @SuppressWarnings("deprecation")
     private void generateChunk(final SnipeData v) {
         final Chunk chunk = this.getTargetBlock().getChunk();
         final Undo undo = new Undo();

@@ -66,7 +66,7 @@ public class VoxelPerformerCommand extends VoxelCommand {
             if (brush instanceof IPerformerBrush) {
                 boolean success = ((IPerformerBrush) brush).parsePerformer(args[0], snipeData);
                 if (!success) {
-                    player.sendMessage(Component.text("No such performer with the handle ").color(NamedTextColor.RED).append(Component.text("'" + args[1] + "' exists.").color(NamedTextColor.DARK_RED)));
+                    player.sendMessage(Component.text("No such performer with the handle ").color(NamedTextColor.RED).append(Component.text("'" + args[0] + "' exists.").color(NamedTextColor.DARK_RED)));
                 }
             } else {
                 player.sendMessage(Component.text("The active brush is not a performer brush."));
@@ -80,7 +80,7 @@ public class VoxelPerformerCommand extends VoxelCommand {
     @Override
     public List<String> doSuggestion(Player player, String[] args) {
         if (args.length == 1) {
-            return getTabCompletion(args.length);
+            return getTabCompletion();
         }
         
         return new ArrayList<>();

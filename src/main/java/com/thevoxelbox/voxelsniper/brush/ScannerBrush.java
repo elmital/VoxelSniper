@@ -34,11 +34,7 @@ public class ScannerBrush extends Brush {
     private int clamp(final int value, final int min, final int max) {
         if (value < min) {
             return min;
-        } else if (value > max) {
-            return max;
-        } else {
-            return value;
-        }
+        } else return Math.min(value, max);
     }
 
     private void scan(final SnipeData v, final BlockFace bf) {
@@ -47,7 +43,7 @@ public class ScannerBrush extends Brush {
         }
 
         switch (bf) {
-            case NORTH:
+            case NORTH -> {
                 // Scan south
                 for (int i = 1; i < this.depth + 1; i++) {
                     var mat = this.clampY(this.getTargetBlock().getX() + i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getType();
@@ -57,9 +53,8 @@ public class ScannerBrush extends Brush {
                     }
                 }
                 v.sendMessage(Component.text("Nope.").color(NamedTextColor.GRAY));
-                break;
-
-            case SOUTH:
+            }
+            case SOUTH -> {
                 // Scan north
                 for (int i = 1; i < this.depth + 1; i++) {
                     var mat = this.clampY(this.getTargetBlock().getX() - i, this.getTargetBlock().getY(), this.getTargetBlock().getZ()).getType();
@@ -69,9 +64,8 @@ public class ScannerBrush extends Brush {
                     }
                 }
                 v.sendMessage(Component.text("Nope.").color(NamedTextColor.GRAY));
-                break;
-
-            case EAST:
+            }
+            case EAST -> {
                 // Scan west
                 for (int i = 1; i < this.depth + 1; i++) {
                     var mat = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() + i).getType();
@@ -81,9 +75,8 @@ public class ScannerBrush extends Brush {
                     }
                 }
                 v.sendMessage(Component.text("Nope.").color(NamedTextColor.GRAY));
-                break;
-
-            case WEST:
+            }
+            case WEST -> {
                 // Scan east
                 for (int i = 1; i < this.depth + 1; i++) {
                     var mat = this.clampY(this.getTargetBlock().getX(), this.getTargetBlock().getY(), this.getTargetBlock().getZ() - i).getType();
@@ -93,9 +86,8 @@ public class ScannerBrush extends Brush {
                     }
                 }
                 v.sendMessage(Component.text("Nope.").color(NamedTextColor.GRAY));
-                break;
-
-            case UP:
+            }
+            case UP -> {
                 // Scan down
                 for (int i = 1; i < this.depth + 1; i++) {
                     if ((this.getTargetBlock().getY() - i) <= 0) {
@@ -108,9 +100,8 @@ public class ScannerBrush extends Brush {
                     }
                 }
                 v.sendMessage(Component.text("Nope.").color(NamedTextColor.GRAY));
-                break;
-
-            case DOWN:
+            }
+            case DOWN -> {
                 // Scan up
                 for (int i = this.getWorld().getMinHeight() + 1; i < this.depth + 1; i++) {
                     if ((this.getTargetBlock().getY() + i) >= v.getWorld().getMaxHeight()) {
@@ -123,14 +114,12 @@ public class ScannerBrush extends Brush {
                     }
                 }
                 v.sendMessage(Component.text("Nope.").color(NamedTextColor.GRAY));
-                break;
-
-            default:
-                break;
+            }
+            default -> {
+            }
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected final void arrow(final SnipeData v) {
         this.checkFor = List.of(v.getVoxelMaterial());
@@ -159,7 +148,7 @@ public class ScannerBrush extends Brush {
                 this.depth = this.clamp(Integer.parseInt(params[1]), DEPTH_MIN, DEPTH_MAX);
                 v.sendMessage(Component.text("Scanner depth set to " + this.depth).color(NamedTextColor.AQUA));
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
 
         v.getVoxelMessage().invalidUseParameter(triggerHandle);
@@ -167,11 +156,7 @@ public class ScannerBrush extends Brush {
 
     @Override
     public List<String> registerArguments() {
-        List<String> arguments = new ArrayList<>();
-
-        arguments.addAll(Lists.newArrayList("depth"));
-
-        return arguments;
+        return new ArrayList<>(Lists.newArrayList("depth"));
     }
 
     @Override

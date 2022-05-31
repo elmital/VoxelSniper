@@ -34,7 +34,6 @@ public class pMatMat extends vPerformer {
         vm.replace();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void perform(Block b) {
         if (b.getType() == targetMaterial) {

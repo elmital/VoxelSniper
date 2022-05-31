@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 public class BlockResetSurfaceBrush extends Brush {
 
-    private static final ArrayList<Material> DENIED_UPDATES = new ArrayList<Material>();
+    private static final ArrayList<Material> DENIED_UPDATES = new ArrayList<>();
 
     static {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_SIGN);
@@ -66,7 +66,6 @@ public class BlockResetSurfaceBrush extends Brush {
         this.setName("Block Reset Brush Surface Only");
     }
 
-    @SuppressWarnings("deprecation")
     private void applyBrush(final SnipeData v) {
         final World world = this.getWorld();
 
@@ -83,58 +82,50 @@ public class BlockResetSurfaceBrush extends Brush {
 
                     if (world.getBlockAt(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getType().isAir()) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x + 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                        resetBlock(block);
                         airFound = true;
                     }
 
                     if (world.getBlockAt(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z).getType().isAir()) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x - 1, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                        resetBlock(block);
                         airFound = true;
                     }
 
                     if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z).getType().isAir()) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y + 1, this.getTargetBlock().getZ() + z);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                        resetBlock(block);
                         airFound = true;
                     }
 
                     if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z).getType().isAir()) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y - 1, this.getTargetBlock().getZ() + z);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                        resetBlock(block);
                         airFound = true;
                     }
 
                     if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1).getType().isAir()) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z + 1);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                        resetBlock(block);
                         airFound = true;
                     }
 
                     if (world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1).getType().isAir()) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z - 1);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                        resetBlock(block);
                         airFound = true;
                     }
 
                     if (airFound) {
                         block = world.getBlockAt(this.getTargetBlock().getX() + x, this.getTargetBlock().getY() + y, this.getTargetBlock().getZ() + z);
-                        final byte oldData = block.getData();
-                        resetBlock(block, oldData);
+                        resetBlock(block);
                     }
                 }
             }
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private void resetBlock(Block block, final byte oldData) {
+    private void resetBlock(Block block) {
         // Resets the block state to initial state by creating a new BlockData with default values.
         block.setBlockData(block.getBlockData().getMaterial().createBlockData(), true);
     }

@@ -43,9 +43,9 @@ public class VoxelSniperCommand extends VoxelCommand {
                             .append(Component.newline())
                             .append(Component.text("    Sets and enables the range limitation.").color(NamedTextColor.YELLOW))
             );
-            // TODO: List all bound tools
-            // player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " list"); 
-            // player.sendMessage(ChatColor.YELLOW + "    Lists all items that you have bound an action to.");
+            /* TODO: List all bound tools
+             player.sendMessage(ChatColor.GOLD + "/" + getActiveAlias() + " list");
+             player.sendMessage(ChatColor.YELLOW + "    Lists all items that you have bound an action to.");*/
             return true;
         }
 
@@ -55,43 +55,40 @@ public class VoxelSniperCommand extends VoxelCommand {
             return true;
         }
 
-        if (args.length >= 1) {
-            if (args[0].equalsIgnoreCase("range")) {
-                // Command: /sniper range
-                if (args.length == 1) {
-                    snipeData.setRanged(!snipeData.isRanged());
-                    snipeData.getVoxelMessage().toggleRange();
-                }
-
-                // Command: /sniper range [number]
-                if (args.length == 2) {
-                    try {
-                        int range = Integer.parseInt(args[1]);
-                        if (range < 0) {
-                            player.sendMessage(Component.text("Negative values are not allowed."));
-                        } else {
-                            snipeData.setRange(range);
-                            snipeData.setRanged(true);
-                            snipeData.getVoxelMessage().toggleRange();
-                        }
-                    } catch (NumberFormatException exception) {
-                        player.sendMessage(Component.text("Can't parse number."));
-                    }
-                }
-                return true;
-            } else if (args[0].equalsIgnoreCase("enable")) {
-                sniper.setEnabled(true);
-                player.sendMessage(Component.text("VoxelSniper is now enabled for you."));
-                return true;
-            } else if (args[0].equalsIgnoreCase("disable")) {
-                sniper.setEnabled(false);
-                player.sendMessage(Component.text("VoxelSniper is now disabled for you."));
-                return true;
-            } else {
-                return false;
+        if (args[0].equalsIgnoreCase("range")) {
+            // Command: /sniper range
+            if (args.length == 1) {
+                snipeData.setRanged(!snipeData.isRanged());
+                snipeData.getVoxelMessage().toggleRange();
             }
+
+            // Command: /sniper range [number]
+            if (args.length == 2) {
+                try {
+                    int range = Integer.parseInt(args[1]);
+                    if (range < 0) {
+                        player.sendMessage(Component.text("Negative values are not allowed."));
+                    } else {
+                        snipeData.setRange(range);
+                        snipeData.setRanged(true);
+                        snipeData.getVoxelMessage().toggleRange();
+                    }
+                } catch (NumberFormatException exception) {
+                    player.sendMessage(Component.text("Can't parse number."));
+                }
+            }
+            return true;
+        } else if (args[0].equalsIgnoreCase("enable")) {
+            sniper.setEnabled(true);
+            player.sendMessage(Component.text("VoxelSniper is now enabled for you."));
+            return true;
+        } else if (args[0].equalsIgnoreCase("disable")) {
+            sniper.setEnabled(false);
+            player.sendMessage(Component.text("VoxelSniper is now disabled for you."));
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @Override

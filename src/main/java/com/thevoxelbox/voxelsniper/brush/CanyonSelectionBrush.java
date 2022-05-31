@@ -33,13 +33,12 @@ public class CanyonSelectionBrush extends CanyonBrush {
             this.fz = chunk.getZ();
 
             v.sendMessage(Component.text("First point selected!").color(NamedTextColor.YELLOW));
-            this.first = !this.first;
         } else {
             v.sendMessage(Component.text("Second point selected!").color(NamedTextColor.YELLOW));
             selection(Math.min(fx, chunk.getX()), Math.min(fz, chunk.getZ()), Math.max(fx, chunk.getX()), Math.max(fz, chunk.getZ()), v);
 
-            this.first = !this.first;
         }
+        this.first = !this.first;
     }
 
     private void selection(final int lowX, final int lowZ, final int highX, final int highZ, final SnipeData v) {

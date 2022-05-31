@@ -31,7 +31,7 @@ public class FillDownBrush extends PerformerBrush {
         this.setName("Fill Down");
     }
 
-    private void fillDown(final SnipeData v, final Block b) {
+    private void fillDown(final SnipeData v) {
         final int brushSize = v.getBrushSize();
         final double brushSizeSquared = Math.pow(brushSize + (smoothCircle ? SMOOTH_CIRCLE_VALUE : VOXEL_CIRCLE_VALUE), 2);
         final Block targetBlock = this.getTargetBlock();
@@ -78,12 +78,12 @@ public class FillDownBrush extends PerformerBrush {
 
     @Override
     protected final void arrow(final SnipeData v) {
-        this.fillDown(v, this.getTargetBlock());
+        this.fillDown(v);
     }
 
     @Override
     protected final void powder(final SnipeData v) {
-        this.fillDown(v, this.getLastBlock());
+        this.fillDown(v);
     }
 
     @Override

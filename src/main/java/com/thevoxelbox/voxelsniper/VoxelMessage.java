@@ -77,7 +77,6 @@ public class VoxelMessage {
     /**
      * Display voxel type.
      */
-    @SuppressWarnings("deprecation")
     public void voxel() {
         snipeData.sendMessage(Component.text("Voxel Material: ").color(NamedTextColor.GOLD).append(Component.text(snipeData.getVoxelMaterial().toString()).color(NamedTextColor.RED)));
     }
@@ -112,7 +111,6 @@ public class VoxelMessage {
     /**
      * Display replace material.
      */
-    @SuppressWarnings("deprecation")
     public void replace() {
         snipeData.sendMessage(Component.text("Replace Target Material: ").color(NamedTextColor.AQUA).append(Component.text(snipeData.getReplaceMaterial().toString()).color(NamedTextColor.RED)));
     }
