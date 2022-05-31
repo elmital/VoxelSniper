@@ -7,8 +7,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Triangle_Brush
- *
  * @author Giltwist
  */
 public class TriangleBrush extends PerformerBrush {

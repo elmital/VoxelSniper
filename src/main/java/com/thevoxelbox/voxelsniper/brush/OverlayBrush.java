@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Overlay_.2F_Topsoil_Brush
- *
  * @author Gavjenks
  */
 public class OverlayBrush extends PerformerBrush {

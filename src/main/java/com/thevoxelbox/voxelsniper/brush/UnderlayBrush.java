@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Underlay_Brush
- *
  * @author jmck95 Credit to GavJenks for framework and 95 of code. Big Thank you
  * to GavJenks
  */

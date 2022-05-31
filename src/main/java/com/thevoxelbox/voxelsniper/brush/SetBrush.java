@@ -8,8 +8,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Set_Brush
- *
  * @author Voxel
  */
 public class SetBrush extends PerformerBrush {

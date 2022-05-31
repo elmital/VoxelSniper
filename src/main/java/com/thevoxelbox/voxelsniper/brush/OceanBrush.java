@@ -16,8 +16,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_OCEANATOR_5000
- *
  * @author Voxel
  */
 // TODO: FIX (not working?)

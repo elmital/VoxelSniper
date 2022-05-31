@@ -8,9 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-/**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Blend_Brushes
- */
+
 public class BlendDiscBrush extends BlendBrushBase {
 
     /**

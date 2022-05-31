@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Blob_Brush
- *
  * @author Giltwist
  */
 public class BlobBrush extends PerformerBrush {

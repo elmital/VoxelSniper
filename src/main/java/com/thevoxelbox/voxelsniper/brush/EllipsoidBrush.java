@@ -12,10 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Ellipsoid_Brush
- *
- */
+
 public class EllipsoidBrush extends PerformerBrush {
 
     private double xRad;

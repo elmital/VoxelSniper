@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Jagged_Line_Brush
- *
  * @author Giltwist
  * @author Monofraps
  */

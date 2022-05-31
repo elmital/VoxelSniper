@@ -89,6 +89,5 @@ Some rough guidelines for now:
 - Give us a good description to what you've done.
 - Try to submit one change in one pull request and try to link it to the issue in the tracker if possible.
 
-[Original VoxelSniperWiki]: http://voxelwiki.com/minecraft/VoxelSniper/
 [PaperMC]: https://papermc.io
 [Gradle]: https://gradle.org

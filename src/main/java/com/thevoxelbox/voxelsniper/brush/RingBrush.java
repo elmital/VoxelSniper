@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Ring_Brush
- *
  * @author Voxel
  */
 public class RingBrush extends PerformerBrush {

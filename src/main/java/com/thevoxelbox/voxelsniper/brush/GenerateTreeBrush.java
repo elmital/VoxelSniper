@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#VoxelTrees_Brush
- *
  * @author Ghost8700 @ Voxel
  */
 public class GenerateTreeBrush extends Brush {

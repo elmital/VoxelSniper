@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Entity_Brush
- *
  * @author Piotr
  */
 public class EntityBrush extends Brush {

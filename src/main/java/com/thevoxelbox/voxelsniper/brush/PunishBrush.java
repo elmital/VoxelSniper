@@ -21,8 +21,6 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Punish_Brush
- *
  * @author Monofraps
  * @author Deamon
  * @author MikeMatrix

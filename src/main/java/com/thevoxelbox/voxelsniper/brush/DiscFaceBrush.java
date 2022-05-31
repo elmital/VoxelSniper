@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Disc_Face_Brush
- *
  * @author Voxel
  */
 public class DiscFaceBrush extends PerformerBrush {

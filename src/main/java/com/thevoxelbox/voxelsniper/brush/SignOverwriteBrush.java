@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * Overwrites signs. (Wiki: http://www.voxelwiki.com/minecraft/VoxelSniper#Sign_Overwrite_Brush)
+ * Overwrites signs.
  *
  * @author Monofraps
  */

@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#CopyPasta_Brush
- *
  * @author giltwist
  */
 public class CopyPastaBrush extends Brush {

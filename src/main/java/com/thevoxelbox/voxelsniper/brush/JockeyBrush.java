@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Jockey_Brush
- *
  * @author Voxel
  * @author Monofraps
  */

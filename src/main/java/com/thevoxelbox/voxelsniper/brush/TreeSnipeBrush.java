@@ -18,8 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Tree_Brush
- *
  * @author Mick
  */
 public class TreeSnipeBrush extends Brush {

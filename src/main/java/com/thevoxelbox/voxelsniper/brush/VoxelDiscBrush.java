@@ -6,7 +6,6 @@ import com.thevoxelbox.voxelsniper.snipe.SnipeData;
 import org.bukkit.block.Block;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_Voxel_Disc_Brush
  *
  * @author Voxel
  */

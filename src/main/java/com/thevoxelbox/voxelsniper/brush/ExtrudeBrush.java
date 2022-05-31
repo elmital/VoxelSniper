@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Extrude_Brush
- *
  * @author psanker
  */
 public class ExtrudeBrush extends Brush {

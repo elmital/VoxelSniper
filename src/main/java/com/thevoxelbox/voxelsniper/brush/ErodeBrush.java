@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * http://www.voxelwiki.com/minecraft/VoxelSniper#The_Erosion_Brush
- *
  * @author Piotr
  * @author MikeMatrix
  */

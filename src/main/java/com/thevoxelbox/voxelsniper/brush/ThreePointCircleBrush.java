@@ -13,8 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Three-Point_Circle_Brush
- *
  * @author Giltwist
  */
 public class ThreePointCircleBrush extends PerformerBrush {

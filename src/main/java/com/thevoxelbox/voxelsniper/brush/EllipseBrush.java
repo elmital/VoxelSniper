@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Ellipse_Brush
- *
  * @author psanker
  */
 public class EllipseBrush extends PerformerBrush {

@@ -16,8 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#The_CANYONATOR
- *
  * @author Voxel
  */
 public class CanyonBrush extends Brush {

@@ -9,7 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 /**
- * THIS BRUSH SHOULD NOT USE PERFORMERS. http://www.voxelwiki.com/minecraft/Voxelsniper#Shell_Brushes
+ * THIS BRUSH SHOULD NOT USE PERFORMERS.
  *
  * @author Voxel
  */

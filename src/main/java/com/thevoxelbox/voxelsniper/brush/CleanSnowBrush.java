@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * http://www.voxelwiki.com/minecraft/Voxelsniper#Clean_Snow_Brush
- *
  * @author psanker
  */
 public class CleanSnowBrush extends Brush {
