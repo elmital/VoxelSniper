@@ -113,12 +113,12 @@ public abstract class VoxelCommand implements TabExecutor {
         return new ArrayList<>();
     }
 
-    public final List<String> getTabCompletion(int argumentNumber) {
-        return getTabCompletion(this.getIdentifier(), argumentNumber);
+    public final List<String> getTabCompletion() {
+        return getTabCompletion(this.getIdentifier());
     }
 
-    public final List<String> getTabCompletion(String identifier, int argumentNumber) {
-        return this.getCommandManager().getCommandArgumentsList(identifier, argumentNumber);
+    public final List<String> getTabCompletion(String identifier) {
+        return this.getCommandManager().getCommandArgumentsList(identifier);
     }
 
     public final VoxelCommandManager getCommandManager() {

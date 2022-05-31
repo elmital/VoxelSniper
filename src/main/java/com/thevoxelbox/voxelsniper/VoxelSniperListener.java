@@ -3,6 +3,7 @@ package com.thevoxelbox.voxelsniper;
 import com.thevoxelbox.voxelsniper.snipe.Sniper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -26,7 +27,8 @@ public class VoxelSniperListener implements Listener {
     /**
      * @param event
      */
-    @EventHandler(ignoreCancelled = false)
+    @EventHandler
+    @SuppressWarnings("unused")
     public final void onPlayerInteract(final PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
@@ -47,6 +49,7 @@ public class VoxelSniperListener implements Listener {
      * @param event
      */
     @EventHandler
+    @SuppressWarnings("unused")
     public final void onPlayerJoin(final PlayerJoinEvent event) {
         Player player = event.getPlayer();
         Sniper sniper = VoxelProfileManager.getInstance().getSniperForPlayer(player);

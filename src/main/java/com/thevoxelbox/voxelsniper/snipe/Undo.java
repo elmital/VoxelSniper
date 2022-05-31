@@ -1,6 +1,7 @@
 package com.thevoxelbox.voxelsniper.snipe;
 
 import com.google.common.collect.Sets;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -122,9 +123,9 @@ public class Undo {
      * Default constructor of a Undo container.
      */
     public Undo() {
-        all = new LinkedList<BlockState>();
-        falloff = new LinkedList<BlockState>();
-        dropdown = new LinkedList<BlockState>();
+        all = new LinkedList<>();
+        falloff = new LinkedList<>();
+        dropdown = new LinkedList<>();
     }
 
     /**
@@ -204,8 +205,8 @@ public class Undo {
             currentState.update();
         } else if (blockState instanceof Sign && currentState instanceof Sign) {
             int i = 0;
-            for (String text : ((Sign) blockState).getLines()) {
-                ((Sign) currentState).setLine(i++, text);
+            for (Component text : ((Sign) blockState).lines()) {
+                ((Sign) currentState).line(i++, text);
             }
             currentState.update();
         }

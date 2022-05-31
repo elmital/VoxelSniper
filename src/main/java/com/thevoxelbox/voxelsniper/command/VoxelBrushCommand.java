@@ -125,14 +125,14 @@ public class VoxelBrushCommand extends VoxelCommand {
     @Override
     public List<String> doSuggestion(Player player, String[] args) {
         if (args.length == 1) {
-            return getTabCompletion(args.length);
+            return getTabCompletion();
         }
 
         if (args.length >= 2) {
             if (args.length % 2 == 0) {
-                return getTabCompletion(BRUSH_SUBCOMMAND_PREFIX + args[0], 1);
+                return getTabCompletion(BRUSH_SUBCOMMAND_PREFIX + args[0]);
             } else {
-                return getTabCompletion(BRUSH_SUBCOMMAND_PREFIX + args[0] + BRUSH_SUBCOMMAND_SUFFIX + args[args.length - 2], 1);
+                return getTabCompletion(BRUSH_SUBCOMMAND_PREFIX + args[0] + BRUSH_SUBCOMMAND_SUFFIX + args[args.length - 2]);
             }
         }
 

@@ -19,7 +19,7 @@ public class SnipeData {
     public static final BlockData DEFAULT_VOXEL_SUBSTANCE = Material.AIR.createBlockData();
     public static final BlockData DEFAULT_TARGET_SUBSTANCE = Material.AIR.createBlockData();
 
-    // Sniper varaibles
+    // Sniper variables
     private final Sniper owner;
     private VoxelMessage voxelMessage;
 

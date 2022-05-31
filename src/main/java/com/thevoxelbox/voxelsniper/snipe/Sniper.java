@@ -20,6 +20,7 @@ import org.bukkit.event.block.Action;
 
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -30,7 +31,7 @@ public class Sniper {
     private final VoxelSniper plugin;
     private final UUID player;
     private boolean enabled = true;
-    private final LinkedList<Undo> undoList = new LinkedList<Undo>();
+    private final LinkedList<Undo> undoList = new LinkedList<>();
     private final Map<String, SnipeTool> tools = Maps.newHashMap();
 
     public Sniper(VoxelSniper plugin, Player player) {
@@ -43,7 +44,7 @@ public class Sniper {
     }
 
     public String getCurrentToolId() {
-        return getToolId((getPlayer().getItemInHand() != null) ? getPlayer().getItemInHand().getType() : null);
+        return getToolId((!getPlayer().getInventory().getItemInMainHand().getType().isAir()) ? getPlayer().getInventory().getItemInMainHand().getType() : null);
     }
 
     public String getToolId(Material itemInHand) {
@@ -113,29 +114,22 @@ public class Sniper {
                         }
 
                         switch (snipeAction) {
-                            case GUNPOWDER:
-                            case ARROW:
-                                BlockData oldSubstance,
-                                 newSubstance;
+                            case GUNPOWDER, ARROW -> {
+                                BlockData oldSubstance, newSubstance;
+                                oldSubstance = snipeData.getVoxelSubstance();
                                 if (targetBlock != null) {
-                                    oldSubstance = snipeData.getVoxelSubstance();
-
                                     snipeData.setVoxelSubstance(targetBlock.getBlockData());
-                                    newSubstance = snipeData.getVoxelSubstance();
                                 } else {
-                                    oldSubstance = snipeData.getVoxelSubstance();
-
                                     snipeData.setVoxelSubstance(SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-                                    newSubstance = snipeData.getVoxelSubstance();
                                 }
-
+                                newSubstance = snipeData.getVoxelSubstance();
                                 SniperMaterialChangedEvent event = new SniperMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
                                 Bukkit.getPluginManager().callEvent(event);
-
                                 snipeData.getVoxelMessage().voxel();
                                 return true;
-                            default:
-                                break;
+                            }
+                            default -> {
+                            }
                         }
                         break;
                     case RIGHT_CLICK_AIR:
@@ -150,19 +144,14 @@ public class Sniper {
                         switch (snipeAction) {
                             case ARROW:
                             case GUNPOWDER:
-                                BlockData oldSubstance,
-                                 newSubstance;
+                                BlockData oldSubstance, newSubstance;
+                                oldSubstance = snipeData.getReplaceSubstance();
                                 if (targetBlock != null) {
-                                    oldSubstance = snipeData.getReplaceSubstance();
-
                                     snipeData.setReplaceSubstance(targetBlock.getBlockData());
-                                    newSubstance = snipeData.getReplaceSubstance();
                                 } else {
-                                    oldSubstance = snipeData.getReplaceSubstance();
-
                                     snipeData.setVoxelSubstance(SnipeData.DEFAULT_VOXEL_SUBSTANCE);
-                                    newSubstance = snipeData.getReplaceSubstance();
                                 }
+                                newSubstance = snipeData.getReplaceSubstance();
 
                                 SniperReplaceMaterialChangedEvent event = new SniperReplaceMaterialChangedEvent(this, toolId, oldSubstance, newSubstance);
                                 Bukkit.getPluginManager().callEvent(event);
@@ -191,10 +180,6 @@ public class Sniper {
                 if (clickedBlock != null) {
                     targetBlock = clickedBlock;
                     lastBlock = clickedBlock.getRelative(clickedFace);
-                    if (lastBlock == null) {
-                        getPlayer().sendMessage(Component.text("Snipe target block must be visible.").color(NamedTextColor.RED));
-                        return true;
-                    }
                 } else {
                     BlockHelper rangeBlockHelper = snipeData.isRanged() ? new BlockHelper(getPlayer(), getPlayer().getWorld(), snipeData.getRange()) : new BlockHelper(getPlayer(), getPlayer().getWorld());
                     targetBlock = snipeData.isRanged() ? rangeBlockHelper.getRangeBlock() : rangeBlockHelper.getTargetBlock();
@@ -206,8 +191,7 @@ public class Sniper {
                     }
                 }
 
-                if (sniperTool.getCurrentBrush() instanceof PerformerBrush) {
-                    PerformerBrush performerBrush = (PerformerBrush) sniperTool.getCurrentBrush();
+                if (sniperTool.getCurrentBrush() instanceof PerformerBrush performerBrush) {
                     performerBrush.initP(snipeData);
                 }
 
@@ -243,7 +227,7 @@ public class Sniper {
 
     public boolean setTool(String toolId, SnipeAction action, Material itemInHand) {
         for (Map.Entry<String, SnipeTool> entry : tools.entrySet()) {
-            if (entry.getKey() != toolId && entry.getValue().hasToolAssigned(itemInHand)) {
+            if (!Objects.equals(entry.getKey(), toolId) && entry.getValue().hasToolAssigned(itemInHand)) {
                 return false;
             }
         }

@@ -11,9 +11,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class VoxelInkCommand extends VoxelCommand {
 
@@ -64,21 +62,18 @@ public class VoxelInkCommand extends VoxelCommand {
         }
 
         // Command: /vi [material]      <- Sets the defined material as voxel substance.
-        if (args.length >= 1) {
-            try {
-                BlockData newData = snipeData.getVoxelMaterial().createBlockData("[" + Arrays.stream(args).collect(Collectors.joining(",")) + "]");
-                BlockData activeData = snipeData.getVoxelSubstance();
+        try {
+            BlockData newData = snipeData.getVoxelMaterial().createBlockData("[" + String.join(",", args) + "]");
+            BlockData activeData = snipeData.getVoxelSubstance();
 
-                snipeData.setVoxelSubstance(activeData.merge(newData));
-                snipeData.getVoxelMessage().data();
-            } catch (IllegalArgumentException e) {
-                player.sendMessage(Component.text("The data value(s) cannot be imitated to the active voxel material.").color(NamedTextColor.RED));
-            }
-
-            return true;
+            snipeData.setVoxelSubstance(activeData.merge(newData));
+            snipeData.getVoxelMessage().data();
+        } catch (IllegalArgumentException e) {
+            player.sendMessage(Component.text("The data value(s) cannot be imitated to the active voxel material.").color(NamedTextColor.RED));
         }
 
-        return false;
+        return true;
+
     }
 
     @Override
