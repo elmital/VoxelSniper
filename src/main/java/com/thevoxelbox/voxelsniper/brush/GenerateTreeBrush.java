@@ -18,6 +18,10 @@ import java.util.Random;
  * @author Ghost8700 @ Voxel
  */
 public class GenerateTreeBrush extends Brush {
+    private final List<Material> validWood = List.of(Material.OAK_LOG, Material.ACACIA_LOG, Material.SPRUCE_LOG, Material.JUNGLE_LOG, Material.DARK_OAK_LOG, Material.BIRCH_LOG, Material.OAK_WOOD
+            , Material.ACACIA_WOOD, Material.SPRUCE_WOOD, Material.JUNGLE_WOOD, Material.DARK_OAK_WOOD, Material.BIRCH_WOOD, Material.CRIMSON_HYPHAE, Material.CRIMSON_STEM, Material.WARPED_HYPHAE, Material.WARPED_STEM);
+    private final List<Material> validLeaves = List.of(Material.OAK_LEAVES, Material.ACACIA_LEAVES, Material.SPRUCE_LEAVES
+            , Material.JUNGLE_LEAVES, Material.DARK_OAK_LEAVES, Material.BIRCH_LEAVES, Material.WARPED_WART_BLOCK, Material.NETHER_WART_BLOCK);
 
     // Tree Variables.
     private final Random randGenerator = new Random();
@@ -511,8 +515,7 @@ public class GenerateTreeBrush extends Brush {
             if (params[0].equalsIgnoreCase("leaves")) {
                 Material material = Material.valueOf(params[1]);
 
-                if (material == Material.OAK_LEAVES || material == Material.ACACIA_LEAVES || material == Material.SPRUCE_LEAVES
-                        || material == Material.JUNGLE_LEAVES || material == Material.DARK_OAK_LEAVES || material == Material.BIRCH_LEAVES) {
+                if (validLeaves.contains(material)) {
                     this.leavesMaterial = material;
                     v.sendMessage(Component.text("Leaves material set to " + this.leavesMaterial.name()).color(NamedTextColor.BLUE));
                 } else {
@@ -524,9 +527,8 @@ public class GenerateTreeBrush extends Brush {
             if (params[0].equalsIgnoreCase("wood")) {
                 Material material = Material.valueOf(params[1]);
 
-                if (material == Material.OAK_LOG || material == Material.ACACIA_LOG || material == Material.SPRUCE_LOG
-                        || material == Material.JUNGLE_LOG || material == Material.DARK_OAK_LOG || material == Material.BIRCH_LOG) {
-                    this.leavesMaterial = material;
+                if (validWood.contains(material)) {
+                    this.woodMaterial = material;
                     v.sendMessage(Component.text("Wood log material set to " + this.leavesMaterial.name()).color(NamedTextColor.BLUE));
                 } else {
                     throw new IllegalArgumentException();
@@ -686,12 +688,10 @@ public class GenerateTreeBrush extends Brush {
         argumentValues.put("rootFloat", Lists.newArrayList("true", "false"));
 
         // Wood material variables
-        argumentValues.put("wood", Lists.newArrayList(Material.OAK_LOG.name(), Material.ACACIA_LOG.name(), Material.SPRUCE_LOG.name(), Material.JUNGLE_LOG.name(),
-                Material.DARK_OAK_LOG.name(), Material.BIRCH_LOG.name()));
+        argumentValues.put("wood", validWood.stream().map(Material::name).toList());
 
         // Leaves material variables
-        argumentValues.put("leaves", Lists.newArrayList(Material.OAK_LEAVES.name(), Material.ACACIA_LEAVES.name(), Material.SPRUCE_LEAVES.name(), Material.JUNGLE_LEAVES.name(),
-                Material.DARK_OAK_LEAVES.name(), Material.BIRCH_LEAVES.name()));
+        argumentValues.put("leaves", validLeaves.stream().map(Material::name).toList());
 
         return argumentValues;
     }
