@@ -13,7 +13,6 @@ import java.util.HashSet;
 /**
  * @author Piotr
  */
-// TODO: Figure out what this does
 public class PullBrush extends Brush {
 
     private final HashSet<BlockWrapper> surface = new HashSet<>();
