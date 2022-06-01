@@ -26,8 +26,8 @@ public class RegenerateChunkBrush extends Brush {
         final Chunk chunk = this.getTargetBlock().getChunk();
         final Undo undo = new Undo();
 
-        for (int z = CHUNK_SIZE; z >= 0; z--) {
-            for (int x = CHUNK_SIZE; x >= 0; x--) {
+        for (int z = CHUNK_SIZE - 1; z >= 0; z--) {
+            for (int x = CHUNK_SIZE - 1; x >= 0; x--) {
                 for (int y = this.getWorld().getMaxHeight(); y >= this.getWorld().getMinHeight(); y--) {
                     undo.put(chunk.getBlock(x, y, z));
                 }
