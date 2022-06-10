@@ -27,78 +27,9 @@ public class HeatRayBrush extends Brush {
     private static final double REQUIRED_FIRE_DENSITY = -0.25;
     private static final double REQUIRED_AIR_DENSITY = 0;
 
-    private static final ArrayList<Material> FLAMMABLE_BLOCKS = new ArrayList<>();
-
     private int octaves = 5;
     private double amplitude = 0.3;
     private double frequency = 1;
-
-    static {
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_SAPLING);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_SAPLING);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_SAPLING);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_SAPLING);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_SAPLING);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPRUCE_SAPLING);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_LEAVES);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_LEAVES);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_LEAVES);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_LEAVES);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_LEAVES);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPRUCE_LEAVES);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_LOG);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_LOG);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_LOG);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_LOG);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_LOG);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPRUCE_LOG);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_WOOD);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_WOOD);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_WOOD);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_WOOD);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_WOOD);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPRUCE_WOOD);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SPONGE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.COBWEB);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.TALL_GRASS);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DEAD_BUSH);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.WHITE_WOOL);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DANDELION);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.POPPY);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BLUE_ORCHID);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ALLIUM);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.AZURE_BLUET);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.RED_TULIP);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ORANGE_TULIP);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.WHITE_TULIP);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.PINK_TULIP);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OXEYE_DAISY);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.TORCH);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.FIRE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_STAIRS);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.WHEAT);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ACACIA_WALL_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.BIRCH_WALL_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.DARK_OAK_WALL_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.JUNGLE_WALL_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_WALL_SIGN);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_DOOR);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.LADDER);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_PRESSURE_PLATE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SNOW);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.ICE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.SUGAR_CANE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_FENCE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_TRAPDOOR);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.VINE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.OAK_FENCE_GATE);
-        HeatRayBrush.FLAMMABLE_BLOCKS.add(Material.LILY_PAD);
-    }
 
     /**
      * Default Constructor.
@@ -139,7 +70,7 @@ public class HeatRayBrush extends Brush {
                             continue;
                         }
 
-                        if (HeatRayBrush.FLAMMABLE_BLOCKS.contains(currentBlock.getType())) {
+                        if (currentBlock.isBurnable()) {
                             undo.put(currentBlock);
                             currentBlock.setType(Material.FIRE);
                             continue;

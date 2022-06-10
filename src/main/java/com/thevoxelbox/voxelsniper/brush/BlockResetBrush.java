@@ -20,13 +20,22 @@ public class BlockResetBrush extends Brush {
         BlockResetBrush.DENIED_UPDATES.add(Material.DARK_OAK_SIGN);
         BlockResetBrush.DENIED_UPDATES.add(Material.JUNGLE_SIGN);
         BlockResetBrush.DENIED_UPDATES.add(Material.OAK_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(Material.CRIMSON_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(Material.WARPED_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(Material.MANGROVE_SIGN);
         BlockResetBrush.DENIED_UPDATES.add(Material.ACACIA_WALL_SIGN);
         BlockResetBrush.DENIED_UPDATES.add(Material.BIRCH_WALL_SIGN);
         BlockResetBrush.DENIED_UPDATES.add(Material.DARK_OAK_WALL_SIGN);
         BlockResetBrush.DENIED_UPDATES.add(Material.JUNGLE_WALL_SIGN);
         BlockResetBrush.DENIED_UPDATES.add(Material.OAK_WALL_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(Material.CRIMSON_WALL_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(Material.WARPED_WALL_SIGN);
+        BlockResetBrush.DENIED_UPDATES.add(Material.MANGROVE_WALL_SIGN);
         BlockResetBrush.DENIED_UPDATES.add(Material.CHEST);
+        BlockResetBrush.DENIED_UPDATES.add(Material.BARREL);
         BlockResetBrush.DENIED_UPDATES.add(Material.FURNACE);
+        BlockResetBrush.DENIED_UPDATES.add(Material.SMOKER);
+        BlockResetBrush.DENIED_UPDATES.add(Material.BLAST_FURNACE);
         BlockResetBrush.DENIED_UPDATES.add(Material.REDSTONE_TORCH);
         BlockResetBrush.DENIED_UPDATES.add(Material.REDSTONE_WALL_TORCH);
         BlockResetBrush.DENIED_UPDATES.add(Material.REDSTONE_WIRE);
@@ -36,12 +45,18 @@ public class BlockResetBrush extends Brush {
         BlockResetBrush.DENIED_UPDATES.add(Material.DARK_OAK_DOOR);
         BlockResetBrush.DENIED_UPDATES.add(Material.JUNGLE_DOOR);
         BlockResetBrush.DENIED_UPDATES.add(Material.OAK_DOOR);
+        BlockResetBrush.DENIED_UPDATES.add(Material.CRIMSON_DOOR);
+        BlockResetBrush.DENIED_UPDATES.add(Material.WARPED_DOOR);
+        BlockResetBrush.DENIED_UPDATES.add(Material.MANGROVE_DOOR);
         BlockResetBrush.DENIED_UPDATES.add(Material.IRON_DOOR);
         BlockResetBrush.DENIED_UPDATES.add(Material.ACACIA_FENCE_GATE);
         BlockResetBrush.DENIED_UPDATES.add(Material.BIRCH_FENCE_GATE);
         BlockResetBrush.DENIED_UPDATES.add(Material.DARK_OAK_FENCE_GATE);
         BlockResetBrush.DENIED_UPDATES.add(Material.JUNGLE_FENCE_GATE);
         BlockResetBrush.DENIED_UPDATES.add(Material.OAK_FENCE_GATE);
+        BlockResetBrush.DENIED_UPDATES.add(Material.CRIMSON_FENCE_GATE);
+        BlockResetBrush.DENIED_UPDATES.add(Material.WARPED_FENCE_GATE);
+        BlockResetBrush.DENIED_UPDATES.add(Material.MANGROVE_FENCE_GATE);
     }
 
     /**
