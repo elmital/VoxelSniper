@@ -9,7 +9,7 @@ version '6.3.0-SNAPSHOT'
 
 //Minecraft API variable
 ext {
-    minecraftAPI = '1.18.2-R0.1-SNAPSHOT'
+    minecraftAPI = '1.19-R0.1-SNAPSHOT'
 }
 
 defaultTasks 'build'
