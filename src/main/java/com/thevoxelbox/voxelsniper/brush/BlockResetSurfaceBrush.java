@@ -70,6 +70,9 @@ public class BlockResetSurfaceBrush extends Brush {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CRIMSON_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.WARPED_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.MANGROVE_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.AIR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.VOID_AIR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CAVE_AIR);
     }
 
     /**
