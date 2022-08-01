@@ -5,11 +5,11 @@ plugins {
 
 //Plugin information
 group 'com.thevoxelbox.voxelsniper'
-version '6.2.0'
+version '6.3.0'
 
 //Minecraft API variable
 ext {
-    minecraftAPI = '1.18.2-R0.1-SNAPSHOT'
+    minecraftAPI = '1.19.1-R0.1-SNAPSHOT'
 }
 
 defaultTasks 'build'
