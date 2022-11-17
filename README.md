@@ -5,13 +5,13 @@ This plugin is a fork created to just maintains the project updated to new minec
 
 Minecraft Version
 ------------------
-VoxelSniper was built against the PaperMC 1.18.2 API.
+VoxelSniper was built against the PaperMC 1.19.2 API.
 
- - Minecraft 1.18.2 [Tested on PaperMC, 6.2.0-SNAPSHOT]
+ - Minecraft 1.19.2 [Tested on PaperMC, 6.3.0]
 
 Compilation
 -----------
-Pre-compiled JARs are available in releases. Latest release is `6.2.0-SNAPSHOT`.
+Pre-compiled JARs are available in releases. Latest release is `6.3.0`.
 
 Fork use Gradle to handle dependencies.
 
@@ -80,14 +80,15 @@ We will still look into stuff that does not follow these guidelines, but it will
 Pull Requests
 -------------
 
-We do accept pull requests and enhancements from third parties. Guidelines how to submit your pull requests properly and how to format your code will come.
+We do not accept necessarily pull requests and enhancements from third parties. Don't PR changes made on main branches.
 
 Some rough guidelines for now:
 
 - Keep the number of commits to a minimum. We want to look over the commit and basically see what you've done.
-- Coding guidelines should try to comply to the checkstyle rules (checkstyle.xml) but not blindly. Use your mind to make smart decissions.
+- Use the conventional commits spécification for commits messages.
 - Give us a good description to what you've done.
 - Try to submit one change in one pull request and try to link it to the issue in the tracker if possible.
 
-[PaperMC]: https://papermc.io
-[Gradle]: https://gradle.org
+[Conventional commit](https://www.conventionalcommits.org/en/v1.0.0/)
+ [PaperMC](https://papermc.io)
+ [Gradle](https://gradle.org)
