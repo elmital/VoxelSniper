@@ -29,6 +29,7 @@ public class BlockResetSurfaceBrush extends Brush {
 
     static {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.SPRUCE_SIGN);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_SIGN);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_SIGN);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_SIGN);
@@ -36,7 +37,9 @@ public class BlockResetSurfaceBrush extends Brush {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CRIMSON_SIGN);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.WARPED_SIGN);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.MANGROVE_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BAMBOO_SIGN);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_WALL_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.SPRUCE_WALL_SIGN);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_WALL_SIGN);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_WALL_SIGN);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_WALL_SIGN);
@@ -44,6 +47,27 @@ public class BlockResetSurfaceBrush extends Brush {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CRIMSON_WALL_SIGN);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.WARPED_WALL_SIGN);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.MANGROVE_WALL_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BAMBOO_WALL_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.SPRUCE_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.OAK_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CRIMSON_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.WARPED_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.MANGROVE_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BAMBOO_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_WALL_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.SPRUCE_WALL_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_WALL_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_WALL_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_WALL_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.OAK_WALL_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CRIMSON_WALL_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.WARPED_WALL_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.MANGROVE_WALL_HANGING_SIGN);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BAMBOO_WALL_HANGING_SIGN);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CHEST);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BARREL);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.FURNACE);
@@ -54,6 +78,7 @@ public class BlockResetSurfaceBrush extends Brush {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.REDSTONE_WIRE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.REPEATER);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.SPRUCE_DOOR);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_DOOR);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_DOOR);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_DOOR);
@@ -63,6 +88,7 @@ public class BlockResetSurfaceBrush extends Brush {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.MANGROVE_DOOR);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.IRON_DOOR);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.SPRUCE_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BIRCH_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.DARK_OAK_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.JUNGLE_FENCE_GATE);
@@ -70,6 +96,7 @@ public class BlockResetSurfaceBrush extends Brush {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CRIMSON_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.WARPED_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.MANGROVE_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BAMBOO_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.AIR);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.VOID_AIR);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CAVE_AIR);
