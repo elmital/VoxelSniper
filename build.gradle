@@ -5,7 +5,7 @@ plugins {
 
 //Plugin information
 group 'com.thevoxelbox.voxelsniper'
-version '6.3.0'
+version '6.3.1-SNAPSHOT'
 
 //Minecraft API variable
 ext {

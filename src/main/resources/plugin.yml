@@ -1,6 +1,6 @@
 name: VoxelSniper
 main: com.thevoxelbox.voxelsniper.VoxelSniper
-version: 6.3.0
+version: 6.3.1-SNAPSHOT
 api-version: 1.19
 website: https://github.com/elmital/VoxelSniper
 authors: [przerwap, MikeMatrix, Gavjenks, giltwist, psanker, Deamon5550, DivineRage, elmital]
