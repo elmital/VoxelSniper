@@ -35,6 +35,7 @@ public class EntityRemovalBrush extends Brush {
 
         exclusionList.add(EntityType.ARMOR_STAND);
         exclusionList.add(EntityType.BOAT);
+        exclusionList.add(EntityType.CHEST_BOAT);
         exclusionList.add(EntityType.DROPPED_ITEM);
         exclusionList.add(EntityType.ITEM_FRAME);
         exclusionList.add(EntityType.LEASH_HITCH);
