@@ -5,13 +5,13 @@ This plugin is a fork created to just maintains the project updated to new minec
 
 Minecraft Version
 ------------------
-VoxelSniper was built against the PaperMC 1.19.3 API.
+VoxelSniper was built against the PaperMC 1.19.4 API.
 
- - Minecraft 1.19.3 [Not Fully Tested on PaperMC, 6.3.1]
+ - Minecraft 1.19.4 [Not Fully Tested on PaperMC, 6.3.2]
 
 Compilation
 -----------
-Pre-compiled JARs are available in releases. Latest release is `6.3.1`.
+Pre-compiled JARs are available in releases. Latest release is `6.3.2`.
 
 Fork use Gradle to handle dependencies.
 
