@@ -37,6 +37,7 @@ public class OceanBrush extends Brush {
         EXCLUDED_MATERIALS.add(Material.JUNGLE_SAPLING);
         EXCLUDED_MATERIALS.add(Material.SPRUCE_SAPLING);
         EXCLUDED_MATERIALS.add(Material.MANGROVE_PROPAGULE);
+        EXCLUDED_MATERIALS.add(Material.CHERRY_SAPLING);
         EXCLUDED_MATERIALS.add(Material.OAK_LEAVES);
         EXCLUDED_MATERIALS.add(Material.ACACIA_LEAVES);
         EXCLUDED_MATERIALS.add(Material.BIRCH_LEAVES);
@@ -44,6 +45,7 @@ public class OceanBrush extends Brush {
         EXCLUDED_MATERIALS.add(Material.JUNGLE_LEAVES);
         EXCLUDED_MATERIALS.add(Material.SPRUCE_LEAVES);
         EXCLUDED_MATERIALS.add(Material.MANGROVE_LEAVES);
+        EXCLUDED_MATERIALS.add(Material.CHERRY_LEAVES);
         EXCLUDED_MATERIALS.add(Material.OAK_LOG);
         EXCLUDED_MATERIALS.add(Material.ACACIA_LOG);
         EXCLUDED_MATERIALS.add(Material.BIRCH_LOG);
@@ -51,6 +53,7 @@ public class OceanBrush extends Brush {
         EXCLUDED_MATERIALS.add(Material.JUNGLE_LOG);
         EXCLUDED_MATERIALS.add(Material.SPRUCE_LOG);
         EXCLUDED_MATERIALS.add(Material.MANGROVE_LOG);
+        EXCLUDED_MATERIALS.add(Material.CHERRY_LOG);
         EXCLUDED_MATERIALS.add(Material.OAK_WOOD);
         EXCLUDED_MATERIALS.add(Material.ACACIA_WOOD);
         EXCLUDED_MATERIALS.add(Material.BIRCH_WOOD);
@@ -58,6 +61,7 @@ public class OceanBrush extends Brush {
         EXCLUDED_MATERIALS.add(Material.JUNGLE_WOOD);
         EXCLUDED_MATERIALS.add(Material.SPRUCE_WOOD);
         EXCLUDED_MATERIALS.add(Material.MANGROVE_WOOD);
+        EXCLUDED_MATERIALS.add(Material.CHERRY_WOOD);
         EXCLUDED_MATERIALS.add(Material.WATER);
         EXCLUDED_MATERIALS.add(Material.LAVA);
         EXCLUDED_MATERIALS.add(Material.DANDELION);

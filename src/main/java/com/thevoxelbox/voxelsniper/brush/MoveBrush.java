@@ -37,6 +37,7 @@ public class MoveBrush extends Brush {
         MoveBrush.BREAKABLE_MATERIALS.add(Material.DARK_OAK_SAPLING);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.JUNGLE_SAPLING);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.SPRUCE_SAPLING);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.CHERRY_SAPLING);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.BAMBOO);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.MANGROVE_PROPAGULE);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.BLACK_BED);
@@ -88,6 +89,7 @@ public class MoveBrush extends Brush {
         MoveBrush.BREAKABLE_MATERIALS.add(Material.CRIMSON_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.MANGROVE_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.BAMBOO_SIGN);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.CHERRY_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.ACACIA_WALL_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.SPRUCE_WALL_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.BIRCH_WALL_SIGN);
@@ -98,6 +100,7 @@ public class MoveBrush extends Brush {
         MoveBrush.BREAKABLE_MATERIALS.add(Material.CRIMSON_WALL_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.MANGROVE_WALL_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.BAMBOO_WALL_SIGN);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.CHERRY_WALL_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.ACACIA_HANGING_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.SPRUCE_HANGING_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.BIRCH_HANGING_SIGN);
@@ -118,6 +121,7 @@ public class MoveBrush extends Brush {
         MoveBrush.BREAKABLE_MATERIALS.add(Material.CRIMSON_WALL_HANGING_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.MANGROVE_WALL_HANGING_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.BAMBOO_WALL_HANGING_SIGN);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.CHERRY_WALL_HANGING_SIGN);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.OAK_DOOR);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.ACACIA_DOOR);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.BIRCH_DOOR);
@@ -128,6 +132,7 @@ public class MoveBrush extends Brush {
         MoveBrush.BREAKABLE_MATERIALS.add(Material.CRIMSON_DOOR);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.MANGROVE_DOOR);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.BAMBOO_DOOR);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.CHERRY_DOOR);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.LADDER);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.RAIL);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.ACTIVATOR_RAIL);

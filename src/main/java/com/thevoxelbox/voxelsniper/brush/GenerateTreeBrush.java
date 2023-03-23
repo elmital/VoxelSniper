@@ -19,9 +19,9 @@ import java.util.Random;
  */
 public class GenerateTreeBrush extends Brush {
     private final List<Material> validWood = List.of(Material.OAK_LOG, Material.ACACIA_LOG, Material.SPRUCE_LOG, Material.JUNGLE_LOG, Material.DARK_OAK_LOG, Material.BIRCH_LOG, Material.OAK_WOOD
-            , Material.ACACIA_WOOD, Material.SPRUCE_WOOD, Material.JUNGLE_WOOD, Material.DARK_OAK_WOOD, Material.BIRCH_WOOD, Material.CRIMSON_HYPHAE, Material.CRIMSON_STEM, Material.WARPED_HYPHAE, Material.WARPED_STEM, Material.MANGROVE_LOG, Material.MANGROVE_WOOD);
+            , Material.ACACIA_WOOD, Material.SPRUCE_WOOD, Material.JUNGLE_WOOD, Material.DARK_OAK_WOOD, Material.BIRCH_WOOD, Material.CRIMSON_HYPHAE, Material.CRIMSON_STEM, Material.WARPED_HYPHAE, Material.WARPED_STEM, Material.MANGROVE_LOG, Material.MANGROVE_WOOD, Material.CHERRY_LOG, Material.CHERRY_WOOD);
     private final List<Material> validLeaves = List.of(Material.OAK_LEAVES, Material.ACACIA_LEAVES, Material.SPRUCE_LEAVES
-            , Material.JUNGLE_LEAVES, Material.DARK_OAK_LEAVES, Material.BIRCH_LEAVES, Material.WARPED_WART_BLOCK, Material.NETHER_WART_BLOCK, Material.MANGROVE_LEAVES);
+            , Material.JUNGLE_LEAVES, Material.DARK_OAK_LEAVES, Material.BIRCH_LEAVES, Material.WARPED_WART_BLOCK, Material.NETHER_WART_BLOCK, Material.MANGROVE_LEAVES, Material.CHERRY_LEAVES);
 
     // Tree Variables.
     private final Random randGenerator = new Random();
