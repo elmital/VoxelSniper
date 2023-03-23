@@ -86,6 +86,7 @@ public class BlockResetSurfaceBrush extends Brush {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CRIMSON_DOOR);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.WARPED_DOOR);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.MANGROVE_DOOR);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CHERRY_DOOR);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.IRON_DOOR);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.ACACIA_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.SPRUCE_FENCE_GATE);
@@ -97,6 +98,7 @@ public class BlockResetSurfaceBrush extends Brush {
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.WARPED_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.MANGROVE_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.BAMBOO_FENCE_GATE);
+        BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CHERRY_FENCE_GATE);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.AIR);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.VOID_AIR);
         BlockResetSurfaceBrush.DENIED_UPDATES.add(Material.CAVE_AIR);
