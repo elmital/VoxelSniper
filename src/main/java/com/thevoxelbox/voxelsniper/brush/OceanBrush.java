@@ -78,6 +78,8 @@ public class OceanBrush extends Brush {
         EXCLUDED_MATERIALS.add(Material.FLOWERING_AZALEA);
         EXCLUDED_MATERIALS.add(Material.RED_MUSHROOM);
         EXCLUDED_MATERIALS.add(Material.BROWN_MUSHROOM);
+        EXCLUDED_MATERIALS.add(Material.PITCHER_POD);
+        EXCLUDED_MATERIALS.add(Material.PITCHER_PLANT);
         EXCLUDED_MATERIALS.add(Material.MELON);
         EXCLUDED_MATERIALS.add(Material.MELON_STEM);
         EXCLUDED_MATERIALS.add(Material.PUMPKIN);

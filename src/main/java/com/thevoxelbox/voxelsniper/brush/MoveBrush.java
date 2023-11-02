@@ -71,6 +71,10 @@ public class MoveBrush extends Brush {
         MoveBrush.BREAKABLE_MATERIALS.add(Material.OXEYE_DAISY);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.AZALEA);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.FLOWERING_AZALEA);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.TORCHFLOWER);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.TORCHFLOWER_CROP);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.PITCHER_PLANT);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.PITCHER_CROP);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.BROWN_MUSHROOM);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.RED_MUSHROOM);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.CRIMSON_FUNGUS);
@@ -159,6 +163,9 @@ public class MoveBrush extends Brush {
         MoveBrush.BREAKABLE_MATERIALS.add(Material.SUGAR_CANE);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.CAKE);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.REPEATER);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.COMPARATOR);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.CALIBRATED_SCULK_SENSOR);
+        MoveBrush.BREAKABLE_MATERIALS.add(Material.SCULK_SENSOR);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.OAK_TRAPDOOR);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.ACACIA_TRAPDOOR);
         MoveBrush.BREAKABLE_MATERIALS.add(Material.BIRCH_TRAPDOOR);

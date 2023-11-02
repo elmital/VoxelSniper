@@ -42,6 +42,9 @@ public class BlockResetBrush extends Brush {
         BlockResetBrush.DENIED_UPDATES.add(Material.REDSTONE_WALL_TORCH);
         BlockResetBrush.DENIED_UPDATES.add(Material.REDSTONE_WIRE);
         BlockResetBrush.DENIED_UPDATES.add(Material.REPEATER);
+        BlockResetBrush.DENIED_UPDATES.add(Material.COMPARATOR);
+        BlockResetBrush.DENIED_UPDATES.add(Material.CALIBRATED_SCULK_SENSOR);
+        BlockResetBrush.DENIED_UPDATES.add(Material.SCULK_SENSOR);
         BlockResetBrush.DENIED_UPDATES.add(Material.ACACIA_DOOR);
         BlockResetBrush.DENIED_UPDATES.add(Material.BIRCH_DOOR);
         BlockResetBrush.DENIED_UPDATES.add(Material.DARK_OAK_DOOR);
